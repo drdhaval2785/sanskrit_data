@@ -91,7 +91,7 @@ setup(
     'jsonpickle',
 
     # Database dependencies
-    'couchdb-python',
+    # 'couchdb-python',
     'pymongo',
     'bson',
   ],
