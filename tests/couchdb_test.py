@@ -3,9 +3,7 @@ from __future__ import absolute_import
 import logging
 import unittest
 
-from sanskrit_data.db.couchdb import Server
-
-from sanskrit_data.db.couchdb import Database
+from sanskrit_data.db.couchdb import CouchdbApiDatabase, CloudantApiClient, CloudantApiDatabase
 from sanskrit_data.schema.common import JsonObject
 
 logging.basicConfig(
@@ -17,7 +15,7 @@ class TestDBRoundTrip(unittest.TestCase):
   TEST_DB_NAME = 'vedavaapi_test'
   def set_configuration(self):
     import os
-    CODE_ROOT = os.path.dirname(os.path.dirname(__file__))
+    CODE_ROOT = os.path.dirname(__file__)
     config_file_name = os.path.join(CODE_ROOT, 'server_config_local.json')
     with open(config_file_name) as fhandle:
       import json
@@ -25,17 +23,12 @@ class TestDBRoundTrip(unittest.TestCase):
 
   def setUp(self):
     self.set_configuration()
-    self.server = Server(url=self.server_config["couchdb_host"])
+    self.server = CloudantApiClient(self.server_config["couchdb_host"])
     self.test_db_base = None
-    try:
-      self.test_db_base = self.server[self.TEST_DB_NAME]
-    except:
-      self.test_db_base = self.server.create(self.TEST_DB_NAME)
-    self.test_db = Database(db=self.test_db_base)
+    self.test_db = CloudantApiDatabase(db=self.test_db_base)
 
   def tearDown(self):
-    pass
-    # self.server.delete(self.TEST_DB_NAME)
+    self.server.delete_database(self.TEST_DB_NAME)
 
   def test_update_doc(self):
     doc = JsonObject()

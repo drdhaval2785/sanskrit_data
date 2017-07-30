@@ -1,6 +1,13 @@
+class ClientInterface(object):
+  def get_database(self):
+    """Create or get a database."""
+    pass
+
+  def delete_database(self):
+    pass
+
 
 class DbInterface(object):
-
   def update_doc(self, doc):
     """ Update or insert a JsonObject.
     
