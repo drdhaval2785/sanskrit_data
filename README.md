@@ -3,7 +3,7 @@ This module defines:
   - shared standard schema for communicating and storing Sanskrit data.
   - various idiosyncratic notations used by various modules which deviate from the proposed standards.
 
-Together with this, it provides shared python libraries for validating, (de-)serializing and storing sanskrit data. Similar libraries in various other languages are being built:
+Together with this, it provides python classes (corresponding to the schema) and shared libraries for validating, (de-)serializing and storing sanskrit data. Similar libraries in various other languages are being built:
   - Scala (likely compatible with Java): [db-interface](https://github.com/sanskrit-coders/db-interface) .
 
 ## Motivation
@@ -19,10 +19,33 @@ Together with this, it provides shared python libraries for validating, (de-)ser
 - To the extant possible, we should take latter approach to data storage and communication.
 - Where idiosyncratic notations are adapted for various reasons, it is still desirable to collect such definitions in a single module - to facilitate conversion to the standard format.
 
+# For users
+## Installation
+* Latest release: `sudo pip2 install sanskrit_data -U`
+* Development copy: `sudo pip2 install git+https://github.com/sanskrit-coders/sanskrit_data@master -U`
+* [Web](https://pypi.python.org/pypi/sanskrit_data).
+
+## Usage
+- The sanskrit_data.schema module contains various python files describing various Python classes for storing Sanskrit data, and their corresponding schema.
+  - At the base of every such class is the common.JsonObject class.
+- Just pick the most suitable class to store your data (or contribute it here).
+- Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
+
+# For contributors
+## Contact
+Have a problem or question? Please head to [github](https://github.com/sanskrit-coders/sanskrit_data).
+
+## Packaging
+* ~/.pypirc should have your pypi login credentials.
+```
+python setup.py bdist_wheel
+twine upload dist/* --skip-existing
+```
 
 # Design principles
 ## General principles
-We want data to be stored in a popular, extensible format - we want to take advantage of existing technologies to the maximum possible extant and not waste time reinventing associated (de)serialization, validation and other libraries.
+- We want data to be stored and communicated between programs in a popular, extensible format - we want to take advantage of existing technologies to the maximum possible extant and not waste time reinventing associated (de)serialization, validation and other libraries.
+- But this does not prevent the data from being presented in a different format for human consumption.
 
 While designing the JSON **data-model**:
 - Type-hint in JSON should be jsonClass (a language-independent name we've picked).
@@ -41,14 +64,3 @@ While designing the JSON **data-model**:
     - Rather than a simple tree, we end up with a Directed Acyclic Graph (DAG) of Annotation objects.
 - JSON schema mindmap [here](https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D) (Updated as needed).
 - The data containers are in a separate sanskrit_data module - so that it can be extracted and used outside this server.
-
-# For contributors
-## Contact
-Have a problem or question? Please head to [github](https://github.com/sanskrit-coders/sanskrit_data).
-
-## Packaging
-* ~/.pypirc should have your pypi login credentials.
-```
-python setup.py bdist_wheel
-twine upload dist/* --skip-existing
-```

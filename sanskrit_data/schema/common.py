@@ -16,6 +16,7 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
+# Maps jsonClass values to Python object names. Useful for (de)serialization.
 # Updated using update_json_class_index() calls at the end of each submodule file (such as this one) in the parent module.
 json_class_index = {}
 
