@@ -91,9 +91,8 @@ setup(
     'jsonpickle',
 
     # Database dependencies
-    # 'couchdb-python',
-    'pymongo',
-    'bson',
+    # 'couchdb-python', # We're using an unreleased version.
+    'pymongo', # Includes the bson package.
   ],
 
   # List additional groups of dependencies here (e.g. development

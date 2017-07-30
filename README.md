@@ -43,7 +43,8 @@ twine upload dist/* --skip-existing
 ```
 
 # Design principles
-## General principles
+## Data design
+### General principles
 - We want data to be stored and communicated between programs in a popular, extensible format - we want to take advantage of existing technologies to the maximum possible extant and not waste time reinventing associated (de)serialization, validation and other libraries.
 - But this does not prevent the data from being presented in a different format for human consumption.
 
@@ -56,7 +57,7 @@ While designing the JSON **data-model**:
   - A [transliteration map](https://docs.google.com/spreadsheets/d/1o2vysXaXfNkFxCO-WD77C4AEbXcAcJmDVgUb-E0mYbg/edit#gid=0) for reference.
 - When in doubt, keep fields optional.
 
-## Books and annotations
+### Books and annotations
 - Basic principles
   - Books are stored as a hierarchy of BookPortion objects - book containing many chapters containing many lines etc..
   - Annotations are stored in a similar hierarchy, for example - a TextAnnotation having PadaAnnotations having SamaasaAnnotations.
@@ -64,3 +65,7 @@ While designing the JSON **data-model**:
     - Rather than a simple tree, we end up with a Directed Acyclic Graph (DAG) of Annotation objects.
 - JSON schema mindmap [here](https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D) (Updated as needed).
 - The data containers are in a separate sanskrit_data module - so that it can be extracted and used outside this server.
+
+## Python data containers and utilities
+- For each JSON schema, we have a python class, at the root of which there is the generic JsonObject class with a lot of utilities. We define a hierarchy of classes so as to share validation and other code specific to certain data classes.
+- **Separate Database-specific elements through an interface**. We should be able to easily switch to a different database.
