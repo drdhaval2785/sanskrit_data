@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 import logging
 
+
 from sanskrit_data.db import DbInterface, ClientInterface
 
 logging.basicConfig(
@@ -20,15 +21,24 @@ def strip_revision(doc_map):
 
 class CloudantApiClient(ClientInterface):
   def __init__(self, url):
-    from urlparse import urlparse
-    parse_result = urlparse(url=url)
-    from cloudant import cloudant
+    logging.debug(url)
+    import yurl
+    parse_result = yurl.URL(url=url)
+    logging.debug(parse_result.username)
+    logging.debug(parse_result.authorization)
     import re
-    url_without_credentials = re.sub(parse_result.username + ":" + parse_result.password, "", url)
-    self.client = cloudant(parse_result.username, parse_result.password, url=url_without_credentials)
+    url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
+    from cloudant.client import CouchDB
+    self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization, url=url_without_credentials, connect=True, auto_renew=True)
+    # logging.debug(self.client.session())
+    # assert self.client, logging.error(self.client)
 
   def get_database(self, db_name):
-    return self.client[db_name]
+    db = self.client.get(db_name, default=None)
+    if db:
+      return db
+    else:
+      return self.client.create_database(db_name)
 
   def delete_database(self, db_name):
     self.client.delete_database(db_name)

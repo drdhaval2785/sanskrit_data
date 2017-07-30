@@ -13,6 +13,7 @@ logging.basicConfig(
 
 class TestDBRoundTrip(unittest.TestCase):
   TEST_DB_NAME = 'vedavaapi_test'
+
   def set_configuration(self):
     import os
     CODE_ROOT = os.path.dirname(__file__)
@@ -24,7 +25,7 @@ class TestDBRoundTrip(unittest.TestCase):
   def setUp(self):
     self.set_configuration()
     self.server = CloudantApiClient(self.server_config["couchdb_host"])
-    self.test_db_base = None
+    self.test_db_base = self.server.get_database(db_name=self.TEST_DB_NAME)
     self.test_db = CloudantApiDatabase(db=self.test_db_base)
 
   def tearDown(self):
