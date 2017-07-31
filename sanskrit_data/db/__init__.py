@@ -1,3 +1,7 @@
+"""
+This package aims to achieve database neutrality - we abstract database-client operations and database operations using interfaces so as to enable one to easily switch the database one uses.
+"""
+
 class ClientInterface(object):
   def get_database(self):
     """Create or get a database."""

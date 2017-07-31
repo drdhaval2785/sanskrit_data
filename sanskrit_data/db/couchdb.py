@@ -53,11 +53,9 @@ class CloudantApiDatabase(DbInterface):
     if not hasattr(doc, "_id"):
       from uuid import uuid4
       doc._id = uuid4().hex
-
-    map_to_write = doc.to_json_map()
     # self.set_revision(doc_map=map_to_write)
-    logging.debug(map_to_write)
-    result_tuple = self.db.save(map_to_write)
+    logging.debug(doc)
+    result_tuple = self.db.save(doc)
     assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
     return doc
 
@@ -94,10 +92,9 @@ class CouchdbApiDatabase(DbInterface):
     if not hasattr(doc, "_id"):
       from uuid import uuid4
       doc._id = uuid4().hex
-    map_to_write = doc.to_json_map()
-    self.set_revision(doc_map=map_to_write)
-    logging.debug(map_to_write)
-    result_tuple = self.db.save(map_to_write)
+    self.set_revision(doc=doc)
+    logging.debug(doc)
+    result_tuple = self.db.save(doc)
     assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
     return doc
 
