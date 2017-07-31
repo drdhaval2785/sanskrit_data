@@ -21,21 +21,19 @@ def strip_revision(doc_map):
 
 class CloudantApiClient(ClientInterface):
   def __init__(self, url):
-    logging.debug(url)
+    # logging.debug(url)
     import yurl
     parse_result = yurl.URL(url=url)
-    logging.debug(parse_result.username)
-    logging.debug(parse_result.authorization)
     import re
     url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
     from cloudant.client import CouchDB
     self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization, url=url_without_credentials, connect=True, auto_renew=True)
-    # logging.debug(self.client.session())
-    # assert self.client, logging.error(self.client)
+    # logging.debug(self.client)
+    assert self.client != None, logging.error(self.client)
 
   def get_database(self, db_name):
     db = self.client.get(db_name, default=None)
-    if db:
+    if db != None:
       return db
     else:
       return self.client.create_database(db_name)
@@ -49,6 +47,20 @@ class CloudantApiDatabase(DbInterface):
   def __init__(self, db):
     logging.info("Initializing db :" + str(db))
     self.db = db
+
+  def update_doc(self, doc):
+    super(CouchdbApiDatabase, self).update_doc(doc=doc)
+    if not hasattr(doc, "_id"):
+      from uuid import uuid4
+      doc._id = uuid4().hex
+
+    map_to_write = doc.to_json_map()
+    # self.set_revision(doc_map=map_to_write)
+    logging.debug(map_to_write)
+    result_tuple = self.db.save(map_to_write)
+    assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
+    return doc
+
 
 class CouchdbApiClient(ClientInterface):
   def __init__(self):
@@ -89,11 +101,10 @@ class CouchdbApiDatabase(DbInterface):
     assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
     return doc
 
-  def delete_doc(self, doc):
-    assert hasattr(doc, "_id")
+  def delete_doc(self, doc_id):
     from couchdb import ResourceNotFound
     try:
-      map_to_delete = self.db[doc._id]
+      map_to_delete = self.db[doc_id]
       self.db.delete(map_to_delete)
     except ResourceNotFound:
       pass

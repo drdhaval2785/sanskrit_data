@@ -44,25 +44,16 @@ class Collection(DbInterface):
 
   def update_doc(self, doc):
     from pymongo import ReturnDocument
-    super(Collection, self).update_doc(doc=doc)
-    map_to_write = doc.to_json_map()
-    if hasattr(doc, "_id"):
+    if "_id" in doc:
       filter = {"_id": ObjectId(doc._id)}
-      map_to_write.pop("_id", None)
+      doc.pop("_id", None)
     else:
-      filter = doc.to_json_map()
+      filter = doc
+    updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True, return_document=ReturnDocument.AFTER)
+    return updated_doc
 
-    updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": map_to_write}, upsert=True, return_document=ReturnDocument.AFTER)
-    doc.set_type()
-    from sanskrit_data.schema.common import TYPE_FIELD
-    updated_doc[TYPE_FIELD] = getattr(doc, TYPE_FIELD)
-    from sanskrit_data.schema.common import JsonObject
-    updated_obj = JsonObject.make_from_dict(updated_doc)
-    return updated_obj
-
-  def delete_doc(self, doc):
-    assert hasattr(doc, "_id"), "_id not present!"
-    self.mongo_collection.delete_one({"_id": ObjectId(doc._id)})
+  def delete_doc(self, doc_id):
+    self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
 
   def get_no_target_entities(self):
     iter = self.mongo_collection.find(

@@ -228,13 +228,17 @@ class JsonObject(object):
     return dict1 == dict2
 
   def update_collection(self, db_interface):
+    self.set_type_recursively()
     if hasattr(self, "schema"):
       self.validate(db_interface)
-    return db_interface.update_doc(self)
+    updated_doc = db_interface.update_doc(self.to_json_map())
+    updated_obj = JsonObject.make_from_dict(updated_doc)
+    return updated_obj
 
   # To delete referrent items also, use appropriate method in JsonObjectNode.
   def delete_in_collection(self, db_interface):
-    return db_interface.delete_doc(self)
+    assert hasattr(self, "_id"), "_id not present!"
+    return db_interface.delete_doc(self._id)
 
   def validate(self, db_interface=None):
     """

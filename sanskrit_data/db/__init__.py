@@ -11,16 +11,16 @@ class DbInterface(object):
   def update_doc(self, doc):
     """ Update or insert a JsonObject.
     
-    :param doc: JsonObject. _id parameter determines the key. One will be created if it does not exist.
-    :return: updated JsonObject with _id set. 
+    :param doc: A dict. _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
+    :return: updated dict with _id set.
     """
-    doc.set_type_recursively()
+    assert isinstance(doc, dict)
     pass
 
-  def delete_doc(self, doc):
+  def delete_doc(self, doc_id):
     """
     
-    :param doc: 
+    :param doc_id:
     :return: Not used.
     """
     pass
