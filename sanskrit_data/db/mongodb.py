@@ -28,19 +28,8 @@ class Collection(DbInterface):
   def find_one(self, filter):
     return self.mongo_collection.find_one(filter=filter)
 
-  def get_targetting_entities(self, json_obj, entity_type=None):
-    filter = {
-      "targets": {
-        "$elemMatch": {
-          "container_id": str(json_obj._id)
-        }
-      }
-    }
-    if entity_type:
-      import sanskrit_data.schema.common
-      filter[sanskrit_data.schema.common.TYPE_FIELD] = entity_type
-    targetting_objs = [json_obj.make_from_dict(item) for item in self.mongo_collection.find(filter)]
-    return targetting_objs
+  def find(self, filter):
+    return self.mongo_collection.find(filter)
 
   def update_doc(self, doc):
     from pymongo import ReturnDocument
@@ -54,14 +43,3 @@ class Collection(DbInterface):
 
   def delete_doc(self, doc_id):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
-
-  def get_no_target_entities(self):
-    iter = self.mongo_collection.find(
-      filter={"$or":
-                [{"targets" : {"$exists" : False}},
-                 {"targets" : {"$size" : 0}}]
-              })
-    from sanskrit_data.schema.common import JsonObject
-    return [JsonObject.make_from_dict(x) for x in iter]
-
-

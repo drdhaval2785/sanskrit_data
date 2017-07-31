@@ -122,6 +122,3 @@ class CouchdbApiDatabase(DbInterface):
   def find(self, filter):
     for row in self.db.find(query=filter):
       yield strip_revision(row.doc)
-
-  def get_targetting_entities(self, json_obj, entity_type=None):
-    raise Exception("not implemented")

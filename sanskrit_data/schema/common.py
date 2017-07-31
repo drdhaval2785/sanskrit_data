@@ -276,9 +276,6 @@ class JsonObject(object):
       item = cls.make_from_dict(item_dict)
     return item
 
-  def get_targetting_entities(self, db_interface, entity_type=None):
-    return db_interface.get_targetting_entities(self, entity_type=entity_type)
-
 
 class TargetValidationError(Exception):
   def __init__(self, allowed_types, target_obj, targetting_obj):
@@ -361,6 +358,18 @@ class JsonObjectWithTarget(JsonObject):
       self.validate_targets(targets=self.targets, allowed_types=self.get_allowed_target_classes(),
                             db_interface=db_interface)
 
+  def get_targetting_entities(self, db_interface, entity_type=None):
+    filter = {
+      "targets": {
+        "$elemMatch": {
+          "container_id": str(self._id)
+        }
+      }
+    }
+    if entity_type:
+      filter[TYPE_FIELD] = entity_type
+    targetting_objs = [JsonObject.make_from_dict(item) for item in self.mongo_collection.find(filter)]
+    return targetting_objs
 
 class JsonObjectNode(JsonObject):
   """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets."""

@@ -56,15 +56,3 @@ class DbInterface(object):
       return iterator.next()
     except StopIteration:
       return None
-
-  def get_targetting_entities(self, json_obj, entity_type=None):
-    """ Find entities targeting a JsonObjectWithTarget (Refer to sanskrit_data package.)
-    
-    :param json_obj: JsonObject
-    :param entity_type: 
-    :return: A list of JsonObjectWithTarget objects. 
-    """
-    pass
-
-  def get_no_target_entities(self):
-    pass
