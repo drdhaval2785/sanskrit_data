@@ -5,4 +5,4 @@ schema package contains modules which define various modules describing various 
 - Just pick the most suitable class to store your data (or contribute it here).
 """
 
-__all__ = ["common", "ullekhanam", "books", "users"]
+__all__ = ["common", "books", "ullekhanam", "users"]

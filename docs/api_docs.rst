@@ -11,6 +11,15 @@ Welcome to sanskrit_data's documentation!
    :caption: Contents:
 
 
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+getting_started
+
 .. automodule:: sanskrit_data
     :members:
     :undoc-members:
@@ -21,14 +30,37 @@ Welcome to sanskrit_data's documentation!
     :undoc-members:
     :show-inheritance:
 
+.. automodule:: sanskrit_data.schema.common
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: sanskrit_data.schema.books
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: sanskrit_data.schema.ullekhanam
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: sanskrit_data.schema.users
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. automodule:: sanskrit_data.db
     :members:
     :undoc-members:
     :show-inheritance:
 
-Indices and tables
-==================
+.. automodule:: sanskrit_data.db.couchdb
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. automodule:: sanskrit_data.db.mongodb
+    :members:
+    :undoc-members:
+    :show-inheritance:
