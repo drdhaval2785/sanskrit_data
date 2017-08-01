@@ -6,25 +6,21 @@
 Welcome to sanskrit_data's documentation!
 =========================================
 
-.. toctree::
-   :maxdepth: 5
-   :caption: Contents:
-
 
 Indices and tables
-==================
+====================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-getting_started
 
 .. automodule:: sanskrit_data
     :members:
     :undoc-members:
     :show-inheritance:
 
+sanskrit_data.schema
+====================
 .. automodule:: sanskrit_data.schema
     :members:
     :undoc-members:
@@ -50,6 +46,8 @@ getting_started
     :undoc-members:
     :show-inheritance:
 
+# sanskrit_data.db
+====================
 .. automodule:: sanskrit_data.db
     :members:
     :undoc-members:
@@ -64,3 +62,8 @@ getting_started
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: 5
+   :caption: Contents:
