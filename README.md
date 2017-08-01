@@ -26,7 +26,15 @@ Together with this, it provides python classes (corresponding to the schema) and
 * [Web](https://pypi.python.org/pypi/sanskrit_data).
 
 ## Usage
-- Please see the generated python sphynx docs under docs/_build/html/index.html ([project page](https://sanskrit-coders.github.io/sanskrit_data/_build/html/index.html), currently not working) .
+- Highlights:
+  - sanskrit_data.schema contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.
+    - At the base of every such class is the common.JsonObject class.
+    - Just pick the most suitable class to store your data (or contribute it here).
+  - sanskrit_data.db package aims to achieve database neutrality - we abstract database-client operations and database operations using interfaces so as to enable one to easily switch the database one uses.
+- Please see the generated python sphynx docs in one of the following places:
+   - http://sanskrit-data.readthedocs.io - currently broken due to BUILD errors - see [bug](https://github.com/rtfd/readthedocs.org/issues/3021) .
+   - under docs/_build/html/index.html
+   - [project page](https://sanskrit-coders.github.io/sanskrit_data/_build/html/index.html), currently formatting is broken) .
 - Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
 
 # For contributors
@@ -39,6 +47,10 @@ Have a problem or question? Please head to [github](https://github.com/sanskrit-
 python setup.py bdist_wheel
 twine upload dist/* --skip-existing
 ```
+
+## Document generation
+- Sphynx html docs can be generated with `cd docs; make html`
+- http://sanskrit-data.readthedocs.io should automatically have good updated documentation - unless there are build errors.
 
 # Design principles
 ## Data design
