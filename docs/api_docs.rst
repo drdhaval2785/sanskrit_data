@@ -6,6 +6,11 @@
 Welcome to sanskrit_data's documentation!
 =========================================
 
+.. toctree::
+   :maxdepth: 5
+   :caption: Contents:
+
+
 .. automodule:: sanskrit_data
     :members:
     :undoc-members:
@@ -20,10 +25,6 @@ Welcome to sanskrit_data's documentation!
     :members:
     :undoc-members:
     :show-inheritance:
-
-.. toctree::
-   :maxdepth: 5
-   :caption: Contents:
 
 Indices and tables
 ==================
