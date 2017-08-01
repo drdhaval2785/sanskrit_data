@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sanskrit_data.schema.books &#8212; sanskrit_data 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sanskrit_data.schema.books</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema</span> <span class="k">import</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">TextContent</span><span class="p">,</span> <span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">Target</span>
+
+
+<div class="viewcode-block" id="BookPositionTarget"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPositionTarget">[docs]</a><span class="k">class</span> <span class="nc">BookPositionTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Target</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;BookPositionTarget&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Any number describing the position of one BookPortion within another.&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">})</span>
+
+<div class="viewcode-block" id="BookPositionTarget.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPositionTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">BookPositionTarget</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">container_id</span><span class="p">:</span>
+      <span class="n">target</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="n">container_id</span>
+    <span class="k">if</span> <span class="n">position</span><span class="p">:</span>
+      <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">target</span></div></div>
+
+
+<div class="viewcode-block" id="BookPortion"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPortion">[docs]</a><span class="k">class</span> <span class="nc">BookPortion</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;BookPortion&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;base_data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;portion_class&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;book, part, chapter, verse, line etc..&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;curated_content&quot;</span><span class="p">:</span> <span class="n">TextContent</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+      <span class="s2">&quot;targets&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;maxLength&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">BookPositionTarget</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Target for BookPortion of which this BookPortion is a part. It is an array only for consistency. &quot;</span>
+                       <span class="s2">&quot;For any given BookPortion, one can get the right order of contained BookPortions by seeking all &quot;</span>
+                       <span class="s2">&quot;BookPortions referring to it in the targets list, and sorting them by their target position values.&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+  <span class="p">}))</span>
+
+  <span class="n">target_class</span> <span class="o">=</span> <span class="n">BookPositionTarget</span>
+
+<div class="viewcode-block" id="BookPortion.get_allowed_target_classes"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPortion.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BookPortion.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPortion.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">curated_content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">portion_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">book_portion</span> <span class="o">=</span> <span class="n">BookPortion</span><span class="p">()</span>
+    <span class="n">book_portion</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+    <span class="n">book_portion</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+    <span class="c1"># logging.debug(str(book_portion))</span>
+    <span class="n">book_portion</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">book_portion</span><span class="p">))</span>
+    <span class="n">book_portion</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
+    <span class="k">if</span> <span class="n">curated_content</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">book_portion</span><span class="o">.</span><span class="n">curated_content</span> <span class="o">=</span> <span class="n">curated_content</span>
+    <span class="k">if</span> <span class="n">base_data</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">book_portion</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="n">base_data</span>
+    <span class="k">if</span> <span class="n">portion_class</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">book_portion</span><span class="o">.</span><span class="n">portion_class</span> <span class="o">=</span> <span class="n">portion_class</span>
+    <span class="n">book_portion</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">book_portion</span></div>
+
+<div class="viewcode-block" id="BookPortion.from_path"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.books.BookPortion.from_path">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+    <span class="n">book_portion_dict</span> <span class="o">=</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">book_portion_dict</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">book_portion</span> <span class="o">=</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">book_portion_dict</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">book_portion</span></div></div>
+
+<span class="c1"># Essential for depickling to work.</span>
+<span class="n">common</span><span class="o">.</span><span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_class_index</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">sanskrit_data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, sanskrit-programmers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
