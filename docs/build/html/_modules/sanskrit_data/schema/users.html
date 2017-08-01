@@ -1,0 +1,240 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sanskrit_data.schema.users &#8212; sanskrit_data 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sanskrit_data.schema.users</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema</span> <span class="k">import</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">recursively_merge</span><span class="p">,</span> <span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="n">update_json_class_index</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+  <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+  <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(asctime)s</span><span class="s2"> {</span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)d</span><span class="s2">}: </span><span class="si">%(message)s</span><span class="s2"> &quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="UserPermission"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.UserPermission">[docs]</a><span class="k">class</span> <span class="nc">UserPermission</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
+    <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;UserPermission&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.*&quot;</span><span class="p">,</span> <span class="s2">&quot;ullekhanam&quot;</span><span class="p">],</span>
+          <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Allowable values should be predetermined regular expressions.&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;write&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">],</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Should be an enum in the future.&quot;</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+
+<div class="viewcode-block" id="UserPermission.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.UserPermission.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">UserPermission</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="n">actions</span>
+    <span class="k">return</span> <span class="n">obj</span></div></div>
+
+
+<div class="viewcode-block" id="AuthenticationInfo"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.AuthenticationInfo">[docs]</a><span class="k">class</span> <span class="nc">AuthenticationInfo</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
+    <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;AuthenticationInfo&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;auth_user_id&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;auth_provider&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;google&quot;</span><span class="p">,</span> <span class="s2">&quot;vedavaapi&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;auth_secret_bcrypt&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+
+  <span class="n">VEDAVAAPI_AUTH</span> <span class="o">=</span> <span class="s2">&quot;vedavaapi&quot;</span>
+
+<div class="viewcode-block" id="AuthenticationInfo.get_user_id"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.AuthenticationInfo.get_user_id">[docs]</a>  <span class="k">def</span> <span class="nf">get_user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_provider</span> <span class="o">+</span> <span class="s2">&quot;____&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_user_id</span></div>
+
+<div class="viewcode-block" id="AuthenticationInfo.check_password"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.AuthenticationInfo.check_password">[docs]</a>  <span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain_password</span><span class="p">):</span>
+    <span class="c1"># Check hased password. Useing bcrypt, the salt is saved into the hash itself</span>
+    <span class="kn">import</span> <span class="nn">bcrypt</span>
+    <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">checkpw</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_secret_bcrypt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AuthenticationInfo.set_password"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.AuthenticationInfo.set_password">[docs]</a>  <span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain_password</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">bcrypt</span>
+    <span class="c1">#   (Using bcrypt, the salt is saved into the hash itself)</span>
+    <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">hashpw</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">gensalt</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="AuthenticationInfo.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.AuthenticationInfo.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_secret_hashed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">AuthenticationInfo</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">auth_user_id</span> <span class="o">=</span> <span class="n">auth_user_id</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">auth_provider</span> <span class="o">=</span> <span class="n">auth_provider</span>
+    <span class="k">if</span> <span class="n">auth_secret_hashed</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">auth_secret_hashed</span> <span class="o">=</span> <span class="n">auth_secret_hashed</span>
+    <span class="k">return</span> <span class="n">obj</span></div></div>
+
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Represents a user of our service.&quot;&quot;&quot;</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
+    <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;user_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;human&quot;</span><span class="p">,</span> <span class="s2">&quot;bot&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;authentication_infos&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">AuthenticationInfo</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">UserPermission</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+
+<div class="viewcode-block" id="User.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.User.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_provider</span><span class="p">,</span> <span class="n">user_type</span><span class="p">,</span> <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">permissions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">authentication_infos</span> <span class="o">=</span> <span class="p">[</span><span class="n">AuthenticationInfo</span><span class="o">.</span><span class="n">from_details</span><span class="p">(</span><span class="n">auth_provider</span><span class="o">=</span><span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="o">=</span><span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="n">auth_secret_hashed</span><span class="p">)]</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="n">nickname</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">user_type</span> <span class="o">=</span> <span class="n">user_type</span>
+    <span class="k">if</span> <span class="n">permissions</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">permissions</span> <span class="o">=</span> <span class="n">permissions</span>
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+<div class="viewcode-block" id="User.check_permission"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.User.check_permission">[docs]</a>  <span class="k">def</span> <span class="nf">check_permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot;Emulate python-3.4 re.fullmatch().&quot;&quot;&quot;</span>
+      <span class="kn">import</span> <span class="nn">re</span>
+      <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;(?:&quot;</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;)\Z&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">permission</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">permissions</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permission</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">service</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">permitted_action</span> <span class="ow">in</span> <span class="n">permission</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permitted_action</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">action</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="User.get_user_ids"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.users.User.get_user_ids">[docs]</a>  <span class="k">def</span> <span class="nf">get_user_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">auth_info</span><span class="o">.</span><span class="n">get_user_id</span><span class="p">()</span> <span class="k">for</span> <span class="n">auth_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authentication_infos</span><span class="p">]</span></div></div>
+
+
+<span class="c1"># Essential for depickling to work.</span>
+<span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_class_index</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">sanskrit_data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, sanskrit-programmers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
