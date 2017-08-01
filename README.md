@@ -26,9 +26,7 @@ Together with this, it provides python classes (corresponding to the schema) and
 * [Web](https://pypi.python.org/pypi/sanskrit_data).
 
 ## Usage
-- The sanskrit_data.schema module contains various python files describing various Python classes for storing Sanskrit data, and their corresponding schema.
-  - At the base of every such class is the common.JsonObject class.
-- Just pick the most suitable class to store your data (or contribute it here).
+- Please see the generated python sphynx docs under docs/_build/html/index.html ([project page](https://sanskrit-coders.github.io/sanskrit_data/_build/html/index.html), currently not working) .
 - Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
 
 # For contributors

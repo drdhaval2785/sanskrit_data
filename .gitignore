@@ -1,5 +1,5 @@
 # general things to ignore
-build/
+/build/
 dist/
 tests/server_config_local.json
 *.egg-info/
