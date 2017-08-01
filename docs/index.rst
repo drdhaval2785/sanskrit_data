@@ -46,7 +46,7 @@ sanskrit_data.schema
     :undoc-members:
     :show-inheritance:
 
-# sanskrit_data.db
+sanskrit_data.db
 ====================
 .. automodule:: sanskrit_data.db
     :members:
