@@ -6,11 +6,24 @@
 Welcome to sanskrit_data's documentation!
 =========================================
 
+.. automodule:: sanskrit_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: sanskrit_data.schema
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: sanskrit_data.db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
    :caption: Contents:
-
-
 
 Indices and tables
 ==================
