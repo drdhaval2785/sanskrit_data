@@ -71,6 +71,7 @@ class Collection(DbInterface):
     else:
       filter = doc
     updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True, return_document=ReturnDocument.AFTER)
+    updated_doc["_id"] = str(updated_doc["_id"])
     return updated_doc
 
   def delete_doc(self, doc_id):
