@@ -1,9 +1,12 @@
 # Introduction
 This module defines:
-  - shared standard schema for communicating and storing Sanskrit data.
-  - various idiosyncratic notations used by various modules which deviate from the proposed standards.
+  - **schema**
+    - shared standard schema for communicating and storing Sanskrit data of various types.
+    - various idiosyncratic notations used by various modules which deviate from the proposed standards.
+  - **python classes** (corresponding to the schema) and **shared libraries** for validating, (de-)serializing and storing sanskrit data of various types.
+  - a **common database interface** for accessing various databases (so that a downstream app can switch to a different database with a single line change).
 
-Together with this, it provides python classes (corresponding to the schema) and shared libraries for validating, (de-)serializing and storing sanskrit data. Similar libraries in various other languages are being built:
+Similar libraries in various other languages are being built:
   - Scala (likely compatible with Java): [db-interface](https://github.com/sanskrit-coders/db-interface) .
 
 ## Motivation
@@ -26,11 +29,6 @@ Together with this, it provides python classes (corresponding to the schema) and
 * [Web](https://pypi.python.org/pypi/sanskrit_data).
 
 ## Usage
-- Highlights:
-  - sanskrit_data.schema contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.
-    - At the base of every such class is the common.JsonObject class.
-    - Just pick the most suitable class to store your data (or contribute it here).
-  - sanskrit_data.db package aims to achieve database neutrality - we abstract database-client operations and database operations using interfaces so as to enable one to easily switch the database one uses.
 - Please see the generated python sphynx docs in one of the following places:
    - http://sanskrit-data.readthedocs.io - currently broken due to BUILD errors - see [bug](https://github.com/rtfd/readthedocs.org/issues/3021) .
    - under docs/_build/html/index.html
