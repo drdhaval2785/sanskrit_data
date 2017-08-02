@@ -97,7 +97,8 @@ class BookPortion(JsonObjectWithTarget):
     book_portion.title = title
     book_portion.authors = authors
     # logging.debug(str(book_portion))
-    book_portion.path = path
+    if path:
+      book_portion.path = path
 
     targets = targets or []
     logging.debug(str(book_portion))

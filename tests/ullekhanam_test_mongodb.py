@@ -21,25 +21,12 @@ class TestDBRoundTrip(unittest.TestCase):
     tests.set_configuration()
     from sanskrit_data.db import mongodb
     self.server = mongodb.Client(url=tests.server_config["mongo_host"])
-    self.test_db = mongodb.Collection(some_collection=self.server.get_database(db_name = "test_db"))
+    self.test_db = mongodb.Collection(some_collection=self.server.get_database(db_name = self.TEST_DB_NAME))
 
   def tearDown(self):
+    pass
     self.server.delete_database(self.TEST_DB_NAME)
-
-  def add_book(self):
-    from sanskrit_data.schema.books import BookPortion, BookPositionTarget
-    db = self.test_db
-    book_portion = BookPortion.from_details(
-      title="halAyudhakoshaH", authors=["halAyudhaH"], path="myrepo/halAyudha", portion_class="book")
-    book_portion = book_portion.update_collection(db)
-
-    book_portion_1 = BookPortion.from_details(
-      title="halAyudhakoshaH_pg1", targets=[BookPositionTarget.fromDetails(container_id=book_portion._id)])
-    book_portion_1.update_collection(db)
-
-    book_portion_2 = BookPortion.from_details(
-      title="halAyudhakoshaH_pg2", targets=[BookPositionTarget.fromDetails(container_id=book_portion._id)])
-    book_portion_2.update_collection(db)
+    logging.info("deleting " + self.TEST_DB_NAME)
 
   # We deliberately don't use find_one_and_update below - as a test.
   def test_BookPortion(self):
@@ -167,8 +154,23 @@ class TestDBRoundTrip(unittest.TestCase):
     logging.debug(sandhi_annotation_rAmoavigrahavAn.to_json_map())
 
   def test_JsonObjectNode(self):
-    self.add_book()
-    book = common.JsonObject.make_from_dict(self.test_db.find_one(filter={"path": "myrepo/halAyudha"}))
+    def add_book():
+      from sanskrit_data.schema.books import BookPortion, BookPositionTarget
+      db = self.test_db
+      book_portion = BookPortion.from_details(
+        title="something", path="myrepo/something", portion_class="book")
+      book_portion = book_portion.update_collection(db)
+
+      book_portion_1 = BookPortion.from_details(
+        title="something_pg1", targets=[BookPositionTarget.from_details(container_id=book_portion._id)])
+      book_portion_1.update_collection(db)
+
+      book_portion_2 = BookPortion.from_details(
+        title="something_pg2", targets=[BookPositionTarget.from_details(container_id=book_portion._id)])
+      book_portion_2.update_collection(db)
+
+    add_book()
+    book = common.JsonObject.make_from_dict(self.test_db.find_one(filter={"path": "myrepo/something"}))
     logging.debug(str(book))
     json_node = common.JsonObjectNode.from_details(content=book)
     json_node.fill_descendents(db_interface=self.test_db)
