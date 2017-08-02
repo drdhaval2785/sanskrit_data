@@ -13,7 +13,7 @@ class Client(ClientInterface):
   def __init__(self, url):
     try:
       from pymongo import MongoClient
-      return MongoClient(host=url)
+      self.client = MongoClient(host=url)
     except Exception as e:
       logging.error("Error initializing MongoDB database; aborting.")
       raise e
