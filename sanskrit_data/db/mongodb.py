@@ -84,7 +84,8 @@ class Collection(DbInterface):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
 
 def _fix_id(doc):
-  doc["_id"] = str(doc["_id"])
+  if doc != None and "_id" in doc:
+    doc["_id"] = str(doc["_id"])
 
 def _fix_id_filter(filter):
   if "_id" in filter:
