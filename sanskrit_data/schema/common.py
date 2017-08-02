@@ -368,7 +368,7 @@ class JsonObjectWithTarget(JsonObject):
     }
     if entity_type:
       filter[TYPE_FIELD] = entity_type
-    targetting_objs = [JsonObject.make_from_dict(item) for item in self.mongo_collection.find(filter)]
+    targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(filter)]
     return targetting_objs
 
 class JsonObjectNode(JsonObject):
