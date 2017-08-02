@@ -89,7 +89,7 @@ class BookPortion(JsonObjectWithTarget):
     return [BookPortion]
 
   @classmethod
-  def from_details(cls, path, title, authors=None, targets=None, base_data = None,
+  def from_details(cls, title, path=None, authors=None, targets=None, base_data = None,
                    curated_content=None, portion_class=None):
     if authors is None:
       authors = []
