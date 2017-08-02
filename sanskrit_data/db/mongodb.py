@@ -67,7 +67,7 @@ class Collection(DbInterface):
     results = self.mongo_collection.find(filter)
     for result in results:
       _fix_id(doc=result)
-    return results
+      yield result
 
   def update_doc(self, doc):
     from pymongo import ReturnDocument
