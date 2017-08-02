@@ -55,13 +55,19 @@ class Collection(DbInterface):
     self.mongo_collection = some_collection
 
   def find_by_id(self, id):
-    return self.mongo_collection.find_one({"_id": ObjectId(id)})
+    return self.find_one(filter={"_id": id})
 
   def find_one(self, filter):
-    return self.mongo_collection.find_one(filter=filter)
+    _fix_id_filter(filter=filter)
+    result = self.mongo_collection.find_one(filter=filter)
+    _fix_id(doc=result)
+    return result
 
   def find(self, filter):
-    return self.mongo_collection.find(filter)
+    results = self.mongo_collection.find(filter)
+    for result in results:
+      _fix_id(doc=result)
+    return results
 
   def update_doc(self, doc):
     from pymongo import ReturnDocument
@@ -71,8 +77,15 @@ class Collection(DbInterface):
     else:
       filter = doc
     updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True, return_document=ReturnDocument.AFTER)
-    updated_doc["_id"] = str(updated_doc["_id"])
+    _fix_id(doc=updated_doc)
     return updated_doc
 
   def delete_doc(self, doc_id):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
+
+def _fix_id(doc):
+  doc["_id"] = str(doc["_id"])
+
+def _fix_id_filter(filter):
+  if "_id" in filter:
+    filter["_id"] = ObjectId(filter["_id"])
