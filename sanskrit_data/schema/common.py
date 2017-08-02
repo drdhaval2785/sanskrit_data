@@ -241,11 +241,12 @@ class JsonObject(object):
     return db_interface.delete_doc(self._id)
 
   def validate(self, db_interface=None):
-    """
+    """Validate the JSON serialization of this object using the schema member.
     
     :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).
-    This value may not be availabe: for example when called from the from_details methods.
-    :return: 
+      This value may not be available: for example when called from the from_details methods.
+
+    :return: a boolean.
     """
     self.validate_schema()
 

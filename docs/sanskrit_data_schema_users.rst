@@ -1,5 +1,5 @@
 sanskrit_data.schema.users
-====================
+========================================
 
 
 .. automodule:: sanskrit_data.schema.users

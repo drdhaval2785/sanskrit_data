@@ -283,11 +283,12 @@
     <span class="k">return</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="JsonObject.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Validate the JSON serialization of this object using the schema member.</span>
 <span class="sd">    </span>
 <span class="sd">    :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).</span>
-<span class="sd">    This value may not be availabe: for example when called from the from_details methods.</span>
-<span class="sd">    :return: </span>
+<span class="sd">      This value may not be available: for example when called from the from_details methods.</span>
+
+<span class="sd">    :return: a boolean.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_schema</span><span class="p">()</span></div>
 
@@ -410,7 +411,7 @@
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">entity_type</span><span class="p">:</span>
       <span class="nb">filter</span><span class="p">[</span><span class="n">TYPE_FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">entity_type</span>
-    <span class="n">targetting_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mongo_collection</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">filter</span><span class="p">)]</span>
+    <span class="n">targetting_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">filter</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">targetting_objs</span></div></div>
 
 <div class="viewcode-block" id="JsonObjectNode"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectNode</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>

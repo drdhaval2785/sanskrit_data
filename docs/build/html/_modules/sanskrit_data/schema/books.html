@@ -131,7 +131,7 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="BookPortion.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                    <span class="n">curated_content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">portion_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
@@ -139,7 +139,8 @@
     <span class="n">book_portion</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
     <span class="n">book_portion</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
     <span class="c1"># logging.debug(str(book_portion))</span>
-    <span class="n">book_portion</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+      <span class="n">book_portion</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
 
     <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span> <span class="ow">or</span> <span class="p">[]</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">book_portion</span><span class="p">))</span>

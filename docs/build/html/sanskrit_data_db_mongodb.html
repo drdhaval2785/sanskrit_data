@@ -41,9 +41,43 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sanskrit-data-db-mongodb">
-<h1>sanskrit_data.db.mongodb<a class="headerlink" href="#sanskrit-data-db-mongodb" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-sanskrit_data.db.mongodb"></span><dl class="class">
+  <div class="section" id="module-sanskrit_data.db.mongodb">
+<span id="sanskrit-data-db-mongodb"></span><h1>sanskrit_data.db.mongodb<a class="headerlink" href="#module-sanskrit_data.db.mongodb" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sanskrit_data.db.mongodb.Client">
+<em class="property">class </em><code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sanskrit_data.db.mongodb.Client.delete_database">
+<code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.delete_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a collection, does not bother with the database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.mongodb.Client.get_database">
+<code class="descname">get_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.get_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.get_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a collection within a database.</p>
+<p>&#64;:param db_name: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
+&#64;:returns A collection within a database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.mongodb.Client.get_db_collection_names">
+<code class="descname">get_db_collection_names</code><span class="sig-paren">(</span><em>db_collection_string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.get_db_collection_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.get_db_collection_names" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db_collection_string</strong> – A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An object with db and collection names.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sanskrit_data.db.mongodb.Collection">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">Collection</code><span class="sig-paren">(</span><em>some_collection</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
@@ -72,11 +106,6 @@
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="function">
-<dt id="sanskrit_data.db.mongodb.get_mongo_client">
-<code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">get_mongo_client</code><span class="sig-paren">(</span><em>host</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#get_mongo_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.get_mongo_client" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 

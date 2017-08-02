@@ -41,9 +41,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sanskrit-data-schema-common">
-<h1>sanskrit_data.schema.common<a class="headerlink" href="#sanskrit-data-schema-common" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-sanskrit_data.schema.common"></span><dl class="class">
+  <div class="section" id="module-sanskrit_data.schema.common">
+<span id="sanskrit-data-schema-common"></span><h1>sanskrit_data.schema.common<a class="headerlink" href="#module-sanskrit_data.schema.common" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObject">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObject</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
@@ -154,16 +154,18 @@ Many functions accept such json maps, just as they accept strings.</p>
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObject.validate">
 <code class="descname">validate</code><span class="sig-paren">(</span><em>db_interface=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject.validate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Validate the JSON serialization of this object using the schema member.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db_interface</strong> – Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db_interface</strong> – Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).
+This value may not be available: for example when called from the from_details methods.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a boolean.</td>
 </tr>
 </tbody>
 </table>
-<p>This value may not be availabe: for example when called from the from_details methods.
-:return:</p>
 </dd></dl>
 
 <dl class="method">
@@ -342,6 +344,9 @@ Many functions accept such json maps, just as they accept strings.</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#intro">Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#data-design">Data design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#python-data-containers-and-utilities">Python data containers and utilities</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">sanskrit_data.schema.common</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
