@@ -52,7 +52,7 @@
   <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(asctime)s</span><span class="s2"> {</span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)d</span><span class="s2">}: </span><span class="si">%(message)s</span><span class="s2"> &quot;</span>
 <span class="p">)</span>
 
-<div class="viewcode-block" id="strip_revision"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.strip_revision">[docs]</a><span class="k">def</span> <span class="nf">strip_revision</span><span class="p">(</span><span class="n">doc_map</span><span class="p">):</span>
+<div class="viewcode-block" id="strip_revision"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.strip_revision">[docs]</a><span class="k">def</span> <span class="nf">strip_revision</span><span class="p">(</span><span class="n">doc_map</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  </span>
 <span class="sd">  :param doc_map: </span>
@@ -61,7 +61,7 @@
   <span class="n">doc_map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;_rev&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">doc_map</span></div>
 
-<div class="viewcode-block" id="CloudantApiClient"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CloudantApiClient">[docs]</a><span class="k">class</span> <span class="nc">CloudantApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiClient"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CloudantApiClient">[docs]</a><span class="k">class</span> <span class="nc">CloudantApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="c1"># logging.debug(url)</span>
     <span class="kn">import</span> <span class="nn">yurl</span>
@@ -73,24 +73,24 @@
     <span class="c1"># logging.debug(self.client)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CloudantApiClient.get_database"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CloudantApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiClient.get_database"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CloudantApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">db</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">db</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CloudantApiClient.delete_database"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CloudantApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiClient.delete_database"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CloudantApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="CloudantApiDatabase"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CloudantApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CloudantApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiDatabase"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CloudantApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CloudantApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing db :&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
 
-<div class="viewcode-block" id="CloudantApiDatabase.update_doc"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc">[docs]</a>  <span class="k">def</span> <span class="nf">update_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiDatabase.update_doc"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc">[docs]</a>  <span class="k">def</span> <span class="nf">update_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">CouchdbApiDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update_doc</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="n">doc</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="p">):</span>
       <span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">uuid4</span>
@@ -102,34 +102,34 @@
     <span class="k">return</span> <span class="n">doc</span></div></div>
 
 
-<div class="viewcode-block" id="CouchdbApiClient"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiClient">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiClient"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiClient">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">couchdb</span> <span class="k">import</span> <span class="n">Server</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">server_config</span><span class="p">[</span><span class="s2">&quot;couchdb_host&quot;</span><span class="p">])</span>
 
-<div class="viewcode-block" id="CouchdbApiClient.get_database"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiClient.get_database"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TEST_DB_NAME</span><span class="p">]</span>
     <span class="k">except</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TEST_DB_NAME</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CouchdbApiClient.delete_database"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiClient.delete_database"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">delete_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing db :&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.set_revision"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.set_revision">[docs]</a>  <span class="k">def</span> <span class="nf">set_revision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_map</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.set_revision"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.set_revision">[docs]</a>  <span class="k">def</span> <span class="nf">set_revision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_map</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">couchdb</span> <span class="k">import</span> <span class="n">ResourceNotFound</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="n">doc_map</span><span class="p">[</span><span class="s2">&quot;_rev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">doc_map</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">]][</span><span class="s2">&quot;_rev&quot;</span><span class="p">]</span>
     <span class="k">except</span> <span class="n">ResourceNotFound</span><span class="p">:</span>
       <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.update_doc"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.update_doc">[docs]</a>  <span class="k">def</span> <span class="nf">update_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.update_doc"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.update_doc">[docs]</a>  <span class="k">def</span> <span class="nf">update_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">CouchdbApiDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update_doc</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="n">doc</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="p">):</span>
       <span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">uuid4</span>
@@ -140,7 +140,7 @@
     <span class="k">assert</span> <span class="n">result_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">doc</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; vs &quot;</span> <span class="o">+</span> <span class="n">doc</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">doc</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.delete_doc"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc">[docs]</a>  <span class="k">def</span> <span class="nf">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.delete_doc"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc">[docs]</a>  <span class="k">def</span> <span class="nf">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">couchdb</span> <span class="k">import</span> <span class="n">ResourceNotFound</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="n">map_to_delete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span>
@@ -148,17 +148,17 @@
     <span class="k">except</span> <span class="n">ResourceNotFound</span><span class="p">:</span>
       <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.find_by_id"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_id">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.find_by_id"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_id">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">couchdb</span> <span class="k">import</span> <span class="n">ResourceNotFound</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">strip_revision</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="nb">id</span><span class="p">])</span>
     <span class="k">except</span> <span class="n">ResourceNotFound</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.find_by_indexed_key"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_indexed_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.find_by_indexed_key"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_indexed_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;not implemented&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.find"><a class="viewcode-back" href="../../../index.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.find"><a class="viewcode-back" href="../../../db.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="nb">filter</span><span class="p">):</span>
       <span class="k">yield</span> <span class="n">strip_revision</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">doc</span><span class="p">)</span></div></div>
 </pre></div>
@@ -168,7 +168,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../../index.html">sanskrit_data</a></h1>
+<h1 class="logo"><a href="../../../sanskrit_data.html">sanskrit_data</a></h1>
 
 
 
@@ -178,11 +178,15 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schema.html">sanskrit_data.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db.html">sanskrit_data.db</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../sanskrit_data.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
   </ul></li>
   </ul></li>

@@ -63,7 +63,7 @@
 <span class="n">json_class_index</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="update_json_class_index"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.update_json_class_index">[docs]</a><span class="k">def</span> <span class="nf">update_json_class_index</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
+<div class="viewcode-block" id="update_json_class_index"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.update_json_class_index">[docs]</a><span class="k">def</span> <span class="nf">update_json_class_index</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
   <span class="kn">import</span> <span class="nn">inspect</span>
   <span class="n">schemas</span> <span class="o">=</span> <span class="p">{}</span>
   <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
@@ -71,19 +71,19 @@
       <span class="n">json_class_index</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__module__</span></div>
 
 
-<div class="viewcode-block" id="check_class"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.check_class">[docs]</a><span class="k">def</span> <span class="nf">check_class</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
+<div class="viewcode-block" id="check_class"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.check_class">[docs]</a><span class="k">def</span> <span class="nf">check_class</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
   <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">some_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">some_type</span> <span class="ow">in</span> <span class="n">allowed_types</span><span class="p">]</span>
   <span class="c1"># logging.debug(results)</span>
   <span class="k">return</span> <span class="p">(</span><span class="kc">True</span> <span class="ow">in</span> <span class="n">results</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="check_list_item_types"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.check_list_item_types">[docs]</a><span class="k">def</span> <span class="nf">check_list_item_types</span><span class="p">(</span><span class="n">some_list</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
+<div class="viewcode-block" id="check_list_item_types"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.check_list_item_types">[docs]</a><span class="k">def</span> <span class="nf">check_list_item_types</span><span class="p">(</span><span class="n">some_list</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
   <span class="n">check_class_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">check_class</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="n">allowed_types</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">some_list</span><span class="p">]</span>
   <span class="c1"># logging.debug(check_class_results)</span>
   <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="kc">False</span> <span class="ow">in</span> <span class="n">check_class_results</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="recursively_merge"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.recursively_merge">[docs]</a><span class="k">def</span> <span class="nf">recursively_merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="recursively_merge"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.recursively_merge">[docs]</a><span class="k">def</span> <span class="nf">recursively_merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
   <span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; vs &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
 
   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -98,7 +98,7 @@
   <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="JsonObject"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject">[docs]</a><span class="k">class</span> <span class="nc">JsonObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject">[docs]</a><span class="k">class</span> <span class="nc">JsonObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -112,7 +112,7 @@
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type</span><span class="p">()</span>
 
-<div class="viewcode-block" id="JsonObject.make_from_dict"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.make_from_dict">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.make_from_dict"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.make_from_dict">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">make_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Defines *our* canonical way of constructing a JSON object from a dict.</span>
 <span class="sd">    </span>
@@ -149,16 +149,16 @@
     <span class="n">new_obj</span><span class="o">.</span><span class="n">set_type_recursively</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">new_obj</span></div>
 
-<div class="viewcode-block" id="JsonObject.make_from_dict_list"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.make_from_dict_list">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.make_from_dict_list"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.make_from_dict_list">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">make_from_dict_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_dict_list</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="o">=</span><span class="n">input_dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">input_dict</span> <span class="ow">in</span> <span class="n">input_dict_list</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="JsonObject.make_from_pickledstring"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.make_from_pickledstring">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.make_from_pickledstring"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.make_from_pickledstring">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">make_from_pickledstring</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pickle</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">pickle</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="JsonObject.read_from_file"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.read_from_file">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.read_from_file"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.read_from_file">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">read_from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fhandle</span><span class="p">:</span>
@@ -168,7 +168,7 @@
       <span class="k">raise</span> <span class="n">e</span>
       <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error reading &quot;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="JsonObject.dump_to_file"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.dump_to_file">[docs]</a>  <span class="k">def</span> <span class="nf">dump_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.dump_to_file"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.dump_to_file">[docs]</a>  <span class="k">def</span> <span class="nf">dump_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
@@ -176,24 +176,24 @@
       <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error writing &quot;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
       <span class="k">raise</span> <span class="n">e</span></div>
 
-<div class="viewcode-block" id="JsonObject.get_wire_typeid"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.get_wire_typeid">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.get_wire_typeid"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.get_wire_typeid">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_wire_typeid</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span></div>
 
-<div class="viewcode-block" id="JsonObject.get_jsonpickle_typeid"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.get_jsonpickle_typeid">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.get_jsonpickle_typeid"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.get_jsonpickle_typeid">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_jsonpickle_typeid</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span></div>
 
-<div class="viewcode-block" id="JsonObject.get_json_map_list"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.get_json_map_list">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.get_json_map_list"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.get_json_map_list">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_json_map_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">some_list</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">some_list</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="JsonObject.set_type"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.set_type">[docs]</a>  <span class="k">def</span> <span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.set_type"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.set_type">[docs]</a>  <span class="k">def</span> <span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="c1"># self.class_type = str(self.__class__.__name__)</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">get_wire_typeid</span><span class="p">())</span></div>
     <span class="c1"># setattr(self, TYPE_FIELD, self.__class__.__name__)</span>
 
-<div class="viewcode-block" id="JsonObject.set_type_recursively"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.set_type_recursively">[docs]</a>  <span class="k">def</span> <span class="nf">set_type_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.set_type_recursively"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.set_type_recursively">[docs]</a>  <span class="k">def</span> <span class="nf">set_type_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
@@ -203,7 +203,7 @@
           <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
             <span class="n">item</span><span class="o">.</span><span class="n">set_type_recursively</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JsonObject.set_jsonpickle_type_recursively"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.set_jsonpickle_type_recursively">[docs]</a>  <span class="k">def</span> <span class="nf">set_jsonpickle_type_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.set_jsonpickle_type_recursively"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.set_jsonpickle_type_recursively">[docs]</a>  <span class="k">def</span> <span class="nf">set_jsonpickle_type_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
@@ -216,7 +216,7 @@
   <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">())</span>
 
-<div class="viewcode-block" id="JsonObject.set_from_dict"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.set_from_dict">[docs]</a>  <span class="k">def</span> <span class="nf">set_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.set_from_dict"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.set_from_dict">[docs]</a>  <span class="k">def</span> <span class="nf">set_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dict</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">input_dict</span><span class="p">:</span>
       <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">input_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -226,10 +226,10 @@
         <span class="k">else</span><span class="p">:</span>
           <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObject.set_from_id"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.set_from_id">[docs]</a>  <span class="k">def</span> <span class="nf">set_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.set_from_id"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.set_from_id">[docs]</a>  <span class="k">def</span> <span class="nf">set_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_from_dict</span><span class="p">(</span><span class="n">db_interface</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="JsonObject.to_json_map"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.to_json_map">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.to_json_map"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.to_json_map">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;One convenient way of &#39;serializing&#39; the object.</span>
 <span class="sd">    </span>
 <span class="sd">    So, the type must be properly set.</span>
@@ -247,7 +247,7 @@
         <span class="n">jsonMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">return</span> <span class="n">jsonMap</span></div>
 
-<div class="viewcode-block" id="JsonObject.equals_ignore_id"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.equals_ignore_id">[docs]</a>  <span class="k">def</span> <span class="nf">equals_ignore_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.equals_ignore_id"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.equals_ignore_id">[docs]</a>  <span class="k">def</span> <span class="nf">equals_ignore_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
     <span class="c1"># Makes a unicode copy.</span>
     <span class="k">def</span> <span class="nf">to_unicode</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -269,7 +269,7 @@
     <span class="c1"># logging.debug(dict2)</span>
     <span class="k">return</span> <span class="n">dict1</span> <span class="o">==</span> <span class="n">dict2</span></div>
 
-<div class="viewcode-block" id="JsonObject.update_collection"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.update_collection"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type_recursively</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
@@ -278,11 +278,11 @@
     <span class="k">return</span> <span class="n">updated_obj</span></div>
 
   <span class="c1"># To delete referrent items also, use appropriate method in JsonObjectNode.</span>
-<div class="viewcode-block" id="JsonObject.delete_in_collection"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.delete_in_collection">[docs]</a>  <span class="k">def</span> <span class="nf">delete_in_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.delete_in_collection"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.delete_in_collection">[docs]</a>  <span class="k">def</span> <span class="nf">delete_in_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="p">),</span> <span class="s2">&quot;_id not present!&quot;</span>
     <span class="k">return</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObject.validate"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    </span>
 <span class="sd">    :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).</span>
@@ -292,7 +292,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_schema</span><span class="p">()</span></div>
 
   <span class="c1"># Override and call this method to add extra validations.</span>
-<div class="viewcode-block" id="JsonObject.validate_schema"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.validate_schema">[docs]</a>  <span class="k">def</span> <span class="nf">validate_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObject.validate_schema"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.validate_schema">[docs]</a>  <span class="k">def</span> <span class="nf">validate_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">json_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span>
     <span class="n">json_map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;_id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="c1"># logging.debug(str(self))</span>
@@ -309,7 +309,7 @@
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">json_map</span><span class="p">)</span>
       <span class="k">raise</span> <span class="n">e</span></div>
 
-<div class="viewcode-block" id="JsonObject.from_id"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObject.from_id">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObject.from_id"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObject.from_id">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns None if nothing is found.&quot;&quot;&quot;</span>
     <span class="n">item_dict</span> <span class="o">=</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
@@ -319,7 +319,7 @@
     <span class="k">return</span> <span class="n">item</span></div></div>
 
 
-<div class="viewcode-block" id="TargetValidationError"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.TargetValidationError">[docs]</a><span class="k">class</span> <span class="nc">TargetValidationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="TargetValidationError"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.TargetValidationError">[docs]</a><span class="k">class</span> <span class="nc">TargetValidationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">,</span> <span class="n">target_obj</span><span class="p">,</span> <span class="n">targetting_obj</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">allowed_types</span> <span class="o">=</span> <span class="n">allowed_types</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">target_obj</span> <span class="o">=</span> <span class="n">target_obj</span>
@@ -332,7 +332,7 @@
            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targetting_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allowed_types</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="Target"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.Target">[docs]</a><span class="k">class</span> <span class="nc">Target</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Target"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.Target">[docs]</a><span class="k">class</span> <span class="nc">Target</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -346,27 +346,27 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;container_id&quot;</span><span class="p">]</span>
   <span class="p">})</span>
 
-<div class="viewcode-block" id="Target.get_target_entity"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.Target.get_target_entity">[docs]</a>  <span class="k">def</span> <span class="nf">get_target_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="Target.get_target_entity"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.Target.get_target_entity">[docs]</a>  <span class="k">def</span> <span class="nf">get_target_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns null if db_interface doesnt have any such entity.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">from_id</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">container_id</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Target.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.Target.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Target.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.Target.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">Target</span><span class="p">()</span>
     <span class="n">target</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="n">container_id</span>
     <span class="n">target</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">target</span></div>
 
-<div class="viewcode-block" id="Target.from_ids"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.Target.from_ids">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Target.from_ids"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.Target.from_ids">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_ids</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_ids</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">Target</span><span class="o">.</span><span class="n">from_details</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">container_id</span><span class="p">))</span> <span class="k">for</span> <span class="n">container_id</span> <span class="ow">in</span> <span class="n">container_ids</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Target.from_containers"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.Target.from_containers">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Target.from_containers"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.Target.from_containers">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_containers</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Target</span><span class="o">.</span><span class="n">from_ids</span><span class="p">(</span><span class="n">container_ids</span><span class="o">=</span><span class="p">[</span><span class="n">container</span><span class="o">.</span><span class="n">_id</span> <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">containers</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="JsonObjectWithTarget"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectWithTarget">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectWithTarget</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectWithTarget"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectWithTarget">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectWithTarget</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;A JsonObject with a target field.&quot;&quot;&quot;</span>
 
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
@@ -383,24 +383,24 @@
 
   <span class="n">target_class</span> <span class="o">=</span> <span class="n">Target</span>
 
-<div class="viewcode-block" id="JsonObjectWithTarget.get_allowed_target_classes"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectWithTarget.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObjectWithTarget.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectWithTarget.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="JsonObjectWithTarget.validate_targets"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate_targets">[docs]</a>  <span class="k">def</span> <span class="nf">validate_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectWithTarget.validate_targets"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate_targets">[docs]</a>  <span class="k">def</span> <span class="nf">validate_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">targets</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">db_interface</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
         <span class="n">target_entity</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_target_entity</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_class</span><span class="p">(</span><span class="n">target_entity</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
           <span class="k">raise</span> <span class="n">TargetValidationError</span><span class="p">(</span><span class="n">allowed_types</span><span class="o">=</span><span class="n">allowed_types</span><span class="p">,</span> <span class="n">targetting_obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_obj</span><span class="o">=</span><span class="n">target_entity</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObjectWithTarget.validate"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectWithTarget.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_allowed_target_classes</span><span class="p">(),</span>
                             <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObjectWithTarget.get_targetting_entities"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectWithTarget.get_targetting_entities">[docs]</a>  <span class="k">def</span> <span class="nf">get_targetting_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="n">entity_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectWithTarget.get_targetting_entities"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectWithTarget.get_targetting_entities">[docs]</a>  <span class="k">def</span> <span class="nf">get_targetting_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="n">entity_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">filter</span> <span class="o">=</span> <span class="p">{</span>
       <span class="s2">&quot;targets&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;$elemMatch&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -413,7 +413,7 @@
     <span class="n">targetting_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mongo_collection</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">filter</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">targetting_objs</span></div></div>
 
-<div class="viewcode-block" id="JsonObjectNode"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectNode</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectNode"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectNode</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.&quot;&quot;&quot;</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
     <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
@@ -431,7 +431,7 @@
     <span class="p">}</span>
   <span class="p">)</span>
 
-<div class="viewcode-block" id="JsonObjectNode.validate"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectNode.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">JsonObjectNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
       <span class="k">if</span> <span class="ow">not</span> <span class="n">check_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">get_allowed_target_classes</span><span class="p">()):</span>
@@ -440,7 +440,7 @@
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
       <span class="n">child</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObjectNode.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="JsonObjectNode.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
@@ -453,7 +453,7 @@
     <span class="n">node</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">node</span></div>
 
-<div class="viewcode-block" id="JsonObjectNode.update_collection"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectNode.update_collection"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">update_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
@@ -463,14 +463,14 @@
       <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
       <span class="n">child</span><span class="o">.</span><span class="n">update_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObjectNode.delete_in_collection"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode.delete_in_collection">[docs]</a>  <span class="k">def</span> <span class="nf">delete_in_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectNode.delete_in_collection"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode.delete_in_collection">[docs]</a>  <span class="k">def</span> <span class="nf">delete_in_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fill_descendents</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
       <span class="n">child</span><span class="o">.</span><span class="n">delete_in_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="c1"># Delete or disconnect children before deleting oneself.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">delete_in_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JsonObjectNode.fill_descendents"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.JsonObjectNode.fill_descendents">[docs]</a>  <span class="k">def</span> <span class="nf">fill_descendents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="JsonObjectNode.fill_descendents"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.JsonObjectNode.fill_descendents">[docs]</a>  <span class="k">def</span> <span class="nf">fill_descendents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">targetting_objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">get_targetting_entities</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -480,7 +480,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="TextContent"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.TextContent">[docs]</a><span class="k">class</span> <span class="nc">TextContent</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="TextContent"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.TextContent">[docs]</a><span class="k">class</span> <span class="nc">TextContent</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -500,7 +500,7 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="TextContent.from_details"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.TextContent.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextContent.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.TextContent.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
     <span class="n">text_content</span> <span class="o">=</span> <span class="n">TextContent</span><span class="p">()</span>
     <span class="n">text_content</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
@@ -510,7 +510,7 @@
     <span class="k">return</span> <span class="n">text_content</span></div></div>
 
 
-<div class="viewcode-block" id="get_schemas"><a class="viewcode-back" href="../../../index.html#sanskrit_data.schema.common.get_schemas">[docs]</a><span class="k">def</span> <span class="nf">get_schemas</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
+<div class="viewcode-block" id="get_schemas"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.common.get_schemas">[docs]</a><span class="k">def</span> <span class="nf">get_schemas</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
   <span class="kn">import</span> <span class="nn">inspect</span>
   <span class="n">schemas</span> <span class="o">=</span> <span class="p">{}</span>
   <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
@@ -529,7 +529,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../../index.html">sanskrit_data</a></h1>
+<h1 class="logo"><a href="../../../sanskrit_data.html">sanskrit_data</a></h1>
 
 
 
@@ -539,11 +539,15 @@
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schema.html">sanskrit_data.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db.html">sanskrit_data.db</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../sanskrit_data.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
   </ul></li>
   </ul></li>

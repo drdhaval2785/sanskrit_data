@@ -34,7 +34,7 @@ Together with this, it provides python classes (corresponding to the schema) and
 - Please see the generated python sphynx docs in one of the following places:
    - http://sanskrit-data.readthedocs.io - currently broken due to BUILD errors - see [bug](https://github.com/rtfd/readthedocs.org/issues/3021) .
    - under docs/_build/html/index.html
-   - [project page](https://sanskrit-coders.github.io/sanskrit_data/_build/html/index.html), currently formatting is broken) .
+   - [project page](https://sanskrit-coders.github.io/sanskrit_data/build/html/sanskrit_data.html).
 - Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
 
 # For contributors
