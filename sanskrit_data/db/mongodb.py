@@ -27,10 +27,10 @@ class Client(ClientInterface):
     name_parts = db_collection_string.split(".")
     assert len(name_parts) > 0
     obj = object()
-    obj.db = name_parts[0]
+    setattr(obj, "db", name_parts[0])
     obj.collection = name_parts[0]
     if len(name_parts) == 2:
-      obj.collection = name_parts[1]
+      setattr(obj, "collection", name_parts[1])
     return obj
 
 
