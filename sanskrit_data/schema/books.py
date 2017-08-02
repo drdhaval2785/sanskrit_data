@@ -1,3 +1,15 @@
+"""
+Intro
+-----------
+
+Here we define data-containers to store books. Books are stored or represented as a tree of BookPortion objects - book
+containing many chapters containing many lines etc..
+
+-  JSON schema mindmap
+   `here <https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D>`__
+   (Updated as needed).
+
+"""
 import logging
 import sys
 

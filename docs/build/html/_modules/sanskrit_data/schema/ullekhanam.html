@@ -41,6 +41,23 @@
             
   <h1>Source code for sanskrit_data.schema.ullekhanam</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Intro</span>
+<span class="sd">-----------</span>
+
+<span class="sd">-  Annotations are stored in a directed acyclic graph, for example - a book portion having a</span>
+<span class="sd">  TextAnnotation having PadaAnnotations having SamaasaAnnotations.</span>
+
+<span class="sd">    -  Some Annotations (eg. SandhiAnnotation, TextAnnotation) can</span>
+<span class="sd">       have multiple &quot;targets&quot; (ie. other objects being annotated).</span>
+<span class="sd">    -  Rather than a simple tree, we end up with a Directed Acyclic</span>
+<span class="sd">       Graph (DAG) of Annotation objects.</span>
+
+<span class="sd">-  JSON schema mindmap</span>
+<span class="sd">   `here &lt;https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D&gt;`__</span>
+<span class="sd">   (Updated as needed).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 

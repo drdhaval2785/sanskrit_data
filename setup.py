@@ -27,7 +27,7 @@ setup(
   # Versions should comply with PEP440.  For a discussion on single-sourcing
   # the version across setup.py and the project code, see
   # https://packaging.python.org/en/latest/single_source_version.html
-  version='0.2.7',
+  version='0.2.9',
 
   description='Standard and idiosyncratic schemata for Sanskrit data, with a library of validation, (de-)serialization, a database interface and other utilities.',
   long_description=long_description,

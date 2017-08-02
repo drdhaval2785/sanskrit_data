@@ -43,16 +43,78 @@
             
   <div class="section" id="sanskrit-data-schema">
 <h1>sanskrit_data.schema<a class="headerlink" href="#sanskrit-data-schema" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-sanskrit_data.schema"></span><p>schema package contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.</p>
+<span class="target" id="module-sanskrit_data.schema"></span><div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>schema package contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.</p>
 <ul class="simple">
 <li>At the base of every such class is the common.JsonObject class.</li>
 <li>Just pick the most suitable class to store your data (or contribute it here).</li>
 </ul>
+</div>
+<div class="section" id="data-design">
+<h2>Data design<a class="headerlink" href="#data-design" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-principles">
+<h3>General principles<a class="headerlink" href="#general-principles" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>We want data to be stored and communicated between programs in a
+popular, extensible format - we want to take advantage of existing
+technologies to the maximum possible extant and not waste time
+reinventing associated (de)serialization, validation and other
+libraries.</li>
+<li>But this does not prevent the data from being presented in a
+different format for human consumption.</li>
+</ul>
+<p>While designing the JSON <strong>data-model</strong>:</p>
+<ul class="simple">
+<li>Type-hint in JSON should be jsonClass (a language-independent name
+we’ve picked).</li>
+<li>Try to avoid field-names which conflict with programming language
+keywords. (Eg. Prefer “source_type” to “type”).</li>
+<li>In general, use camelCase or underscore_case for field names - both
+are fine. Where romanized (potentially mixed case) sanskrit words are
+used, the latter is the superior convention.</li>
+<li>Where field names and values are to be automatically rendered into
+various scripts, as in case of sanskrit vyAkarana jargon (eg:
+vibhakti, lakAra), we prefer SLP1 transliteration (“viBakti”,
+“lakAra”).<ul>
+<li>PS: Convenient transliteration modules are available in various
+languages: please see them listed
+<a class="reference external" href="https://github.com/sanskrit-coders/indic-transliteration#libraries-in-other-languages">here</a>.</li>
+<li>A <a class="reference external" href="https://docs.google.com/spreadsheets/d/1o2vysXaXfNkFxCO-WD77C4AEbXcAcJmDVgUb-E0mYbg/edit#gid=0">transliteration
+map</a>
+for reference.</li>
+</ul>
+</li>
+<li>When in doubt, keep fields optional.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="python-data-containers-and-utilities">
+<h2>Python data containers and utilities<a class="headerlink" href="#python-data-containers-and-utilities" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>For each JSON schema, we have a python class, at the root of which
+there is the generic JsonObject class with a lot of utilities. We
+define a hierarchy of classes so as to share validation and other
+code specific to certain data classes.</li>
+<li><strong>Separate Database-specific elements through an interface</strong>. We
+should be able to easily switch to a different database.</li>
+</ul>
+<div class="section" id="books-and-annotations">
+<h3>Books and annotations<a class="headerlink" href="#books-and-annotations" title="Permalink to this headline">¶</a></h3>
+<p>Please refer to <a class="reference internal" href="sanskrit_data_schema_books.html#module-sanskrit_data.schema.books" title="sanskrit_data.schema.books"><code class="xref py py-mod docutils literal"><span class="pre">books</span></code></a> and <a class="reference internal" href="sanskrit_data_schema_ullekhanam.html#module-sanskrit_data.schema.ullekhanam" title="sanskrit_data.schema.ullekhanam"><code class="xref py py-mod docutils literal"><span class="pre">ullekhanam</span></code></a> .</p>
+</div>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_common.html">sanskrit_data.schema.common</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html#intro">Intro</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html#intro">Intro</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema_users.html">sanskrit_data.schema.users</a></li>
 </ul>
 </div>
@@ -76,6 +138,15 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sanskrit_data.schema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#intro">Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-design">Data design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-principles">General principles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-data-containers-and-utilities">Python data containers and utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#books-and-annotations">Books and annotations</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_common.html">sanskrit_data.schema.common</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
