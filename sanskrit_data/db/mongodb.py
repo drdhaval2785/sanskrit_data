@@ -26,11 +26,11 @@ class Client(ClientInterface):
     """
     name_parts = db_collection_string.split(".")
     assert len(name_parts) > 0
-    obj = object()
-    setattr(obj, "db", name_parts[0])
-    obj.collection = name_parts[0]
+    obj = {"db": name_parts[0],
+           "collection": name_parts[0],
+           }
     if len(name_parts) == 2:
-      setattr(obj, "collection", name_parts[1])
+      obj["collection"] = name_parts[1]
     return obj
 
 
@@ -41,12 +41,12 @@ class Client(ClientInterface):
     @:returns A collection within a database.
     """
     db_details = self.get_db_collection_names(db_collection_string=db_name)
-    return self.client[db_details.db][db_details.collection]
+    return self.client[db_details["db"]][db_details["collection"]]
 
   def delete_database(self, db_name):
     """Deletes a collection, does not bother with the database."""
     db_details = self.get_db_collection_names(db_collection_string=db_name)
-    self.client[db_details.db].drop_collection(db_details.collection)
+    self.client[db_details["db"]].drop_collection(db_details["collection"])
 
 
 class Collection(DbInterface):
