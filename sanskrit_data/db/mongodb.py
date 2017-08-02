@@ -72,7 +72,7 @@ class Collection(DbInterface):
   def update_doc(self, doc):
     from pymongo import ReturnDocument
     if "_id" in doc:
-      filter = {"_id": ObjectId(doc._id)}
+      filter = {"_id": ObjectId(doc["_id"])}
       doc.pop("_id", None)
     else:
       filter = doc
