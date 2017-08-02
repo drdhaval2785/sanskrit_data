@@ -1,10 +1,14 @@
-.. sanskrit_data documentation master file, created by
-   sphinx-quickstart on Mon Jul 31 16:48:33 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 sanskrit_data's documentation
 =========================================
+
+You'll find a concise introduction to this project in the project README.md file at our `github root <https://github.com/sanskrit-coders/sanskrit_data/>`_ .
+
+.. github_root: https://github.com/sanskrit-coders/sanskrit_data/
+
+.. automodule:: sanskrit_data
+  :members:
+  :undoc-members:
+  :show-inheritance:
 
 
 .. toctree::
@@ -12,12 +16,6 @@ sanskrit_data's documentation
 
   sanskrit_data_schema
   sanskrit_data_db
-
-.. automodule:: sanskrit_data
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
 
 Indices and tables
 ====================
