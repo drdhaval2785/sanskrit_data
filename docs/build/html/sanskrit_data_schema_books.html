@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sanskrit_data.schema.books &#8212; sanskrit_data 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sanskrit_data.schema.ullekhanam" href="sanskrit_data_schema_ullekhanam.html" />
+    <link rel="prev" title="sanskrit_data.schema.common" href="sanskrit_data_schema_common.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sanskrit-data-schema-books">
+<h1>sanskrit_data.schema.books<a class="headerlink" href="#sanskrit-data-schema-books" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-sanskrit_data.schema.books"></span><dl class="class">
+<dt id="sanskrit_data.schema.books.BookPortion">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.books.</code><code class="descname">BookPortion</code><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPortion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="sanskrit_data.schema.books.BookPortion.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>path</em>, <em>title</em>, <em>authors=None</em>, <em>targets=None</em>, <em>base_data=None</em>, <em>curated_content=None</em>, <em>portion_class=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPortion.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sanskrit_data.schema.books.BookPortion.from_path">
+<em class="property">classmethod </em><code class="descname">from_path</code><span class="sig-paren">(</span><em>path</em>, <em>db_interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPortion.from_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion.from_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sanskrit_data.schema.books.BookPortion.get_allowed_target_classes">
+<em class="property">classmethod </em><code class="descname">get_allowed_target_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPortion.get_allowed_target_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion.get_allowed_target_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.books.BookPortion.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'title': {'type': 'string'}, 'base_data': {'enum': ['image', 'text'], 'type': 'string'}, 'portion_class': {'type': 'string', 'description': 'book, part, chapter, verse, line etc..'}, 'authors': {'items': {'type': 'string'}, 'type': 'array'}, 'path': {'type': 'string'}, 'curated_content': {'required': ['text', 'jsonClass'], 'type': 'object', 'properties': {'text': {'type': 'string'}, 'encoding': {'type': 'string'}, 'language': {'type': 'string'}, 'jsonClass': {'enum': ['TextContent'], 'type': 'string'}}}, 'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'position': {'type': 'number', 'description': 'Any number describing the position of one BookPortion within another.'}, 'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['BookPositionTarget', 'Target'], 'type': 'string'}}, 'description': 'A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.'}, 'description': 'Target for BookPortion of which this BookPortion is a part. It is an array only for consistency. For any given BookPortion, one can get the right order of contained BookPortions by seeking all BookPortions referring to it in the targets list, and sorting them by their target position values.', 'maxLength': 1}, 'jsonClass': {'enum': ['BookPortion'], 'type': 'string'}}, 'description': 'A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.'}</em><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.books.BookPortion.target_class">
+<code class="descname">target_class</code><a class="headerlink" href="#sanskrit_data.schema.books.BookPortion.target_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sanskrit_data.schema.books.BookPositionTarget" title="sanskrit_data.schema.books.BookPositionTarget"><code class="xref py py-class docutils literal"><span class="pre">BookPositionTarget</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.schema.books.BookPositionTarget">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.books.</code><code class="descname">BookPositionTarget</code><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPositionTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPositionTarget" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="sanskrit_data.schema.books.BookPositionTarget.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>container_id=None</em>, <em>position=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/books.html#BookPositionTarget.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.books.BookPositionTarget.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.books.BookPositionTarget.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'position': {'type': 'number', 'description': 'Any number describing the position of one BookPortion within another.'}, 'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['BookPositionTarget', 'Target'], 'type': 'string'}}, 'description': 'A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.'}</em><a class="headerlink" href="#sanskrit_data.schema.books.BookPositionTarget.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="sanskrit_data.html">sanskrit_data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_common.html">sanskrit_data.schema.common</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sanskrit_data.schema.books</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_users.html">sanskrit_data.schema.users</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="sanskrit_data.html">Documentation overview</a><ul>
+  <li><a href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul>
+      <li>Previous: <a href="sanskrit_data_schema_common.html" title="previous chapter">sanskrit_data.schema.common</a></li>
+      <li>Next: <a href="sanskrit_data_schema_ullekhanam.html" title="next chapter">sanskrit_data.schema.ullekhanam</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, sanskrit-programmers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/sanskrit_data_schema_books.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

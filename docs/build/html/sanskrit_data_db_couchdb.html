@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sanskrit_data.db.couchdb &#8212; sanskrit_data 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sanskrit-data-db-couchdb">
+<h1>sanskrit_data.db.couchdb<a class="headerlink" href="#sanskrit-data-db-couchdb" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-sanskrit_data.db.couchdb"></span><dl class="class">
+<dt id="sanskrit_data.db.couchdb.CloudantApiClient">
+<em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CloudantApiClient</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiClient" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sanskrit_data.db.couchdb.CloudantApiClient.delete_database">
+<code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiClient.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiClient.delete_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CloudantApiClient.get_database">
+<code class="descname">get_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiClient.get_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiClient.get_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.db.couchdb.CloudantApiDatabase">
+<em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CloudantApiDatabase</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc">
+<code class="descname">update_doc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiDatabase.update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiClient">
+<em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CouchdbApiClient</code><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiClient" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">
+<code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiClient.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiClient.get_database">
+<code class="descname">get_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiClient.get_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiClient.get_database" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase">
+<em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CouchdbApiDatabase</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc">
+<code class="descname">delete_doc</code><span class="sig-paren">(</span><em>doc_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.delete_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.find">
+<code class="descname">find</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_id">
+<code class="descname">find_by_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.find_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key">
+<code class="descname">find_by_indexed_key</code><span class="sig-paren">(</span><em>index_name</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.find_by_indexed_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.set_revision">
+<code class="descname">set_revision</code><span class="sig-paren">(</span><em>doc_map</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.set_revision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.set_revision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.update_doc">
+<code class="descname">update_doc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.update_doc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sanskrit_data.db.couchdb.strip_revision">
+<code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">strip_revision</code><span class="sig-paren">(</span><em>doc_map</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#strip_revision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.strip_revision" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_map</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">doc_map itself without _rev</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="sanskrit_data.html">sanskrit_data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="sanskrit_data.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, sanskrit-programmers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/sanskrit_data_db_couchdb.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

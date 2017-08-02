@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sanskrit_data.schema.users &#8212; sanskrit_data 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sanskrit_data.db" href="sanskrit_data_db.html" />
+    <link rel="prev" title="sanskrit_data.schema.ullekhanam" href="sanskrit_data_schema_ullekhanam.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sanskrit-data-schema-users">
+<h1>sanskrit_data.schema.users<a class="headerlink" href="#sanskrit-data-schema-users" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-sanskrit_data.schema.users"></span><dl class="class">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.users.</code><code class="descname">AuthenticationInfo</code><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.VEDAVAAPI_AUTH">
+<code class="descname">VEDAVAAPI_AUTH</code><em class="property"> = 'vedavaapi'</em><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.VEDAVAAPI_AUTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.check_password">
+<code class="descname">check_password</code><span class="sig-paren">(</span><em>plain_password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.check_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.check_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>auth_user_id</em>, <em>auth_provider</em>, <em>auth_secret_hashed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.get_user_id">
+<code class="descname">get_user_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.get_user_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.get_user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_secret_bcrypt': {'type': 'string'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_user_id': {'type': 'string'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.set_password">
+<code class="descname">set_password</code><span class="sig-paren">(</span><em>plain_password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.set_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.set_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.schema.users.User">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.users.</code><code class="descname">User</code><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a user of our service.</p>
+<dl class="method">
+<dt id="sanskrit_data.schema.users.User.check_permission">
+<code class="descname">check_permission</code><span class="sig-paren">(</span><em>service</em>, <em>action</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.check_permission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.check_permission" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sanskrit_data.schema.users.User.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>nickname</em>, <em>auth_user_id</em>, <em>auth_provider</em>, <em>user_type</em>, <em>auth_secret_hashed=None</em>, <em>permissions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.User.get_user_ids">
+<code class="descname">get_user_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.get_user_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.get_user_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.users.User.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'enum': ['User'], 'type': 'string'}, 'user_type': {'enum': ['human', 'bot'], 'type': 'string'}, 'authentication_infos': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_user_id': {'type': 'string'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_secret_bcrypt': {'type': 'string'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}, 'type': 'array'}, 'permissions': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'service': {'enum': ['.*', 'ullekhanam'], 'type': 'string', 'description': 'Allowable values should be predetermined regular expressions.'}, 'actions': {'items': {'enum': ['read', 'write', 'admin'], 'type': 'string'}, 'type': 'array', 'description': 'Should be an enum in the future.'}, 'jsonClass': {'enum': ['UserPermission'], 'type': 'string'}}}, 'type': 'array'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.User.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sanskrit_data.schema.users.UserPermission">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.users.</code><code class="descname">UserPermission</code><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#UserPermission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.UserPermission" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="sanskrit_data.schema.users.UserPermission.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>service</em>, <em>actions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#UserPermission.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.UserPermission.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.users.UserPermission.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'actions': {'items': {'enum': ['read', 'write', 'admin'], 'type': 'string'}, 'type': 'array', 'description': 'Should be an enum in the future.'}, 'service': {'enum': ['.*', 'ullekhanam'], 'type': 'string', 'description': 'Allowable values should be predetermined regular expressions.'}, 'jsonClass': {'enum': ['UserPermission'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.UserPermission.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="sanskrit_data.html">sanskrit_data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_common.html">sanskrit_data.schema.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sanskrit_data.schema.users</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="sanskrit_data.html">Documentation overview</a><ul>
+  <li><a href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul>
+      <li>Previous: <a href="sanskrit_data_schema_ullekhanam.html" title="previous chapter">sanskrit_data.schema.ullekhanam</a></li>
+      <li>Next: <a href="sanskrit_data_db.html" title="next chapter">sanskrit_data.db</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, sanskrit-programmers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/sanskrit_data_schema_users.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

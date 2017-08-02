@@ -10,8 +10,8 @@ sanskrit_data's documentation
 .. toctree::
   :maxdepth: 5
 
-  schema
-  db
+  sanskrit_data_schema
+  sanskrit_data_db
 
 .. automodule:: sanskrit_data
   :members:

@@ -54,7 +54,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="AnnotationSource"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.AnnotationSource">[docs]</a><span class="k">class</span> <span class="nc">AnnotationSource</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="AnnotationSource"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.AnnotationSource">[docs]</a><span class="k">class</span> <span class="nc">AnnotationSource</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Source of the annotation which contains this node.&quot;</span><span class="p">,</span>
@@ -75,7 +75,7 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;source_type&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="AnnotationSource.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.AnnotationSource.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AnnotationSource.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.AnnotationSource.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="n">source</span> <span class="o">=</span> <span class="n">AnnotationSource</span><span class="p">()</span>
     <span class="n">source</span><span class="o">.</span><span class="n">source_type</span> <span class="o">=</span> <span class="n">source_type</span>
@@ -84,7 +84,7 @@
     <span class="k">return</span> <span class="n">source</span></div></div>
 
 
-<div class="viewcode-block" id="Annotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Annotation">[docs]</a><span class="k">class</span> <span class="nc">Annotation</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">):</span>
+<div class="viewcode-block" id="Annotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation">[docs]</a><span class="k">class</span> <span class="nc">Annotation</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -102,7 +102,7 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;targets&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="Annotation.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Annotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Annotation.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;user&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">source_type</span><span class="p">:</span>
       <span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">session</span>
       <span class="c1"># logging.debug(session.get(&#39;user&#39;, None))</span>
@@ -111,16 +111,16 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get_user_ids</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">Annotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Annotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Annotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Annotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">Annotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Annotation.set_base_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Annotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="Annotation.set_base_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span></div></div>
 
 
-<div class="viewcode-block" id="Rectangle"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Rectangle">[docs]</a><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Rectangle"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Rectangle">[docs]</a><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A rectangle within an image.&quot;</span><span class="p">,</span>
@@ -144,7 +144,7 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;y1&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="Rectangle.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.Rectangle.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Rectangle.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Rectangle.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">w</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
     <span class="n">rectangle</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">()</span>
     <span class="n">rectangle</span><span class="o">.</span><span class="n">x1</span> <span class="o">=</span> <span class="n">x</span>
@@ -176,7 +176,7 @@
         <span class="k">return</span> <span class="mi">1</span></div></div>
 
 
-<div class="viewcode-block" id="ImageTarget"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.ImageTarget">[docs]</a><span class="k">class</span> <span class="nc">ImageTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageTarget"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageTarget">[docs]</a><span class="k">class</span> <span class="nc">ImageTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Target</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The rectangle within the image being targetted.&quot;</span><span class="p">,</span>
@@ -190,7 +190,7 @@
   <span class="p">}))</span>
 
   <span class="c1"># TODO use w, h instead.</span>
-<div class="viewcode-block" id="ImageTarget.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.ImageTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ImageTarget.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="p">,</span> <span class="n">rectangle</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">ImageTarget</span><span class="p">()</span>
     <span class="n">target</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="n">container_id</span>
@@ -199,7 +199,7 @@
     <span class="k">return</span> <span class="n">target</span></div></div>
 
 
-<div class="viewcode-block" id="ImageAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.ImageAnnotation">[docs]</a><span class="k">class</span> <span class="nc">ImageAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageAnnotation">[docs]</a><span class="k">class</span> <span class="nc">ImageAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A rectangle within an image, picked by a particular annotation source.&quot;</span><span class="p">,</span>
@@ -216,11 +216,11 @@
 
   <span class="n">target_class</span> <span class="o">=</span> <span class="n">ImageTarget</span>
 
-<div class="viewcode-block" id="ImageAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.ImageAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ImageAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">ImageAnnotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ImageAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.ImageAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ImageAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">ImageAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
@@ -229,7 +229,7 @@
 
 
 <span class="c1"># Targets: ImageAnnotation(s) or  TextAnnotation or BookPortion</span>
-<div class="viewcode-block" id="TextAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TextAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="TextAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TextAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Annotation of some (sub)text from within the object (image or another text) being annotated.&quot;</span><span class="p">,</span>
@@ -242,11 +242,11 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="TextAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">ImageAnnotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TextAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">TextAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
@@ -255,17 +255,17 @@
     <span class="k">return</span> <span class="n">annotation</span></div></div>
 
 
-<div class="viewcode-block" id="CommentAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.CommentAnnotation">[docs]</a><span class="k">class</span> <span class="nc">CommentAnnotation</span><span class="p">(</span><span class="n">TextAnnotation</span><span class="p">):</span>
+<div class="viewcode-block" id="CommentAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.CommentAnnotation">[docs]</a><span class="k">class</span> <span class="nc">CommentAnnotation</span><span class="p">(</span><span class="n">TextAnnotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">TextAnnotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A comment that can be associated with nearly any Annotation or BookPortion.&quot;</span><span class="p">,</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="CommentAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.CommentAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CommentAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.CommentAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">Annotation</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="TextOffsetAddress"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextOffsetAddress">[docs]</a><span class="k">class</span> <span class="nc">TextOffsetAddress</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="TextOffsetAddress"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextOffsetAddress">[docs]</a><span class="k">class</span> <span class="nc">TextOffsetAddress</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A way to specify a substring.&quot;</span><span class="p">,</span>
@@ -281,7 +281,7 @@
       <span class="p">}</span>
     <span class="p">}})</span>
 
-<div class="viewcode-block" id="TextOffsetAddress.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextOffsetAddress.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextOffsetAddress.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextOffsetAddress.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">TextOffsetAddress</span><span class="p">()</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
@@ -290,7 +290,7 @@
     <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
-<div class="viewcode-block" id="TextTarget"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextTarget">[docs]</a><span class="k">class</span> <span class="nc">TextTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
+<div class="viewcode-block" id="TextTarget"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextTarget">[docs]</a><span class="k">class</span> <span class="nc">TextTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Target</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A way to specify a particular substring within a string.&quot;</span><span class="p">,</span>
@@ -309,7 +309,7 @@
     <span class="p">},</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="TextTarget.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextTarget.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="p">,</span> <span class="n">shabda_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset_address</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">TextTarget</span><span class="p">()</span>
     <span class="n">target</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="n">container_id</span>
@@ -321,7 +321,7 @@
     <span class="k">return</span> <span class="n">target</span></div></div>
 
 
-<div class="viewcode-block" id="PadaAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.PadaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">PadaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="PadaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">PadaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A grammatical pada - subanta or tiNanta.&quot;</span><span class="p">,</span>
@@ -344,16 +344,16 @@
 
   <span class="n">target_class</span> <span class="o">=</span> <span class="n">TextTarget</span>
 
-<div class="viewcode-block" id="PadaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PadaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">TextAnnotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="PadaAnnotation.set_base_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<div class="viewcode-block" id="PadaAnnotation.set_base_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">word</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span></div>
 
-<div class="viewcode-block" id="PadaAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PadaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">PadaAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
@@ -362,7 +362,7 @@
 
 
 <span class="c1"># Targets: TextTarget pointing to TextAnnotation</span>
-<div class="viewcode-block" id="SubantaAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SubantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SubantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
+<div class="viewcode-block" id="SubantaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SubantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SubantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Anything ending with a sup affix. Includes avyaya-s.&quot;</span><span class="p">,</span>
@@ -385,7 +385,7 @@
     <span class="p">},</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="SubantaAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SubantaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SubantaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SubantaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">linga</span><span class="p">,</span> <span class="n">vibhakti</span><span class="p">,</span> <span class="n">vachana</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">SubantaAnnotation</span><span class="p">()</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
@@ -396,7 +396,7 @@
     <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
-<div class="viewcode-block" id="TinantaAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TinantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TinantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
+<div class="viewcode-block" id="TinantaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TinantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TinantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Anything ending with a tiN affix.&quot;</span><span class="p">,</span>
@@ -419,7 +419,7 @@
     <span class="p">},</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="TinantaAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TinantaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TinantaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TinantaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">lakAra</span><span class="p">,</span> <span class="n">puruSha</span><span class="p">,</span> <span class="n">vachana</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">TinantaAnnotation</span><span class="p">()</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
@@ -431,7 +431,7 @@
 
 
 <span class="c1"># Targets: a pair of textAnnotation or BookPortion objects</span>
-<div class="viewcode-block" id="TextSambandhaAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TextSambandhaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="TextSambandhaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TextSambandhaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Describes connection between two text portions. Such connection is directional (ie it connects words in a source sentence to words in a target sentence.)&quot;</span><span class="p">,</span>
@@ -459,19 +459,19 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;combined_string&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
   
-<div class="viewcode-block" id="TextSambandhaAnnotation.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TextSambandhaAnnotation.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">TextSambandhaAnnotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_text_padas</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">],</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_text_padas</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">],</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TextSambandhaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TextSambandhaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">TextAnnotation</span><span class="p">]</span></div></div>
 
 
 
 <span class="c1"># Targets: two or more PadaAnnotations</span>
-<div class="viewcode-block" id="SandhiAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SandhiAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="SandhiAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SandhiAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -488,11 +488,11 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;combined_string&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="SandhiAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SandhiAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SandhiAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SandhiAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">SandhiAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
@@ -503,7 +503,7 @@
 
 
 <span class="c1"># Targets: one PadaAnnotation (the samasta-pada)</span>
-<div class="viewcode-block" id="SamaasaAnnotation"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SamaasaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+<div class="viewcode-block" id="SamaasaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SamaasaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Target</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -521,15 +521,15 @@
     <span class="p">},</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="SamaasaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SamaasaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SamaasaAnnotation.validate"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SamaasaAnnotation.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">SamaasaAnnotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">component_padas</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">],</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SamaasaAnnotation.from_details"><a class="viewcode-back" href="../../../schema.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SamaasaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">SamaasaAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
@@ -560,8 +560,8 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../schema.html">sanskrit_data.schema</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../db.html">sanskrit_data.db</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sanskrit_data_schema.html">sanskrit_data.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sanskrit_data_db.html">sanskrit_data.db</a></li>
 </ul>
 
 <div class="relations">
