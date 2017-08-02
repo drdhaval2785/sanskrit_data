@@ -1,21 +1,53 @@
 import logging
 from bson import ObjectId
 
-from sanskrit_data.db import DbInterface
+from sanskrit_data.db import DbInterface, ClientInterface
 
 logging.basicConfig(
   level=logging.DEBUG,
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
 
-def get_mongo_client(host):
-  try:
-    from pymongo import MongoClient
-    return MongoClient(host=host)
-  except Exception as e:
-    print("Error initializing MongoDB database; aborting.", e)
-    import sys
-    sys.exit(1)
+
+class Client(ClientInterface):
+  def __init__(self, url):
+    try:
+      from pymongo import MongoClient
+      return MongoClient(host=url)
+    except Exception as e:
+      logging.error("Error initializing MongoDB database; aborting.")
+      raise e
+
+  def get_db_collection_names(self, db_collection_string):
+    """
+
+    :param db_collection_string: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
+    :return: An object with db and collection names.
+    """
+    name_parts = db_collection_string.split(".")
+    assert len(name_parts) > 0
+    obj = object()
+    obj.db = name_parts[0]
+    obj.collection = name_parts[0]
+    if len(name_parts) == 2:
+      obj.collection = name_parts[1]
+    return obj
+
+
+  def get_database(self, db_name):
+    """Returns a collection within a database.
+
+    @:param db_name: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
+    @:returns A collection within a database.
+    """
+    db_details = self.get_db_collection_names(db_collection_string=db_name)
+    return self.client[db_details.db][db_details.collection]
+
+  def delete_database(self, db_name):
+    """Deletes a collection, does not bother with the database."""
+    db_details = self.get_db_collection_names(db_collection_string=db_name)
+    self.client[db_details.db].drop_collection(db_details.collection)
+
 
 class Collection(DbInterface):
   def __init__(self, some_collection):

@@ -1,4 +1,4 @@
-Alert: PIP documentation could be badly formatted due to [this pypan bug](https://github.com/bebraw/pypandoc/issues/143) , please see https://github.com/sanskrit-coders/sanskrit_data/blob/master/README.md in the meantime.
+Alert: PIP documentation could be badly formatted due to [this pypan bug](https://github.com/jgm/pandoc/issues/3511) , please see https://github.com/sanskrit-coders/sanskrit_data/blob/master/README.md in the meantime.
 
 # Introduction
 This module defines:
