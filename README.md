@@ -1,13 +1,17 @@
+Alert: PIP documentation is badly formatted due to [this pypan bug](https://github.com/bebraw/pypandoc/issues/143) , please see https://github.com/sanskrit-coders/sanskrit_data/blob/master/README.md in the meantime.
+
 # Introduction
 This module defines:
-  - **schema**
-    - shared standard schema for communicating and storing Sanskrit data of various types.
-    - various idiosyncratic notations used by various modules which deviate from the proposed standards.
-  - **python classes** (corresponding to the schema) and **shared libraries** for validating, (de-)serializing and storing sanskrit data of various types.
-  - a **common database interface** for accessing various databases (so that a downstream app can switch to a different database with a single line change).
+
+- **schema**
+  - shared standard schema for communicating and storing Sanskrit data of various types.
+  - various idiosyncratic notations used by various modules which deviate from the proposed standards.
+- **python classes** (corresponding to the schema) and **shared libraries** for validating, (de-)serializing and storing sanskrit data of various types.
+- a **common database interface** for accessing various databases (so that a downstream app can switch to a different database with a single line change).
 
 Similar libraries in various other languages are being built:
-  - Scala (likely compatible with Java): [db-interface](https://github.com/sanskrit-coders/db-interface) .
+
+- Scala (likely compatible with Java): [db-interface](https://github.com/sanskrit-coders/db-interface) .
 
 ## Motivation
 - Various sanskrit modules need to communicate data amongst each other (for example through a REST API or database stores or even function calls). **Examples of the data being communicated** could be:

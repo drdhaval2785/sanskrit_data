@@ -17,7 +17,6 @@ here = path.abspath(path.dirname(__file__))
 long_description = ''
 try:
   import pypandoc
-
   long_description = pypandoc.convert('README.md', 'rst')
 except (IOError, ImportError):
   long_description = ''
@@ -28,9 +27,9 @@ setup(
   # Versions should comply with PEP440.  For a discussion on single-sourcing
   # the version across setup.py and the project code, see
   # https://packaging.python.org/en/latest/single_source_version.html
-  version='0.2.0',
+  version='0.2.7',
 
-  description='Standard and idiosyncratic schemata for Sanskrit data, with a library of validation, (de-)serialization and other utilities.',
+  description='Standard and idiosyncratic schemata for Sanskrit data, with a library of validation, (de-)serialization, a database interface and other utilities.',
   long_description=long_description,
 
   # The project's main homepage.
