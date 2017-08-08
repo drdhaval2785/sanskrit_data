@@ -24,7 +24,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="sanskrit_data.schema" href="schema.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,13 +41,45 @@
             
   <div class="section" id="sanskrit-data-s-documentation">
 <h1>sanskrit_data’s documentation<a class="headerlink" href="#sanskrit-data-s-documentation" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-sanskrit_data"></span><p>You’ll find a concise introduction to the goals and motivations of this project in the README.md file at our <a class="reference external" href="https://github.com/sanskrit-coders/sanskrit_data/">github root</a> .</p>
+<p>Sub-modules in decreasing order of interest are:</p>
+<ul class="simple">
+<li>schema, where interesting Python classes (with corresponding json schema for [de]serialization) are provided.</li>
+<li>db, where a common interface for accessing various databases is provided.</li>
+</ul>
+<p>Please view the respective documentations for details.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="schema.html">sanskrit_data.schema</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db.html">sanskrit_data.db</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#intro">Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#data-design">Data design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema.html#general-principles">General principles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#python-data-containers-and-utilities">Python data containers and utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema.html#books-and-annotations">Books and annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_common.html">sanskrit_data.schema.common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema_books.html#intro">Intro</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html#intro">Intro</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_users.html">sanskrit_data.schema.users</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_db_mongodb.html">sanskrit_data.db.mongodb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_db_couchdb.html">sanskrit_data.db.couchdb</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<span class="target" id="module-sanskrit_data"></span></div>
+</div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
@@ -64,7 +95,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">sanskrit_data</a></h1>
+<h1 class="logo"><a href="sanskrit_data.html">sanskrit_data</a></h1>
 
 
 
@@ -75,15 +106,14 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="schema.html">sanskrit_data.schema</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db.html">sanskrit_data.db</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="schema.html" title="next chapter">sanskrit_data.schema</a></li>
+  <li><a href="sanskrit_data.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>

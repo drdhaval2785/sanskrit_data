@@ -52,4 +52,4 @@ twine upload dist/* --skip-existing
 
 ## Document generation
 - Sphynx html docs can be generated with `cd docs; make html`
-- http://sanskrit-data.readthedocs.io should automatically have good updated documentation - unless there are build errors.
+- http://sanskrit-data.readthedocs.io/en/latest/sanskrit_data.html should automatically have good updated documentation - unless there are build errors.

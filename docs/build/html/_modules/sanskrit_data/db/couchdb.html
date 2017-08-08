@@ -104,7 +104,13 @@
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
     <span class="n">result_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">result_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">doc</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; vs &quot;</span> <span class="o">+</span> <span class="n">doc</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">doc</span></div></div>
+    <span class="k">return</span> <span class="n">doc</span></div>
+
+<div class="viewcode-block" id="CloudantApiDatabase.delete_doc"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.delete_doc">[docs]</a>  <span class="k">def</span> <span class="nf">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CloudantApiDatabase.find"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+    <span class="k">pass</span></div></div>
 
 
 <div class="viewcode-block" id="CouchdbApiClient"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>

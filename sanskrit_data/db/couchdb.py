@@ -64,6 +64,12 @@ class CloudantApiDatabase(DbInterface):
     assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
     return doc
 
+  def delete_doc(self, doc_id):
+    return self.db[doc_id].delete()
+
+  def find(self, filter):
+    pass
+
 
 class CouchdbApiClient(ClientInterface):
   def __init__(self):
