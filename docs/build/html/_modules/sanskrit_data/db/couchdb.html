@@ -80,6 +80,9 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="CloudantApiClient.get_database_interface"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiClient.get_database_interface">[docs]</a>  <span class="k">def</span> <span class="nf">get_database_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">CloudantApiDatabase</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_database</span><span class="p">(</span><span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="CloudantApiClient.delete_database"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div></div>
 
@@ -112,6 +115,9 @@
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TEST_DB_NAME</span><span class="p">]</span>
     <span class="k">except</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TEST_DB_NAME</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CouchdbApiClient.get_database_interface"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient.get_database_interface">[docs]</a>  <span class="k">def</span> <span class="nf">get_database_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">CouchdbApiDatabase</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_database</span><span class="p">(</span><span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="CouchdbApiClient.delete_database"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">delete_database</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div></div>

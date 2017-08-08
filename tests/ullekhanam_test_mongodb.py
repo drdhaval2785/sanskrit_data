@@ -21,7 +21,7 @@ class TestDBRoundTrip(unittest.TestCase):
     tests.set_configuration()
     from sanskrit_data.db import mongodb
     self.server = mongodb.Client(url=tests.server_config["mongo_host"])
-    self.test_db = mongodb.Collection(some_collection=self.server.get_database(db_name = self.TEST_DB_NAME))
+    self.test_db = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
 
   def tearDown(self):
     pass

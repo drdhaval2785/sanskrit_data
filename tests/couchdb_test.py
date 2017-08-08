@@ -18,8 +18,7 @@ class TestDBRoundTrip(unittest.TestCase):
   def setUp(self):
     tests.set_configuration()
     self.server = CloudantApiClient(tests.server_config["couchdb_host"])
-    self.test_db_base = self.server.get_database(db_name=self.TEST_DB_NAME)
-    self.test_db = CloudantApiDatabase(db=self.test_db_base)
+    self.test_db = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
 
   def tearDown(self):
     self.server.delete_database(self.TEST_DB_NAME)

@@ -43,6 +43,9 @@ class Client(ClientInterface):
     db_details = self.get_db_collection_names(db_collection_string=db_name)
     return self.client[db_details["db"]][db_details["collection"]]
 
+  def get_database_interface(self, db_name):
+    return Collection(some_collection=self.get_database(db_name=db_name))
+
   def delete_database(self, db_name):
     """Deletes a collection, does not bother with the database."""
     db_details = self.get_db_collection_names(db_collection_string=db_name)

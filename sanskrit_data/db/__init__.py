@@ -5,18 +5,42 @@ This package aims to achieve database neutrality - we abstract database-client o
 __all__ = ["ClientInterface", "DbInterface", "couchdb", "mongodb"]
 
 class ClientInterface(object):
-  """A common interface to interface with a database server or system."""
+  """A common interface to a database server or system.
 
-  def get_database(self):
-    """Create or get a database, with which one can instantiate a suitable DbInterface subclass."""
+  Accessing databases through implementations of this interface enables one to switch databases more easily down the line.
+  """
+
+  def get_database(self, db_name):
+    """Create or get a database, with which one can instantiate a suitable DbInterface subclass.
+
+    While it is better to use :meth:`get_database_interface` generally, we expose this in order to support :class:`DbInterface` subclasses which may be defined outside this module.
+    :param str db_name: Name of the database which needs to be accessed (The database is created if it does not already exist).
+    :returns DbInterface db: A database interface implementation for accessing this database.
+    """
     pass
 
-  def delete_database(self):
-    """Delete a database, with which one can instantiate a suitable DbInterface subclass."""
+  def get_database_interface(self, db_name):
+    """Create or get a suitable :class:`DbInterface` subclass.
+
+    :param str db_name: Name of the database which needs to be accessed (The database is created if it does not already exist).
+    :returns DbInterface db: A database interface implementation for accessing this database.
+    """
+    pass
+
+  def delete_database(self, db_name):
+    """Delete a database, with which one can instantiate a suitable DbInterface subclass.
+
+    :param str db_name: Name of the database which needs to be deleted.
+    """
     pass
 
 
 class DbInterface(object):
+  """A common interface to a database.
+
+  Accessing databases through implementations of this interface enables one to switch databases more easily down the line.
+  """
+
   def update_doc(self, doc):
     """ Update or insert a JsonObject.
     

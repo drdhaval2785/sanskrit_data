@@ -38,6 +38,9 @@ class CloudantApiClient(ClientInterface):
     else:
       return self.client.create_database(db_name)
 
+  def get_database_interface(self, db_name):
+    return CloudantApiDatabase(db=self.get_database(db_name=db_name))
+
   def delete_database(self, db_name):
     self.client.delete_database(db_name)
 
@@ -70,6 +73,9 @@ class CouchdbApiClient(ClientInterface):
       return self.server[self.TEST_DB_NAME]
     except:
       return self.server.create(self.TEST_DB_NAME)
+
+  def get_database_interface(self, db_name):
+    return CouchdbApiDatabase(db=self.get_database(db_name=db_name))
 
   def delete_database(self, db_name):
     self.server.delete_database(db_name)
