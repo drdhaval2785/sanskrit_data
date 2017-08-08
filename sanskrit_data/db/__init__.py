@@ -2,14 +2,17 @@
 This package aims to achieve database neutrality - we abstract database-client operations and database operations using interfaces so as to enable one to easily switch the database one uses.
 """
 
-__all__ = ["couchdb", "mongodb"]
+__all__ = ["ClientInterface", "DbInterface", "couchdb", "mongodb"]
 
 class ClientInterface(object):
+  """A common interface to interface with a database server or system."""
+
   def get_database(self):
-    """Create or get a database."""
+    """Create or get a database, with which one can instantiate a suitable DbInterface subclass."""
     pass
 
   def delete_database(self):
+    """Delete a database, with which one can instantiate a suitable DbInterface subclass."""
     pass
 
 
@@ -17,7 +20,7 @@ class DbInterface(object):
   def update_doc(self, doc):
     """ Update or insert a JsonObject.
     
-    :param doc: A dict. _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
+    :param dict doc: _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
     :return: updated dict with _id set.
     """
     assert isinstance(doc, dict)

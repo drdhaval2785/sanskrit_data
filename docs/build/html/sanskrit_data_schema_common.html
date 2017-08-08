@@ -86,11 +86,23 @@
 <dt id="sanskrit_data.schema.common.JsonObject.make_from_dict">
 <em class="property">classmethod </em><code class="descname">make_from_dict</code><span class="sig-paren">(</span><em>input_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject.make_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject.make_from_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines <em>our</em> canonical way of constructing a JSON object from a dict.</p>
-<p>All other deserialization methods should use this.
-Note that this assumes that json_class_index is populated properly!
-from sanskrit_data.schema import * before using this should take care of it.
-:param input_dict: 
-:return:</p>
+<p>All other deserialization methods should use this.</p>
+<p>Note that this assumes that json_class_index is populated properly!</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">from</span> <span class="pre">sanskrit_data.schema</span> <span class="pre">import</span> <span class="pre">*</span></code> before using this should take care of it.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_dict</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A subclass of JsonObject</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">

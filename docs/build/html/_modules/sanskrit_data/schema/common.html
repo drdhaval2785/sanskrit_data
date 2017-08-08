@@ -117,10 +117,14 @@
     <span class="sd">&quot;&quot;&quot;Defines *our* canonical way of constructing a JSON object from a dict.</span>
 <span class="sd">    </span>
 <span class="sd">    All other deserialization methods should use this.</span>
+
 <span class="sd">    Note that this assumes that json_class_index is populated properly!</span>
-<span class="sd">    from sanskrit_data.schema import * before using this should take care of it.</span>
-<span class="sd">    :param input_dict: </span>
-<span class="sd">    :return: </span>
+
+<span class="sd">      - ``from sanskrit_data.schema import *`` before using this should take care of it.</span>
+
+<span class="sd">    :param input_dict:</span>
+
+<span class="sd">    :return: A subclass of JsonObject</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">input_dict</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span>

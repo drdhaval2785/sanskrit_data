@@ -75,10 +75,14 @@ class JsonObject(object):
     """Defines *our* canonical way of constructing a JSON object from a dict.
     
     All other deserialization methods should use this.
+
     Note that this assumes that json_class_index is populated properly!
-    from sanskrit_data.schema import * before using this should take care of it.
-    :param input_dict: 
-    :return: 
+
+      - ``from sanskrit_data.schema import *`` before using this should take care of it.
+
+    :param input_dict:
+
+    :return: A subclass of JsonObject
     """
     if input_dict == None:
       return None
