@@ -46,7 +46,8 @@
 <dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObject">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObject</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObject.delete_in_collection">
 <code class="descname">delete_in_collection</code><span class="sig-paren">(</span><em>db_interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject.delete_in_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject.delete_in_collection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -190,7 +191,8 @@ This value may not be available: for example when called from the from_details m
 <dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObjectNode">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObjectNode</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.</p>
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<p>Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.</p>
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.delete_in_collection">
 <code class="descname">delete_in_collection</code><span class="sig-paren">(</span><em>db_interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.delete_in_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.delete_in_collection" title="Permalink to this definition">¶</a></dt>
@@ -226,7 +228,8 @@ This value may not be available: for example when called from the from_details m
 <dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObjectWithTarget">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObjectWithTarget</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectWithTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectWithTarget" title="Permalink to this definition">¶</a></dt>
-<dd><p>A JsonObject with a target field.</p>
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<p>A JsonObject with a target field.</p>
 <dl class="classmethod">
 <dt id="sanskrit_data.schema.common.JsonObjectWithTarget.get_allowed_target_classes">
 <em class="property">classmethod </em><code class="descname">get_allowed_target_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectWithTarget.get_allowed_target_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectWithTarget.get_allowed_target_classes" title="Permalink to this definition">¶</a></dt>
@@ -263,7 +266,8 @@ This value may not be available: for example when called from the from_details m
 <dl class="class">
 <dt id="sanskrit_data.schema.common.Target">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">Target</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#Target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.Target" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.common.Target.from_containers">
 <em class="property">classmethod </em><code class="descname">from_containers</code><span class="sig-paren">(</span><em>containers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#Target.from_containers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.Target.from_containers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -294,12 +298,14 @@ This value may not be available: for example when called from the from_details m
 <dl class="exception">
 <dt id="sanskrit_data.schema.common.TargetValidationError">
 <em class="property">exception </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">TargetValidationError</code><span class="sig-paren">(</span><em>allowed_types</em>, <em>target_obj</em>, <em>targetting_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#TargetValidationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.TargetValidationError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/exceptions.html#exceptions.Exception" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="sanskrit_data.schema.common.TextContent">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">TextContent</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#TextContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.TextContent" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.common.TextContent.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>text</em>, <em>language='UNK'</em>, <em>encoding='UNK'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#TextContent.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.TextContent.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>

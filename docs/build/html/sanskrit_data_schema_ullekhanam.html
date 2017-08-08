@@ -45,11 +45,8 @@
 <span id="sanskrit-data-schema-ullekhanam"></span><h1>sanskrit_data.schema.ullekhanam<a class="headerlink" href="#module-sanskrit_data.schema.ullekhanam" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="intro">
 <h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Annotations are stored in a directed acyclic graph, for example - a book portion having a</li>
-</ul>
-<blockquote>
-<div><p>TextAnnotation having PadaAnnotations having SamaasaAnnotations.</p>
+<ul>
+<li><p class="first">Annotations are stored in a directed acyclic graph, for example - a book portion having a TextAnnotation having PadaAnnotations having SamaasaAnnotations.</p>
 <blockquote>
 <div><ul class="simple">
 <li>Some Annotations (eg. SandhiAnnotation, TextAnnotation) can
@@ -58,16 +55,17 @@ have multiple “targets” (ie. other objects being annotated).</li>
 Graph (DAG) of Annotation objects.</li>
 </ul>
 </div></blockquote>
-</div></blockquote>
-<ul class="simple">
-<li>JSON schema mindmap
+</li>
+<li><p class="first">JSON schema mindmap
 <a class="reference external" href="https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D">here</a>
-(Updated as needed).</li>
+(Updated as needed).</p>
+</li>
 </ul>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.Annotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">Annotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#Annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.Annotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectWithTarget" title="sanskrit_data.schema.common.JsonObjectWithTarget"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObjectWithTarget</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.Annotation.get_allowed_target_classes">
 <em class="property">classmethod </em><code class="descname">get_allowed_target_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#Annotation.get_allowed_target_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.Annotation.get_allowed_target_classes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -92,7 +90,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.AnnotationSource">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">AnnotationSource</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#AnnotationSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.AnnotationSource" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.AnnotationSource.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>source_type</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#AnnotationSource.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.AnnotationSource.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -107,7 +106,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.CommentAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">CommentAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#CommentAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.CommentAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.TextAnnotation" title="sanskrit_data.schema.ullekhanam.TextAnnotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.TextAnnotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.CommentAnnotation.get_allowed_target_classes">
 <em class="property">classmethod </em><code class="descname">get_allowed_target_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#CommentAnnotation.get_allowed_target_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.CommentAnnotation.get_allowed_target_classes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -122,7 +122,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.ImageAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">ImageAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#ImageAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.ImageAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.ImageAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#ImageAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.ImageAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -148,7 +149,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.ImageTarget">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">ImageTarget</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#ImageTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.ImageTarget" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.Target" title="sanskrit_data.schema.common.Target"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.Target</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.ImageTarget.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>container_id</em>, <em>rectangle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#ImageTarget.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.ImageTarget.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -163,7 +165,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.PadaAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">PadaAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#PadaAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.PadaAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.PadaAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>word</em>, <em>root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#PadaAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.PadaAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -194,7 +197,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.Rectangle">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">Rectangle</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#Rectangle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.Rectangle" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.Rectangle.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>x=-1</em>, <em>y=-1</em>, <em>w=-1</em>, <em>h=-1</em>, <em>score=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#Rectangle.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.Rectangle.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -209,7 +213,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.SamaasaAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">SamaasaAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SamaasaAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SamaasaAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.SamaasaAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>combined_string</em>, <em>type='UNK'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SamaasaAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -234,7 +239,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.SandhiAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">SandhiAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SandhiAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SandhiAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.SandhiAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>combined_string</em>, <em>type='UNK'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SandhiAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SandhiAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -254,7 +260,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.SubantaAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">SubantaAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SubantaAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SubantaAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.PadaAnnotation" title="sanskrit_data.schema.ullekhanam.PadaAnnotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.PadaAnnotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.SubantaAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>word</em>, <em>root</em>, <em>linga</em>, <em>vibhakti</em>, <em>vachana</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#SubantaAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.SubantaAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -269,7 +276,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.TextAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">TextAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.TextAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -289,7 +297,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.TextOffsetAddress">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">TextOffsetAddress</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextOffsetAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextOffsetAddress" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.TextOffsetAddress.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextOffsetAddress.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextOffsetAddress.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -304,7 +313,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">TextSambandhaAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextSambandhaAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.Annotation" title="sanskrit_data.schema.ullekhanam.Annotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.Annotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.get_allowed_target_classes">
 <em class="property">classmethod </em><code class="descname">get_allowed_target_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextSambandhaAnnotation.get_allowed_target_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.get_allowed_target_classes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -324,7 +334,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.TextTarget">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">TextTarget</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextTarget" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.Target" title="sanskrit_data.schema.common.Target"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.Target</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.TextTarget.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>container_id</em>, <em>shabda_id=None</em>, <em>offset_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TextTarget.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TextTarget.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -339,7 +350,8 @@ Graph (DAG) of Annotation objects.</li>
 <dl class="class">
 <dt id="sanskrit_data.schema.ullekhanam.TinantaAnnotation">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.ullekhanam.</code><code class="descname">TinantaAnnotation</code><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TinantaAnnotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TinantaAnnotation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="classmethod">
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.ullekhanam.PadaAnnotation" title="sanskrit_data.schema.ullekhanam.PadaAnnotation"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.ullekhanam.PadaAnnotation</span></code></a></p>
+<dl class="classmethod">
 <dt id="sanskrit_data.schema.ullekhanam.TinantaAnnotation.from_details">
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>targets</em>, <em>source</em>, <em>word</em>, <em>root</em>, <em>lakAra</em>, <em>puruSha</em>, <em>vachana</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/ullekhanam.html#TinantaAnnotation.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.ullekhanam.TinantaAnnotation.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>

@@ -40,7 +40,9 @@
           <div class="body" role="main">
             
   <h1>Source code for sanskrit_data.db.mongodb</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="sd">&quot;&quot;&quot;.. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">bson</span> <span class="k">import</span> <span class="n">ObjectId</span>
 
 <span class="kn">from</span> <span class="nn">sanskrit_data.db</span> <span class="k">import</span> <span class="n">DbInterface</span><span class="p">,</span> <span class="n">ClientInterface</span>
@@ -77,11 +79,6 @@
 
 
 <div class="viewcode-block" id="Client.get_database"><a class="viewcode-back" href="../../../sanskrit_data_db_mongodb.html#sanskrit_data.db.mongodb.Client.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns a collection within a database.</span>
-
-<span class="sd">    @:param db_name: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.</span>
-<span class="sd">    @:returns A collection within a database.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">db_details</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_db_collection_names</span><span class="p">(</span><span class="n">db_collection_string</span><span class="o">=</span><span class="n">db_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="n">db_details</span><span class="p">[</span><span class="s2">&quot;db&quot;</span><span class="p">]][</span><span class="n">db_details</span><span class="p">[</span><span class="s2">&quot;collection&quot;</span><span class="p">]]</span></div>
 

@@ -42,10 +42,15 @@
             
   <div class="section" id="module-sanskrit_data.db.couchdb">
 <span id="sanskrit-data-db-couchdb"></span><h1>sanskrit_data.db.couchdb<a class="headerlink" href="#module-sanskrit_data.db.couchdb" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For undocumented classes and methods, please see superclass documentation in <a class="reference internal" href="sanskrit_data_db.html#module-sanskrit_data.db" title="sanskrit_data.db"><code class="xref py py-mod docutils literal"><span class="pre">sanskrit_data.db</span></code></a>.</p>
+</div>
 <dl class="class">
 <dt id="sanskrit_data.db.couchdb.CloudantApiClient">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CloudantApiClient</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiClient" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.ClientInterface" title="sanskrit_data.db.ClientInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.ClientInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.couchdb.CloudantApiClient.delete_database">
 <code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiClient.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiClient.delete_database" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -65,7 +70,8 @@
 <dl class="class">
 <dt id="sanskrit_data.db.couchdb.CloudantApiDatabase">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CloudantApiDatabase</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiDatabase" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.DbInterface" title="sanskrit_data.db.DbInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.DbInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc">
 <code class="descname">update_doc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CloudantApiDatabase.update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -75,7 +81,8 @@
 <dl class="class">
 <dt id="sanskrit_data.db.couchdb.CouchdbApiClient">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CouchdbApiClient</code><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiClient" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.ClientInterface" title="sanskrit_data.db.ClientInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.ClientInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">
 <code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiClient.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -95,7 +102,8 @@
 <dl class="class">
 <dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">CouchdbApiDatabase</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.DbInterface" title="sanskrit_data.db.DbInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.DbInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc">
 <code class="descname">delete_doc</code><span class="sig-paren">(</span><em>doc_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#CouchdbApiDatabase.delete_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.CouchdbApiDatabase.delete_doc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -130,11 +138,12 @@
 <dl class="function">
 <dt id="sanskrit_data.db.couchdb.strip_revision">
 <code class="descclassname">sanskrit_data.db.couchdb.</code><code class="descname">strip_revision</code><span class="sig-paren">(</span><em>doc_map</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/couchdb.html#strip_revision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.couchdb.strip_revision" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Strip the _rev field.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_map</strong> – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_map</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – A dict representation of a JSON document.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">doc_map itself without _rev</td>
 </tr>

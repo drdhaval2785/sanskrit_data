@@ -1,3 +1,5 @@
+""".. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`."""
+
 from __future__ import absolute_import
 
 import logging
@@ -11,9 +13,9 @@ logging.basicConfig(
 )
 
 def strip_revision(doc_map):
-  """
+  """ Strip the _rev field.
   
-  :param doc_map: 
+  :param dict doc_map: A dict representation of a JSON document.
   :return:  doc_map itself without _rev
   """
   doc_map.pop("_rev", None)

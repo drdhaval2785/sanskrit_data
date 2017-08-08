@@ -40,7 +40,9 @@
           <div class="body" role="main">
             
   <h1>Source code for sanskrit_data.db.couchdb</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span></span><span class="sd">&quot;&quot;&quot;.. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 
@@ -53,9 +55,9 @@
 <span class="p">)</span>
 
 <div class="viewcode-block" id="strip_revision"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.strip_revision">[docs]</a><span class="k">def</span> <span class="nf">strip_revision</span><span class="p">(</span><span class="n">doc_map</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot; Strip the _rev field.</span>
 <span class="sd">  </span>
-<span class="sd">  :param doc_map: </span>
+<span class="sd">  :param dict doc_map: A dict representation of a JSON document.</span>
 <span class="sd">  :return:  doc_map itself without _rev</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">doc_map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;_rev&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>

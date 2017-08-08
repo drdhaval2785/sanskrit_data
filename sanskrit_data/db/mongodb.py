@@ -1,3 +1,5 @@
+""".. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`."""
+
 import logging
 from bson import ObjectId
 
@@ -35,11 +37,6 @@ class Client(ClientInterface):
 
 
   def get_database(self, db_name):
-    """Returns a collection within a database.
-
-    @:param db_name: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
-    @:returns A collection within a database.
-    """
     db_details = self.get_db_collection_names(db_collection_string=db_name)
     return self.client[db_details["db"]][db_details["collection"]]
 

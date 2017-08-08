@@ -43,10 +43,15 @@
             
   <div class="section" id="module-sanskrit_data.db.mongodb">
 <span id="sanskrit-data-db-mongodb"></span><h1>sanskrit_data.db.mongodb<a class="headerlink" href="#module-sanskrit_data.db.mongodb" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For undocumented classes and methods, please see superclass documentation in <a class="reference internal" href="sanskrit_data_db.html#module-sanskrit_data.db" title="sanskrit_data.db"><code class="xref py py-mod docutils literal"><span class="pre">sanskrit_data.db</span></code></a>.</p>
+</div>
 <dl class="class">
 <dt id="sanskrit_data.db.mongodb.Client">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.ClientInterface" title="sanskrit_data.db.ClientInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.ClientInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.mongodb.Client.delete_database">
 <code class="descname">delete_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.delete_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.delete_database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a collection, does not bother with the database.</p>
@@ -55,10 +60,7 @@
 <dl class="method">
 <dt id="sanskrit_data.db.mongodb.Client.get_database">
 <code class="descname">get_database</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.get_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.get_database" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a collection within a database.</p>
-<p>&#64;:param db_name: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
-&#64;:returns A collection within a database.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sanskrit_data.db.mongodb.Client.get_database_interface">
@@ -85,7 +87,8 @@
 <dl class="class">
 <dt id="sanskrit_data.db.mongodb.Collection">
 <em class="property">class </em><code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">Collection</code><span class="sig-paren">(</span><em>some_collection</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <a class="reference internal" href="sanskrit_data_db.html#sanskrit_data.db.DbInterface" title="sanskrit_data.db.DbInterface"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.db.DbInterface</span></code></a></p>
+<dl class="method">
 <dt id="sanskrit_data.db.mongodb.Collection.delete_doc">
 <code class="descname">delete_doc</code><span class="sig-paren">(</span><em>doc_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.delete_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.delete_doc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>

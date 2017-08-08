@@ -3,8 +3,7 @@
 Intro
 -----------
 
--  Annotations are stored in a directed acyclic graph, for example - a book portion having a
-  TextAnnotation having PadaAnnotations having SamaasaAnnotations.
+-  Annotations are stored in a directed acyclic graph, for example - a book portion having a TextAnnotation having PadaAnnotations having SamaasaAnnotations.
 
     -  Some Annotations (eg. SandhiAnnotation, TextAnnotation) can
        have multiple "targets" (ie. other objects being annotated).
