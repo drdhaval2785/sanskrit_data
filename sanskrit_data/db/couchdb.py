@@ -97,21 +97,21 @@ class CloudantApiDatabase(DbInterface):
 
 
 class CouchdbApiClient(ClientInterface):
-  def __init__(self):
+  def __init__(self, url):
     from couchdb import Server
-    self.server = Server(url=self.server_config["couchdb_host"])
+    self.server = Server(url=url)
 
   def get_database(self, db_name):
     try:
-      return self.server[self.TEST_DB_NAME]
+      return self.server[db_name]
     except:
-      return self.server.create(self.TEST_DB_NAME)
+      return self.server.create(db_name)
 
   def get_database_interface(self, db_name):
     return CouchdbApiDatabase(db=self.get_database(db_name=db_name))
 
   def delete_database(self, db_name):
-    self.server.delete_database(db_name)
+    self.server.delete(db_name)
 
 class CouchdbApiDatabase(DbInterface):
 
@@ -131,7 +131,7 @@ class CouchdbApiDatabase(DbInterface):
     if not hasattr(doc, "_id"):
       from uuid import uuid4
       doc._id = uuid4().hex
-    self.set_revision(doc=doc)
+    self.set_revision(doc_map=doc)
     logging.debug(doc)
     result_tuple = self.db.save(doc)
     assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
