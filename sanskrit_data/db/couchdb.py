@@ -1,4 +1,5 @@
-""".. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`."""
+""".. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`.
+"""
 
 from __future__ import absolute_import
 
@@ -98,6 +99,7 @@ class CloudantApiDatabase(DbInterface):
 
 
 class CouchdbApiClient(ClientInterface):
+  """.. note:: Prefer :class:`CloudantApiClient`."""
   def __init__(self, url):
     from couchdb import Server
     self.server = Server(url=url)
@@ -115,7 +117,7 @@ class CouchdbApiClient(ClientInterface):
     self.server.delete(db_name)
 
 class CouchdbApiDatabase(DbInterface):
-
+  """.. note:: Prefer :class:`CloudantApiDatabase`."""
   def __init__(self, db):
     logging.info("Initializing db :" + str(db))
     self.db = db

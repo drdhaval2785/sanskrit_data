@@ -28,9 +28,11 @@ Similar libraries in various other languages are being built:
 
 # For users
 ## Installation
-* Latest release: `sudo pip2 install sanskrit_data -U`
-* Development copy: `sudo pip2 install git+https://github.com/sanskrit-coders/sanskrit_data@master -U`
-* [Web](https://pypi.python.org/pypi/sanskrit_data).
+- Install this library
+    - Latest release: `sudo pip2 install sanskrit_data -U`
+    - Development copy: `sudo pip2 install git+https://github.com/sanskrit-coders/sanskrit_data@master -U`
+    - [Web](https://pypi.python.org/pypi/sanskrit_data).
+- Install libraries for the particular database you want to access through the sanskrit_data.db interface (as needed): pymongo, cloudant (for couchdb).
 
 ## Usage
 - Please see the generated python sphynx docs in one of the following places:
