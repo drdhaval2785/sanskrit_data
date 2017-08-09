@@ -89,6 +89,8 @@ setup(
     'jsonschema',
     'jsonpickle',
 
+    'yurl',
+
     # Database dependencies
     # Rather than automatically install unnecessary database access modules (users may only be interested in interacting with a particular database through the interface), we should let them install them separately.
     # 'cloudant'
