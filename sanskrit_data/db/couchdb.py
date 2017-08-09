@@ -73,15 +73,19 @@ class CloudantApiDatabase(DbInterface):
   def delete_doc(self, doc_id):
     """Beware: This leaves the document in the local cache! But other methods in this class should compensate."""
     from cloudant.document import Document
-    with Document(self.db, doc_id) as db_doc:
-      return db_doc.delete()
+    if doc_id in self.db:
+      db_doc = self.db[doc_id]
+      db_doc.fetch()
+      if db_doc.exists():
+        db_doc.delete()
+        assert not db_doc.exists()
 
   def find_by_id(self, id):
     if id in self.db:
       new_doc = self.db[id]
 
       # A document could be in the local cache but not in the remote db.
-      if new_doc.exists() and "_rev" in new_doc:
+      if new_doc.exists():
         return strip_revision(new_doc)
       else:
         return None
