@@ -17,7 +17,7 @@ here = path.abspath(path.dirname(__file__))
 long_description = ''
 try:
   import pypandoc
-  long_description = pypandoc.convert('README.md', 'rst')
+  long_description = pypandoc.convert(source='README.md', to='rst', format='markdown_github')
 except (IOError, ImportError):
   long_description = ''
 
