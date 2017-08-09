@@ -34,9 +34,9 @@ Similar libraries in various other languages are being built:
 
 ## Usage
 - Please see the generated python sphynx docs in one of the following places:
-    - http://sanskrit-data.readthedocs.io - currently broken due to BUILD errors - see [bug](https://github.com/rtfd/readthedocs.org/issues/3021) .
-    - under docs/_build/html/index.html
+    - http://sanskrit-data.readthedocs.io
     - [project page](https://sanskrit-coders.github.io/sanskrit_data/build/html/sanskrit_data.html).
+    - under docs/_build/html/index.html
 - Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
 
 # For contributors

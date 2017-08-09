@@ -36,9 +36,8 @@ class TestDBRoundTrip(unittest.TestCase):
     doc = JsonObject()
     updated_doc = self.test_db.update_doc(doc.to_json_map())
     logging.debug(updated_doc)
-    self.test_db.delete_doc(doc)
-    self.assertEqual(self.test_db.find_by_id(updated_doc._id), None)
-    self.test_db.delete_doc(doc)
+    self.test_db.delete_doc(updated_doc["_id"])
+    self.assertEqual(self.test_db.find_by_id(updated_doc["_id"]), None)
 
   def test_find(self):
     doc = JsonObject()

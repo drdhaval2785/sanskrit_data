@@ -54,21 +54,46 @@ class CloudantApiDatabase(DbInterface):
     self.db = db
 
   def update_doc(self, doc):
-    super(CouchdbApiDatabase, self).update_doc(doc=doc)
-    if not hasattr(doc, "_id"):
+    super(CloudantApiDatabase, self).update_doc(doc=doc)
+    if not "_id" in doc:
       from uuid import uuid4
-      doc._id = uuid4().hex
-    # self.set_revision(doc_map=map_to_write)
-    logging.debug(doc)
-    result_tuple = self.db.save(doc)
-    assert result_tuple[0] == doc._id, logging.error(str(result_tuple[0]) + " vs " + doc._id)
-    return doc
+      doc["_id"] = uuid4().hex
+
+    from cloudant.document import Document
+    with Document(self.db, doc["_id"]) as db_doc:
+      logging.debug(db_doc)
+      db_doc.clear()
+      db_doc.update(doc)
+    new_doc = self.db[doc["_id"]]
+    strip_revision(new_doc)
+    return new_doc
 
   def delete_doc(self, doc_id):
-    return self.db[doc_id].delete()
+    """Beware: This leaves the document in the local cache! But other methods in this class should compensate."""
+    from cloudant.document import Document
+    with Document(self.db, doc_id) as db_doc:
+      return db_doc.delete()
+
+  def find_by_id(self, id):
+    if id in self.db:
+      new_doc = self.db[id]
+
+      # A document could be in the local cache but not in the remote db.
+      if new_doc.exists() and "_rev" in new_doc:
+        return strip_revision(new_doc)
+      else:
+        return None
+    else:
+      return None
 
   def find(self, filter):
-    pass
+    from cloudant.query import Query
+    query = Query(self.db, selector=filter)
+    for doc in query.result:
+      yield strip_revision(doc_map=doc)
+
+  def find_by_indexed_key(self, index_name, key):
+    raise Exception("Not implemented")
 
 
 class CouchdbApiClient(ClientInterface):

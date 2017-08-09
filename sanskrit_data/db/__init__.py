@@ -43,7 +43,7 @@ class DbInterface(object):
   """
 
   def update_doc(self, doc):
-    """ Update or insert a JsonObject.
+    """ Update or insert a json object, represented as a dict.
     
     :param dict doc: _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
     :return: updated dict with _id set.
@@ -71,10 +71,11 @@ class DbInterface(object):
     pass
 
   def find(self, filter):
-    """ Fine matching objects from the database.
+    """ Find matching objects from the database.
     
     Should be a generator and return an iterator: ie it should use the yield keyword.
-    :param filter: A mango or mongo query.
+
+    :param dict filter: A mango or mongo query.
     :return: Returns None if nothing is found. Else a python dict representing a JSON object.
     """
     pass
