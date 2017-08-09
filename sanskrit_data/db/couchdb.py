@@ -21,6 +21,7 @@ def strip_revision(doc_map):
   doc_map.pop("_rev", None)
   return doc_map
 
+
 class CloudantApiClient(ClientInterface):
   def __init__(self, url):
     # logging.debug(url)
