@@ -22,6 +22,7 @@ class TestDBRoundTrip(unittest.TestCase):
 
   def tearDown(self):
     self.server.delete_database(self.TEST_DB_NAME)
+    pass
 
   def test_update_doc(self):
     doc = JsonObject()
