@@ -3,8 +3,8 @@
 
 from __future__ import absolute_import
 
+import copy
 import logging
-
 
 from sanskrit_data.db import DbInterface, ClientInterface
 
@@ -13,14 +13,15 @@ logging.basicConfig(
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
 
-def strip_revision(doc_map):
-  """ Strip the _rev field.
+def strip_revision_in_copy(doc_map):
+  """ Strip the _rev field in a deep copy of doc_map and return it.
   
   :param dict doc_map: A dict representation of a JSON document.
   :return:  doc_map itself without _rev
   """
-  doc_map.pop("_rev", None)
-  return doc_map
+  new_doc = copy.deepcopy(doc_map)
+  new_doc.pop("_rev", None)
+  return new_doc
 
 
 class CloudantApiClient(ClientInterface):
@@ -61,24 +62,36 @@ class CloudantApiDatabase(DbInterface):
       from uuid import uuid4
       doc["_id"] = uuid4().hex
 
-    from cloudant.document import Document
-    with Document(self.db, doc["_id"]) as db_doc:
-      logging.debug(db_doc)
+    if self.exists(doc_id=doc["_id"]):
+      db_doc = self.db[doc["_id"]]
+      db_doc.fetch()
+
+      new_doc = doc
+      new_doc["_rev"] = db_doc["_rev"]
+
       db_doc.clear()
-      db_doc.update(doc)
-    new_doc = self.db[doc["_id"]]
-    strip_revision(new_doc)
-    return new_doc
+      db_doc.update(new_doc)
+      db_doc.save()
+      return copy.deepcopy(strip_revision_in_copy(db_doc))
+    else:
+      new_doc = self.db.create_document(data=doc, throw_on_exists=False)
+      return strip_revision_in_copy(new_doc)
+
+  def exists(self, doc_id):
+    try:
+      db_doc = self.db[doc_id]
+      return db_doc.exists()
+    except KeyError:
+      return False
+
 
   def delete_doc(self, doc_id):
     """Beware: This leaves the document in the local cache! But other methods in this class should compensate."""
-    try:
+    if self.exists(doc_id=doc_id):
       db_doc = self.db[doc_id]
-      if db_doc.exists():
-        db_doc.fetch()
-        db_doc.delete()
-        assert not db_doc.exists()
-    except KeyError:
+      db_doc.fetch()
+      db_doc.delete()
+    else:
       logging.warn("Trying to delete non-existant doc " + doc_id)
       pass
 
@@ -87,7 +100,7 @@ class CloudantApiDatabase(DbInterface):
       db_doc = self.db[id]
       if db_doc.exists():
         db_doc.fetch()
-        return strip_revision(doc_map=db_doc)
+        return strip_revision_in_copy(doc_map=db_doc)
       else:
         return None
     except KeyError:
@@ -97,7 +110,7 @@ class CloudantApiDatabase(DbInterface):
     from cloudant.query import Query
     query = Query(self.db, selector=filter)
     for doc in query.result:
-      yield strip_revision(doc_map=doc)
+      yield strip_revision_in_copy(doc_map=doc)
 
   def find_by_indexed_key(self, index_name, key):
     raise Exception("Not implemented")
@@ -156,7 +169,7 @@ class CouchdbApiDatabase(DbInterface):
   def find_by_id(self, id):
     from couchdb import ResourceNotFound
     try:
-      return strip_revision(self.db[id])
+      return strip_revision_in_copy(self.db[id])
     except ResourceNotFound:
       return None
 
@@ -165,4 +178,4 @@ class CouchdbApiDatabase(DbInterface):
 
   def find(self, filter):
     for row in self.db.find(query=filter):
-      yield strip_revision(row.doc)
+      yield strip_revision_in_copy(row.doc)

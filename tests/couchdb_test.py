@@ -28,10 +28,11 @@ class TestDBRoundTrip(unittest.TestCase):
     doc = JsonObject()
     updated_doc = self.test_db.update_doc(doc.to_json_map())
     logging.debug(updated_doc)
-    updated_doc.xyz = "xyzvalue"
-    updated_doc = self.test_db.update_doc(doc.to_json_map())
+    updated_doc["xyz"] = "xyzvalue"
+    updated_doc = self.test_db.update_doc(updated_doc)
     logging.debug(updated_doc)
     self.assertNotEqual(updated_doc, None)
+    self.assertEqual("xyz" in updated_doc, True)
     updated_doc = self.test_db.find_by_id(updated_doc["_id"])
     self.assertNotEqual(updated_doc, None)
 
@@ -50,7 +51,7 @@ class TestDBRoundTrip(unittest.TestCase):
     updated_doc = self.test_db.update_doc(doc.to_json_map())
     logging.debug(updated_doc)
     found_doc = self.test_db.find(filter={"xyz": "xyzvalue"}).next()
-    self.assertEqual(str(updated_doc), str(found_doc))
+    self.assertTrue(JsonObject.make_from_dict(updated_doc).equals_ignore_id(JsonObject.make_from_dict(found_doc)))
 
 
 if __name__ == '__main__':
