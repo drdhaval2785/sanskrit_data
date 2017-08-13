@@ -91,3 +91,7 @@ class DbInterface(object):
       return iterator.next()
     except StopIteration:
       return None
+
+  def update_index(self, name, fields, upsert=False):
+    """Create or update (if upsert=True) an index over certain fields, with a given name."""
+    pass

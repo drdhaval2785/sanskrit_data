@@ -13,6 +13,7 @@ logging.basicConfig(
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
 
+
 def strip_revision_in_copy(doc_map):
   """ Strip the _rev field in a deep copy of doc_map and return it.
   
@@ -84,7 +85,6 @@ class CloudantApiDatabase(DbInterface):
     except KeyError:
       return False
 
-
   def delete_doc(self, doc_id):
     """Beware: This leaves the document in the local cache! But other methods in this class should compensate."""
     if self.exists(doc_id=doc_id):
@@ -114,6 +114,14 @@ class CloudantApiDatabase(DbInterface):
 
   def find_by_indexed_key(self, index_name, key):
     raise Exception("Not implemented")
+
+  def get_index_doc_name(self, name):
+    return '_design/' + name
+
+  def update_index(self, name, fields, upsert=False):
+    self.db.create_query_index(design_document_id=self.get_index_doc_name(name=name), index_name=name, fields=fields)
+    self.db.get_query_indexes() # TODO: This only exists in cloudant database.
+    raise Exception("Not implemented: need to check if index is created.")
 
 
 class CouchdbApiClient(ClientInterface):
