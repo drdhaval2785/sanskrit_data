@@ -364,12 +364,10 @@ class JsonObjectWithTarget(JsonObject):
                             db_interface=db_interface)
 
   def get_targetting_entities(self, db_interface, entity_type=None):
+    # The below is confirmed to use a mango index in case of couchdb, if it exists, as verified by:
+    # curl -sg vedavaapi.org:5984/vedavaapi_ullekhanam_db/_explain -H content-type:application/json -d '{ "selector": { "targets.container_id": { "$gt": null } } }'|jq
     filter = {
-      "targets": {
-        "$elemMatch": {
-          "container_id": str(self._id)
-        }
-      }
+      "targets.container_id": str(self._id)
     }
     if entity_type:
       filter[TYPE_FIELD] = entity_type
