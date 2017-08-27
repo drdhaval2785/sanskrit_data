@@ -95,7 +95,7 @@ class JsonObject(object):
       wire_type = some_dict.pop(TYPE_FIELD, None)
       if wire_type:
         some_dict[JSONPICKLE_TYPE_FIELD] = json_class_index[wire_type] + "." + wire_type
-      for key, value in some_dict.iteritems():
+      for key, value in iter(some_dict.items()):
         if isinstance(value, dict):
           recursively_set_jsonpickle_type(value)
         elif isinstance(value, list):
@@ -158,7 +158,7 @@ class JsonObject(object):
 
   def set_type_recursively(self):
     self.set_type()
-    for key, value in self.__dict__.iteritems():
+    for key, value in iter(self.__dict__.items()):
       if isinstance(value, JsonObject):
         value.set_type_recursively()
       elif isinstance(value, list):
@@ -168,7 +168,7 @@ class JsonObject(object):
 
   def set_jsonpickle_type_recursively(self):
     self.set_type()
-    for key, value in self.__dict__.iteritems():
+    for key, value in iter(self.__dict__.items()):
       if isinstance(value, JsonObject):
         value.set_type_recursively()
       elif isinstance(value, list):
@@ -181,7 +181,7 @@ class JsonObject(object):
 
   def set_from_dict(self, input_dict):
     if input_dict:
-      for key, value in input_dict.iteritems():
+      for key, value in iter(input_dict.items()):
         if isinstance(value, list):
           setattr(self, key, [JsonObject.make_from_dict(item) if isinstance(item, dict) else item for item in value])
         elif isinstance(value, dict):
@@ -200,7 +200,7 @@ class JsonObject(object):
     """
     self.set_type_recursively()
     jsonMap = {}
-    for key, value in self.__dict__.iteritems():
+    for key, value in iter(self.__dict__.items()):
       # logging.debug("%s %s", key, value)
       if isinstance(value, JsonObject):
         jsonMap[key] = value.to_json_map()
@@ -214,7 +214,7 @@ class JsonObject(object):
     # Makes a unicode copy.
     def to_unicode(input):
       if isinstance(input, dict):
-        return {key: to_unicode(value) for key, value in input.iteritems()}
+        return {key: to_unicode(value) for key, value in iter(input.items())}
       elif isinstance(input, list):
         return [to_unicode(element) for element in input]
       elif check_class(input, [str, unicode]):
