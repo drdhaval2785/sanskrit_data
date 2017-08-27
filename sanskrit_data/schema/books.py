@@ -75,6 +75,9 @@ class BookPortion(JsonObjectWithTarget):
       "path": {
         "type": "string"
       },
+      "thumbnail_path": {
+        "type": "string"
+      },
       "authors": {
         "type": "array",
         "items": {
