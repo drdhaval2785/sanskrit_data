@@ -177,7 +177,7 @@ class JsonObject(object):
             item.set_jsonpickle_type_recursively()
 
   def __str__(self):
-    return json.dumps(self.to_json_map())
+    return json.dumps(self.to_json_map(), sort_keys=True, indent=2)
 
   def set_from_dict(self, input_dict):
     if input_dict:
