@@ -122,11 +122,11 @@ class BookPortion(JsonObjectWithTarget):
     targets = targets or []
     logging.debug(str(book_portion))
     book_portion.targets = targets
-    if curated_content != None:
+    if curated_content is not None:
       book_portion.curated_content = curated_content
-    if base_data != None:
+    if base_data is not None:
       book_portion.base_data = base_data
-    if portion_class != None:
+    if portion_class is not None:
       book_portion.portion_class = portion_class
     if publication_details is not None:
       book_portion.publication_details = publication_details
@@ -136,7 +136,7 @@ class BookPortion(JsonObjectWithTarget):
   @classmethod
   def from_path(cls, path, db_interface):
     book_portion_dict = db_interface.find_one(filter={"path": path})
-    if book_portion_dict == None:
+    if book_portion_dict is None:
       return None
     else:
       book_portion = JsonObject.make_from_dict(book_portion_dict)

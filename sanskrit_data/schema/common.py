@@ -84,7 +84,7 @@ class JsonObject(object):
 
     :return: A subclass of JsonObject
     """
-    if input_dict == None:
+    if input_dict is None:
       return None
     assert input_dict.has_key(TYPE_FIELD), "no type field: " + str(input_dict)
     dict_without_id = deepcopy(input_dict)
@@ -277,7 +277,7 @@ class JsonObject(object):
     """Returns None if nothing is found."""
     item_dict = db_interface.find_by_id(id=id)
     item = None
-    if item_dict != None:
+    if item_dict is not None:
       item = cls.make_from_dict(item_dict)
     return item
 
@@ -351,7 +351,7 @@ class JsonObjectWithTarget(JsonObject):
     return []
 
   def validate_targets(self, targets, allowed_types, db_interface):
-    if targets and len(targets) > 0 and db_interface != None:
+    if targets and len(targets) > 0 and db_interface is not None:
       for target in targets:
         target_entity = target.get_target_entity(db_interface=db_interface)
         if not check_class(target_entity, allowed_types):
@@ -418,7 +418,7 @@ class JsonObjectNode(JsonObject):
     self.validate(db_interface=db_interface)
     self.content = self.content.update_collection(db_interface)
     for child in self.children:
-      if (not hasattr(child.content, "targets")) or child.content.targets == None or len(child.content.targets) == 0:
+      if (not hasattr(child.content, "targets")) or child.content.targets is None or len(child.content.targets) == 0:
         child.content.targets = [child.content.target_class()]
       assert len(child.content.targets) == 1
       child.content.targets[0].container_id = str(self.content._id)

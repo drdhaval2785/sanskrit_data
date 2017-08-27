@@ -287,9 +287,9 @@ class TextTarget(Target):
   def from_details(cls, container_id, shabda_id=None, offset_address=None):
     target = TextTarget()
     target.container_id = container_id
-    if shabda_id != None:
+    if shabda_id is not None:
       target.shabda_id = shabda_id
-    if offset_address != None:
+    if offset_address is not None:
       target.offset_address = offset_address
     target.validate()
     return target

@@ -35,11 +35,11 @@ class CloudantApiClient(ClientInterface):
     from cloudant.client import CouchDB
     self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization, url=url_without_credentials, connect=True, auto_renew=True)
     # logging.debug(self.client)
-    assert self.client != None, logging.error(self.client)
+    assert self.client is not None, logging.error(self.client)
 
   def get_database(self, db_name):
     db = self.client.get(db_name, default=None)
-    if db != None:
+    if db is not None:
       return db
     else:
       return self.client.create_database(db_name)
