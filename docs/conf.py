@@ -123,7 +123,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'sanskrit_datadoc'
+htmlhelp_basename = 'doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------

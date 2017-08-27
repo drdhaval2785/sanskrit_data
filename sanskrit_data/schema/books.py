@@ -43,6 +43,24 @@ class BookPositionTarget(Target):
     return target
 
 
+class PublicationDetails(JsonObject):
+  schema = common.recursively_merge(JsonObject.schema, ({
+    "type": "object",
+    "description": "Publication details of a BookPortion.",
+    "properties": {
+      TYPE_FIELD: {
+        "enum": ["PublicationDetails"]
+      },
+      "release_time": {
+        "type": "string"
+      },
+      "publisher": {
+        "type": "string"
+      },
+    }
+  }))
+
+
 class BookPortion(JsonObjectWithTarget):
   schema = common.recursively_merge(JsonObject.schema, ({
     "type": "object",
@@ -67,6 +85,7 @@ class BookPortion(JsonObjectWithTarget):
         "type": "string",
         "enum": ["image", "text"]
       },
+      "publication_details": PublicationDetails.schema,
       "portion_class": {
         "type": "string",
         "description": "book, part, chapter, verse, line etc.."
@@ -89,8 +108,8 @@ class BookPortion(JsonObjectWithTarget):
     return [BookPortion]
 
   @classmethod
-  def from_details(cls, title, path=None, authors=None, targets=None, base_data = None,
-                   curated_content=None, portion_class=None):
+  def from_details(cls, title, path=None, authors=None, targets=None, base_data=None,
+                   curated_content=None, portion_class=None, publication_details=None):
     if authors is None:
       authors = []
     book_portion = BookPortion()
@@ -109,6 +128,8 @@ class BookPortion(JsonObjectWithTarget):
       book_portion.base_data = base_data
     if portion_class != None:
       book_portion.portion_class = portion_class
+    if publication_details is not None:
+      book_portion.publication_details = publication_details
     book_portion.validate()
     return book_portion
 
