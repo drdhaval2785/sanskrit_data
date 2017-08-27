@@ -87,7 +87,7 @@ class JsonObject(object):
     """
     if input_dict is None:
       return None
-    assert input_dict.has_key(TYPE_FIELD), "no type field: " + str(input_dict)
+    assert TYPE_FIELD in input_dict, "no type field: " + str(input_dict)
     dict_without_id = deepcopy(input_dict)
     _id = dict_without_id.pop("_id", None)
 
