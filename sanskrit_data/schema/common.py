@@ -16,14 +16,15 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
-# Maps jsonClass values to Python object names. Useful for (de)serialization.
-# Updated using update_json_class_index() calls at the end of each submodule file (such as this one) in the parent module.
+"""
+Maps jsonClass values to Python object names. Useful for (de)serialization.
+Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
+"""
 json_class_index = {}
 
 
 def update_json_class_index(module_in):
   import inspect
-  schemas = {}
   for name, obj in inspect.getmembers(module_in):
     if inspect.isclass(obj):
       json_class_index[name] = obj.__module__
@@ -45,8 +46,8 @@ def recursively_merge(a, b):
   assert a.__class__ == b.__class__, str(a.__class__) + " vs " + str(b.__class__)
 
   if isinstance(b, dict) and isinstance(a, dict):
-    a_and_b = a.viewkeys() & b.viewkeys()
-    every_key = a.viewkeys() | b.viewkeys()
+    a_and_b = set(a.keys()) & set(b.keys())
+    every_key = set(a.keys()) | set(b.keys())
     return {k: recursively_merge(a[k], b[k]) if k in a_and_b else
     deepcopy(a[k] if k in a else b[k]) for k in every_key}
   elif isinstance(b, list) and isinstance(a, list):
