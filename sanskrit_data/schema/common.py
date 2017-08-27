@@ -136,7 +136,7 @@ class JsonObject(object):
       with open(filename, "w") as f:
         f.write(str(self))
     except Exception as e:
-      return logging.error("Error writing " + filename + " : ".format(e))
+      logging.error("Error writing " + filename + " : ".format(e))
       raise e
 
   @classmethod
