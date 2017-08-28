@@ -116,10 +116,18 @@
 <dl class="method">
 <dt id="sanskrit_data.db.DbInterface.find">
 <code class="descname">find</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fine matching objects from the database.</p>
-<p>Should be a generator and return an iterator: ie it should use the yield keyword.
-:param filter: A mango or mongo query.
-:return: Returns None if nothing is found. Else a python dict representing a JSON object.</p>
+<dd><p>Find matching objects from the database.</p>
+<p>Should be a generator and return an iterator: ie it should use the yield keyword.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – A mango or mongo query.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns None if nothing is found. Else a python dict representing a JSON object.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -161,7 +169,7 @@
 <dl class="method">
 <dt id="sanskrit_data.db.DbInterface.update_doc">
 <code class="descname">update_doc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.update_doc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update or insert a JsonObject.</p>
+<dd><p>Update or insert a json object, represented as a dict.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -172,6 +180,12 @@
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.db.DbInterface.update_index">
+<code class="descname">update_index</code><span class="sig-paren">(</span><em>name</em>, <em>fields</em>, <em>upsert=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.update_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.update_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create or update (if upsert=True) an index over certain fields, with a given name.</p>
 </dd></dl>
 
 </dd></dl>

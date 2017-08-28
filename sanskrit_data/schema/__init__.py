@@ -3,8 +3,16 @@ Intro
 -----------
 schema package contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.
 
-- At the base of every such class is the common.JsonObject class.
-- Just pick the most suitable class to store your data (or contribute it here).
+Usage tips:
+
+- Picking or defining the data container class.
+
+  - At the base of every such data container class is the common.JsonObject class.
+  - You can define such a class yourself, in your own package (Example `here <https://github.com/sanskrit-coders/jyotisha/blob/master/jyotisha/panchangam/temporal.py>`__.).
+
+- Enabling (de)serialization (if one has defined a data container class in a new module file)
+
+  - One needs to update :py:data:`~sanskrit_data.schema.common.json_class_index` - see the comment there for details.
 
 Data design
 -----------

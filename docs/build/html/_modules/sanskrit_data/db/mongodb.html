@@ -126,7 +126,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">mongo_collection</span><span class="o">.</span><span class="n">delete_one</span><span class="p">({</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="n">doc_id</span><span class="p">)})</span></div></div>
 
 <span class="k">def</span> <span class="nf">_fix_id</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
-  <span class="k">if</span> <span class="n">doc</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;_id&quot;</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;_id&quot;</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
     <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">doc</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">])</span>
 
 <span class="k">def</span> <span class="nf">_fix_id_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">):</span>

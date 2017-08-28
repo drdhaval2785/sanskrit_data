@@ -43,10 +43,31 @@
             
   <div class="section" id="module-sanskrit_data.schema.common">
 <span id="sanskrit-data-schema-common"></span><h1>sanskrit_data.schema.common<a class="headerlink" href="#module-sanskrit_data.schema.common" title="Permalink to this headline">¶</a></h1>
+<p>A module containing some data container base classes.</p>
+<dl class="data">
+<dt id="sanskrit_data.schema.common.json_class_index">
+<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
+<blockquote>
+<div>(key, value) pairs</div></blockquote>
+<dl class="docutils">
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
+<dd><p class="first">d = {}
+for k, v in iterable:</p>
+<blockquote class="last">
+<div>d[k] = v</div></blockquote>
+</dd>
+<dt>dict(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt>
+<dd>in the keyword argument list.  For example:  dict(one=1, two=2)</dd>
+</dl>
+</dd></dl>
+
 <dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObject">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObject</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The base class of all Json-serializable data container classes, with many utility methods.</p>
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObject.delete_in_collection">
 <code class="descname">delete_in_collection</code><span class="sig-paren">(</span><em>db_interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject.delete_in_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject.delete_in_collection" title="Permalink to this definition">¶</a></dt>
@@ -210,7 +231,7 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="attribute">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['Target'], 'type': 'string'}}}, 'type': 'array', 'description': 'This field lets us define a directed graph involving JsonObjects stored in a database.'}, 'jsonClass': {'type': 'string'}}, 'description': 'A JsonObject with a target field.'}, 'type': 'array'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'items': {'required': ['jsonClass'], 'type': 'object', 'description': 'A JsonObject with a target field.', 'properties': {'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['Target'], 'type': 'string'}}}, 'type': 'array', 'description': 'This field lets us define a directed graph involving JsonObjects stored in a database.'}, 'jsonClass': {'type': 'string'}}}, 'type': 'array'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -242,7 +263,7 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="attribute">
 <dt id="sanskrit_data.schema.common.JsonObjectWithTarget.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['Target'], 'type': 'string'}}}, 'type': 'array', 'description': 'This field lets us define a directed graph involving JsonObjects stored in a database.'}, 'jsonClass': {'type': 'string'}}, 'description': 'A JsonObject with a target field.'}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectWithTarget.schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'description': 'A JsonObject with a target field.', 'properties': {'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['Target'], 'type': 'string'}}}, 'type': 'array', 'description': 'This field lets us define a directed graph involving JsonObjects stored in a database.'}, 'jsonClass': {'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectWithTarget.schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">

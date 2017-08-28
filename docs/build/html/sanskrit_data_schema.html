@@ -46,9 +46,17 @@
 <span class="target" id="module-sanskrit_data.schema"></span><div class="section" id="intro">
 <h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
 <p>schema package contains modules which define various modules describing various classes for storing Sanskrit data, and their corresponding JSON schema.</p>
+<p>Usage tips:</p>
 <ul class="simple">
-<li>At the base of every such class is the common.JsonObject class.</li>
-<li>Just pick the most suitable class to store your data (or contribute it here).</li>
+<li>Picking or defining the data container class.<ul>
+<li>At the base of every such data container class is the common.JsonObject class.</li>
+<li>You can define such a class yourself, in your own package (Example <a class="reference external" href="https://github.com/sanskrit-coders/jyotisha/blob/master/jyotisha/panchangam/temporal.py">here</a>.).</li>
+</ul>
+</li>
+<li>Enabling (de)serialization (if one has defined a data container class in a new module file)<ul>
+<li>One needs to update <a class="reference internal" href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.json_class_index" title="sanskrit_data.schema.common.json_class_index"><code class="xref py py-data docutils literal"><span class="pre">json_class_index</span></code></a> in <a class="reference internal" href="sanskrit_data_schema_common.html#module-sanskrit_data.schema.common" title="sanskrit_data.schema.common"><code class="xref py py-data docutils literal"><span class="pre">common</span></code></a> - see the comment there for details.</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="data-design">

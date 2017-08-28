@@ -85,6 +85,24 @@
     <span class="k">return</span> <span class="n">target</span></div></div>
 
 
+<div class="viewcode-block" id="PublicationDetails"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.PublicationDetails">[docs]</a><span class="k">class</span> <span class="nc">PublicationDetails</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Publication details of a BookPortion.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PublicationDetails&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;release_time&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">}))</span></div>
+
+
 <div class="viewcode-block" id="BookPortion"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion">[docs]</a><span class="k">class</span> <span class="nc">BookPortion</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -99,6 +117,9 @@
       <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
       <span class="p">},</span>
+      <span class="s2">&quot;thumbnail_path&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
       <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
         <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -109,6 +130,7 @@
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
         <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">]</span>
       <span class="p">},</span>
+      <span class="s2">&quot;publication_details&quot;</span><span class="p">:</span> <span class="n">PublicationDetails</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
       <span class="s2">&quot;portion_class&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;book, part, chapter, verse, line etc..&quot;</span>
@@ -131,8 +153,8 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="BookPortion.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">curated_content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">portion_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">curated_content</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">portion_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">publication_details</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">book_portion</span> <span class="o">=</span> <span class="n">BookPortion</span><span class="p">()</span>
@@ -145,19 +167,21 @@
     <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span> <span class="ow">or</span> <span class="p">[]</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">book_portion</span><span class="p">))</span>
     <span class="n">book_portion</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
-    <span class="k">if</span> <span class="n">curated_content</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">curated_content</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">book_portion</span><span class="o">.</span><span class="n">curated_content</span> <span class="o">=</span> <span class="n">curated_content</span>
-    <span class="k">if</span> <span class="n">base_data</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">base_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">book_portion</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="n">base_data</span>
-    <span class="k">if</span> <span class="n">portion_class</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">portion_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">book_portion</span><span class="o">.</span><span class="n">portion_class</span> <span class="o">=</span> <span class="n">portion_class</span>
+    <span class="k">if</span> <span class="n">publication_details</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">book_portion</span><span class="o">.</span><span class="n">publication_details</span> <span class="o">=</span> <span class="n">publication_details</span>
     <span class="n">book_portion</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">book_portion</span></div>
 
 <div class="viewcode-block" id="BookPortion.from_path"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion.from_path">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
     <span class="n">book_portion_dict</span> <span class="o">=</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">})</span>
-    <span class="k">if</span> <span class="n">book_portion_dict</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">book_portion_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">book_portion</span> <span class="o">=</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">book_portion_dict</span><span class="p">)</span>

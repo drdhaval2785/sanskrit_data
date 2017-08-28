@@ -1,3 +1,12 @@
+"""
+A module containing some data container base classes.
+
+.. autodata:: json_class_index
+  :annotation: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
+
+
+"""
+
 from __future__ import absolute_import
 
 import json
@@ -16,10 +25,6 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
-"""
-Maps jsonClass values to Python object names. Useful for (de)serialization.
-Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
-"""
 json_class_index = {}
 
 
@@ -58,6 +63,8 @@ def recursively_merge(a, b):
 
 
 class JsonObject(object):
+  """The base class of all Json-serializable data container classes, with many utility methods."""
+
   schema = {
     "type": "object",
     "properties": {
