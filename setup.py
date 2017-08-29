@@ -97,7 +97,7 @@ setup(
     # But this idea is rejected because this breaks automatic sphinx documentation at readthedocs.
 
     'cloudant',
-    'couchdb-python', # But ALERT: we're using an unreleased version.
+    # 'couchdb-python', # But ALERT: we're using an unreleased version; a distribution does not exist for Py3.5 as of 20170828.
     'pymongo', # Includes the bson package.
   ],
 
