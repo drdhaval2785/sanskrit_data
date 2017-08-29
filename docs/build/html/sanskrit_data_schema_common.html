@@ -335,7 +335,7 @@ This value may not be available: for example when called from the from_details m
 <dl class="data">
 <dt id="sanskrit_data.schema.common.json_class_index">
 <code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> = {'JsonObjectWithTarget': 'sanskrit_data.schema.common', 'Target': 'sanskrit_data.schema.common', 'JsonObject': 'sanskrit_data.schema.common', 'TextContent': 'sanskrit_data.schema.common', 'TargetValidationError': 'sanskrit_data.schema.common', 'JsonObjectNode': 'sanskrit_data.schema.common'}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</p>
+<dd><p>Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using <a class="reference internal" href="#sanskrit_data.schema.common.update_json_class_index" title="sanskrit_data.schema.common.update_json_class_index"><code class="xref py py-func docutils literal"><span class="pre">update_json_class_index()</span></code></a> calls at the end of each module file (such as this one) whose classes may be serialized.</p>
 </dd></dl>
 
 <dl class="function">
@@ -346,7 +346,9 @@ This value may not be available: for example when called from the from_details m
 <dl class="function">
 <dt id="sanskrit_data.schema.common.update_json_class_index">
 <code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">update_json_class_index</code><span class="sig-paren">(</span><em>module_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#update_json_class_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.update_json_class_index" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call this function to enable (de)serialization.</p>
+<p>Usage example: common.update_json_class_index(sys.modules[__name__]).</p>
+</dd></dl>
 
 </div>
 

@@ -62,11 +62,15 @@
 <span class="n">JSONPICKLE_TYPE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;py/object&quot;</span>
 <span class="n">TYPE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;jsonClass&quot;</span>
 
-<span class="c1">#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</span>
+<span class="c1">#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.</span>
 <span class="n">json_class_index</span> <span class="o">=</span> <span class="p">{}</span>
 
 
 <div class="viewcode-block" id="update_json_class_index"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.update_json_class_index">[docs]</a><span class="k">def</span> <span class="nf">update_json_class_index</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Call this function to enable (de)serialization.</span>
+
+<span class="sd">  Usage example: common.update_json_class_index(sys.modules[__name__]).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="kn">import</span> <span class="nn">inspect</span>
   <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>

@@ -20,12 +20,14 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
-#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
+#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.
 json_class_index = {}
 
 
 def update_json_class_index(module_in):
-  """Call this function to enable (de)serializationvixusrex3
+  """Call this function to enable (de)serialization.
+
+  Usage example: common.update_json_class_index(sys.modules[__name__]).
   """
   import inspect
   for name, obj in inspect.getmembers(module_in):
