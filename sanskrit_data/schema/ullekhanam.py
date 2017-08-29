@@ -18,7 +18,7 @@ Intro
 import logging
 import sys
 
-import common
+from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion
 from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, TextContent
 
