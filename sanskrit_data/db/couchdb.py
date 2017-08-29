@@ -33,11 +33,13 @@ class CloudantApiClient(ClientInterface):
     import re
     url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
     from cloudant.client import CouchDB
-    self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization, url=url_without_credentials, connect=True, auto_renew=True)
+    self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization,
+                          url=url_without_credentials, connect=True, auto_renew=True)
     # logging.debug(self.client)
     assert self.client is not None, logging.error(self.client)
 
   def get_database(self, db_name):
+    # noinspection PyTypeChecker
     db = self.client.get(db_name, default=None)
     if db is not None:
       return db
@@ -52,14 +54,13 @@ class CloudantApiClient(ClientInterface):
 
 
 class CloudantApiDatabase(DbInterface):
-
   def __init__(self, db):
     logging.info("Initializing db :" + str(db))
     self.db = db
 
   def update_doc(self, doc):
     super(CloudantApiDatabase, self).update_doc(doc=doc)
-    if not "_id" in doc:
+    if "_id" not in doc:
       from uuid import uuid4
       doc["_id"] = uuid4().hex
 
@@ -115,21 +116,24 @@ class CloudantApiDatabase(DbInterface):
   def find_by_indexed_key(self, index_name, key):
     raise Exception("Not implemented")
 
-  def get_index_doc_name(self, name):
+  @staticmethod
+  def get_index_doc_name(name):
     return '_design/' + name
 
   def update_index(self, name, fields, upsert=False):
     self.db.create_query_index(design_document_id=self.get_index_doc_name(name=name), index_name=name, fields=fields)
-    self.db.get_query_indexes() # TODO: This only exists in cloudant database.
+    self.db.get_query_indexes()  # TODO: This only exists in cloudant database.
     raise Exception("Not implemented: need to check if index is created.")
 
 
 class CouchdbApiClient(ClientInterface):
   """.. note:: Prefer :class:`CloudantApiClient`."""
+
   def __init__(self, url):
     from couchdb import Server
     self.server = Server(url=url)
 
+  # noinspection PyBroadException
   def get_database(self, db_name):
     try:
       return self.server[db_name]
@@ -142,8 +146,10 @@ class CouchdbApiClient(ClientInterface):
   def delete_database(self, db_name):
     self.server.delete(db_name)
 
+
 class CouchdbApiDatabase(DbInterface):
   """.. note:: Prefer :class:`CloudantApiDatabase`."""
+
   def __init__(self, db):
     logging.info("Initializing db :" + str(db))
     self.db = db

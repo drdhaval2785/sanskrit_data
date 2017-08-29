@@ -11,6 +11,22 @@ logging.basicConfig(
 )
 
 
+def get_db_collection_names(db_collection_string):
+  """
+
+  :param db_collection_string: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
+  :return: An object with db and collection names.
+  """
+  name_parts = db_collection_string.split(".")
+  assert len(name_parts) > 0
+  obj = {"db": name_parts[0],
+         "collection": name_parts[0],
+         }
+  if len(name_parts) == 2:
+    obj["collection"] = name_parts[1]
+  return obj
+
+
 class Client(ClientInterface):
   def __init__(self, url):
     try:
@@ -20,24 +36,8 @@ class Client(ClientInterface):
       logging.error("Error initializing MongoDB database; aborting.")
       raise e
 
-  def get_db_collection_names(self, db_collection_string):
-    """
-
-    :param db_collection_string: A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.
-    :return: An object with db and collection names.
-    """
-    name_parts = db_collection_string.split(".")
-    assert len(name_parts) > 0
-    obj = {"db": name_parts[0],
-           "collection": name_parts[0],
-           }
-    if len(name_parts) == 2:
-      obj["collection"] = name_parts[1]
-    return obj
-
-
   def get_database(self, db_name):
-    db_details = self.get_db_collection_names(db_collection_string=db_name)
+    db_details = get_db_collection_names(db_collection_string=db_name)
     return self.client[db_details["db"]][db_details["collection"]]
 
   def get_database_interface(self, db_name):
@@ -45,7 +45,7 @@ class Client(ClientInterface):
 
   def delete_database(self, db_name):
     """Deletes a collection, does not bother with the database."""
-    db_details = self.get_db_collection_names(db_collection_string=db_name)
+    db_details = get_db_collection_names(db_collection_string=db_name)
     self.client[db_details["db"]].drop_collection(db_details["collection"])
 
 
@@ -76,16 +76,19 @@ class Collection(DbInterface):
       doc.pop("_id", None)
     else:
       filter = doc
-    updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True, return_document=ReturnDocument.AFTER)
+    updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True,
+                                                            return_document=ReturnDocument.AFTER)
     _fix_id(doc=updated_doc)
     return updated_doc
 
   def delete_doc(self, doc_id):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
 
+
 def _fix_id(doc):
   if doc is not None and "_id" in doc:
     doc["_id"] = str(doc["_id"])
+
 
 def _fix_id_filter(filter):
   if "_id" in filter:

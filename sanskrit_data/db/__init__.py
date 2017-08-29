@@ -5,6 +5,7 @@ This package aims to achieve database neutrality - we abstract database-client o
 
 __all__ = ["ClientInterface", "DbInterface", "couchdb", "mongodb"]
 
+
 class ClientInterface(object):
   """A common interface to a database server or system.
 

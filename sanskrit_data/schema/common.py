@@ -303,6 +303,7 @@ class TargetValidationError(Exception):
            "%s" % (self.targetting_obj, self.target_obj, str(self.allowed_types))
 
 
+# noinspection PyProtectedMember
 class Target(JsonObject):
   schema = recursively_merge(JsonObject.schema, {
     "type": "object",
@@ -384,6 +385,7 @@ class JsonObjectWithTarget(JsonObject):
     return targetting_objs
 
 
+# noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
 class JsonObjectNode(JsonObject):
   """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets."""
   schema = recursively_merge(
@@ -406,7 +408,8 @@ class JsonObjectNode(JsonObject):
     super(JsonObjectNode, self).validate(db_interface=None)
     for child in self.children:
       if not check_class(self.content, child.content.get_allowed_target_classes()):
-        raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(), target_obj=self.content)
+        raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(),
+                                    target_obj=self.content)
 
     for child in self.children:
       child.validate(db_interface=None)

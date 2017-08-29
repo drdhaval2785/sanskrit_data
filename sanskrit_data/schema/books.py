@@ -30,7 +30,7 @@ class BookPositionTarget(Target):
         "description": "Any number describing the position of one BookPortion within another."
       }
     }
-    })
+  })
 
   @classmethod
   def from_details(cls, container_id=None, position=None):
@@ -144,6 +144,7 @@ class BookPortion(JsonObjectWithTarget):
     else:
       book_portion = JsonObject.make_from_dict(book_portion_dict)
       return book_portion
+
 
 # Essential for depickling to work.
 common.update_json_class_index(sys.modules[__name__])

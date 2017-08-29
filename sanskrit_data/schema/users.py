@@ -42,6 +42,12 @@ class UserPermission(JsonObject):
     return obj
 
 
+def set_password(plain_password):
+  import bcrypt
+  #   (Using bcrypt, the salt is saved into the hash itself)
+  return bcrypt.hashpw(plain_password, bcrypt.gensalt())
+
+
 class AuthenticationInfo(JsonObject):
   schema = recursively_merge(
     JsonObject.schema, {
@@ -73,19 +79,15 @@ class AuthenticationInfo(JsonObject):
     import bcrypt
     return bcrypt.checkpw(plain_password, self.auth_secret_bcrypt)
 
-  def set_password(self, plain_password):
-    import bcrypt
-    #   (Using bcrypt, the salt is saved into the hash itself)
-    return bcrypt.hashpw(plain_password, bcrypt.gensalt())
-
   @classmethod
-  def from_details(cls, auth_user_id, auth_provider, auth_secret_hashed = None):
+  def from_details(cls, auth_user_id, auth_provider, auth_secret_hashed=None):
     obj = AuthenticationInfo()
     obj.auth_user_id = auth_user_id
     obj.auth_provider = auth_provider
     if auth_secret_hashed:
       obj.auth_secret_hashed = auth_secret_hashed
     return obj
+
 
 class User(JsonObject):
   """Represents a user of our service."""
@@ -114,7 +116,8 @@ class User(JsonObject):
   @classmethod
   def from_details(cls, nickname, auth_user_id, auth_provider, user_type, auth_secret_hashed=None, permissions=None):
     obj = User()
-    obj.authentication_infos = [AuthenticationInfo.from_details(auth_provider=auth_provider, auth_user_id=auth_user_id, auth_secret_hashed=auth_secret_hashed)]
+    obj.authentication_infos = [AuthenticationInfo.from_details(auth_provider=auth_provider, auth_user_id=auth_user_id,
+                                                                auth_secret_hashed=auth_secret_hashed)]
     obj.nickname = nickname
     obj.user_type = user_type
     if permissions:

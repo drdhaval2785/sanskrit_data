@@ -49,6 +49,7 @@ class AnnotationSource(JsonObject):
     "required": ["source_type"]
   }))
 
+  # noinspection PyShadowingBuiltins
   @classmethod
   def from_details(cls, source_type, id):
     source = AnnotationSource()
@@ -90,7 +91,9 @@ class Annotation(JsonObjectWithTarget):
     return [BookPortion, Annotation]
 
   def set_base_details(self, targets, source):
+    # noinspection PyAttributeOutsideInit
     self.targets = targets
+    # noinspection PyAttributeOutsideInit
     self.source = source
 
 
@@ -129,27 +132,28 @@ class Rectangle(JsonObject):
     rectangle.validate()
     return rectangle
 
-    # Two (segments are 'equal' if they overlap
-    def __eq__(self, other):
-      xmax = max(self.x, other.x)
-      ymax = max(self.y, other.y)
-      w = min(self.x + self.w, other.x + other.w) - xmax
-      h = min(self.y + self.h, other.y + other.h) - ymax
-      return w > 0 and h > 0
+  # Two (segments are 'equal' if they overlap
+  def __eq__(self, other):
+    xmax = max(self.x, other.x)
+    ymax = max(self.y, other.y)
+    overalap_w = min(self.x + self.w, other.x + other.w) - xmax
+    overalap_h = min(self.y + self.h, other.y + other.h) - ymax
+    return overalap_w > 0 and overalap_h > 0
 
-    def __ne__(self, other):
-      return not self.__eq__(other)
+  def __ne__(self, other):
+    return not self.__eq__(other)
 
-    def __cmp__(self, other):
-      if self == other:
-        logging.info(str(self) + " overlaps " + str(other))
-        return 0
-      elif (self.y < other.y) or ((self.y == other.y) and (self.x < other.x)):
-        return -1
-      else:
-        return 1
+  def __cmp__(self, other):
+    if self == other:
+      logging.info(str(self) + " overlaps " + str(other))
+      return 0
+    elif (self.y < other.y) or ((self.y == other.y) and (self.x < other.x)):
+      return -1
+    else:
+      return 1
 
 
+# noinspection PyMethodOverriding
 class ImageTarget(Target):
   schema = common.recursively_merge(Target.schema, ({
     "type": "object",
@@ -164,6 +168,7 @@ class ImageTarget(Target):
   }))
 
   # TODO use w, h instead.
+  # noinspection PyMethodOverriding
   @classmethod
   def from_details(cls, container_id, rectangle):
     target = ImageTarget()
@@ -295,6 +300,7 @@ class TextTarget(Target):
     return target
 
 
+# noinspection PyMethodOverriding
 class PadaAnnotation(Annotation):
   schema = common.recursively_merge(Annotation.schema, ({
     "type": "object",
@@ -324,7 +330,9 @@ class PadaAnnotation(Annotation):
 
   def set_base_details(self, targets, source, word, root):
     super(PadaAnnotation, self).set_base_details(targets, source)
+    # noinspection PyAttributeOutsideInit
     self.word = word
+    # noinspection PyAttributeOutsideInit
     self.root = root
 
   @classmethod
@@ -336,6 +344,7 @@ class PadaAnnotation(Annotation):
 
 
 # Targets: TextTarget pointing to TextAnnotation
+# noinspection PyMethodOverriding
 class SubantaAnnotation(PadaAnnotation):
   schema = common.recursively_merge(PadaAnnotation.schema, ({
     "type": "object",
@@ -370,6 +379,7 @@ class SubantaAnnotation(PadaAnnotation):
     return obj
 
 
+# noinspection PyMethodOverriding,PyPep8Naming
 class TinantaAnnotation(PadaAnnotation):
   schema = common.recursively_merge(PadaAnnotation.schema, ({
     "type": "object",
@@ -432,7 +442,7 @@ class TextSambandhaAnnotation(Annotation):
     },
     "required": ["combined_string"]
   }))
-  
+
   def validate(self, db_interface=None):
     super(TextSambandhaAnnotation, self).validate(db_interface=db_interface)
     self.validate_targets(targets=self.source_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
@@ -441,7 +451,6 @@ class TextSambandhaAnnotation(Annotation):
   @classmethod
   def get_allowed_target_classes(cls):
     return [BookPortion, TextAnnotation]
-
 
 
 # Targets: two or more PadaAnnotations
@@ -467,11 +476,11 @@ class SandhiAnnotation(Annotation):
     return [PadaAnnotation]
 
   @classmethod
-  def from_details(cls, targets, source, combined_string, type="UNK"):
+  def from_details(cls, targets, source, combined_string, sandhi_type="UNK"):
     annotation = SandhiAnnotation()
     annotation.set_base_details(targets, source)
     annotation.combined_string = combined_string
-    annotation.sandhi_type = type
+    annotation.sandhi_type = sandhi_type
     annotation.validate()
     return annotation
 
@@ -504,11 +513,11 @@ class SamaasaAnnotation(Annotation):
     self.validate_targets(targets=self.component_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
 
   @classmethod
-  def from_details(cls, targets, source, combined_string, type="UNK"):
+  def from_details(cls, targets, source, combined_string, samaasa_type="UNK"):
     annotation = SamaasaAnnotation()
     annotation.set_base_details(targets, source)
     annotation.combined_string = combined_string
-    annotation.type = type
+    annotation.type = samaasa_type
     annotation.validate()
     return annotation
 
