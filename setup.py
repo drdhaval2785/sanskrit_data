@@ -88,14 +88,17 @@ setup(
     # JSON dependencies
     'jsonschema',
     'jsonpickle',
-
+    'bcrypt',
     'yurl',
 
     # Database dependencies
-    # Rather than automatically install unnecessary database access modules (users may only be interested in interacting with a particular database through the interface), we should let them install them separately.
-    # 'cloudant'
-    # 'couchdb-python', # We're using an unreleased version.
-    # 'pymongo', # Includes the bson package.
+    #
+    # Idea: Rather than automatically install unnecessary database access modules (users may only be interested in interacting with a particular database through the interface), we should let them install them separately.
+    # But this idea is rejected because this breaks automatic sphinx documentation at readthedocs.
+
+    'cloudant',
+    'couchdb-python', # But ALERT: we're using an unreleased version.
+    'pymongo', # Includes the bson package.
   ],
 
   # List additional groups of dependencies here (e.g. development
