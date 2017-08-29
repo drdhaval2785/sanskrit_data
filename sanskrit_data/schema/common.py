@@ -53,8 +53,9 @@ def recursively_merge(a, b):
   if isinstance(b, dict) and isinstance(a, dict):
     a_and_b = set(a.keys()) & set(b.keys())
     every_key = set(a.keys()) | set(b.keys())
-    return {k: recursively_merge(a[k], b[k]) if k in a_and_b else
-        deepcopy(a[k] if k in a else b[k]) for k in every_key}
+    return {
+      k: recursively_merge(a[k], b[k]) if k in a_and_b
+      else deepcopy(a[k] if k in a else b[k]) for k in every_key}
   elif isinstance(b, list) and isinstance(a, list):
     return list(set(a + b))
   else:
@@ -133,7 +134,7 @@ class JsonObject(object):
         obj = cls.make_from_dict(jsonpickle.decode(fhandle.read()))
         return obj
     except Exception as e:
-      return logging.error("Error reading " + filename + " : ".format(e))
+      logging.error("Error reading " + filename + " : ".format(e))
       raise e
 
   def dump_to_file(self, filename):
@@ -405,7 +406,7 @@ class JsonObjectNode(JsonObject):
     super(JsonObjectNode, self).validate(db_interface=None)
     for child in self.children:
       if not check_class(self.content, child.content.get_allowed_target_classes()):
-        raise TargetValidationError(targetting_obj=child, target_obj=self.content)
+        raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(), target_obj=self.content)
 
     for child in self.children:
       child.validate(db_interface=None)
