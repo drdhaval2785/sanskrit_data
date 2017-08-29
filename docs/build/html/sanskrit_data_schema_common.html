@@ -44,25 +44,6 @@
   <div class="section" id="module-sanskrit_data.schema.common">
 <span id="sanskrit-data-schema-common"></span><h1>sanskrit_data.schema.common<a class="headerlink" href="#module-sanskrit_data.schema.common" title="Permalink to this headline">¶</a></h1>
 <p>A module containing some data container base classes.</p>
-<dl class="data">
-<dt id="sanskrit_data.schema.common.json_class_index">
-<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object’s</p>
-<blockquote>
-<div>(key, value) pairs</div></blockquote>
-<dl class="docutils">
-<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
-<dd><p class="first">d = {}
-for k, v in iterable:</p>
-<blockquote class="last">
-<div>d[k] = v</div></blockquote>
-</dd>
-<dt>dict(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; new dictionary initialized with the name=value pairs</dt>
-<dd>in the keyword argument list.  For example:  dict(one=1, two=2)</dd>
-</dl>
-</dd></dl>
-
 <dl class="class">
 <dt id="sanskrit_data.schema.common.JsonObject">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObject</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject" title="Permalink to this definition">¶</a></dt>
@@ -110,11 +91,9 @@ for k, v in iterable:</p>
 <dd><p>Defines <em>our</em> canonical way of constructing a JSON object from a dict.</p>
 <p>All other deserialization methods should use this.</p>
 <p>Note that this assumes that json_class_index is populated properly!</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><code class="docutils literal"><span class="pre">from</span> <span class="pre">sanskrit_data.schema</span> <span class="pre">import</span> <span class="pre">*</span></code> before using this should take care of it.</li>
 </ul>
-</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -352,6 +331,12 @@ This value may not be available: for example when called from the from_details m
 <dt id="sanskrit_data.schema.common.get_schemas">
 <code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">get_schemas</code><span class="sig-paren">(</span><em>module_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#get_schemas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.get_schemas" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="data">
+<dt id="sanskrit_data.schema.common.json_class_index">
+<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> = {'JsonObjectWithTarget': 'sanskrit_data.schema.common', 'Target': 'sanskrit_data.schema.common', 'JsonObject': 'sanskrit_data.schema.common', 'TextContent': 'sanskrit_data.schema.common', 'TargetValidationError': 'sanskrit_data.schema.common', 'JsonObjectNode': 'sanskrit_data.schema.common'}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="sanskrit_data.schema.common.recursively_merge">

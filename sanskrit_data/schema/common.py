@@ -1,10 +1,5 @@
 """
 A module containing some data container base classes.
-
-.. autodata:: json_class_index
-  :annotation: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
-
-
 """
 
 from __future__ import absolute_import
@@ -25,10 +20,13 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
+#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.
 json_class_index = {}
 
 
 def update_json_class_index(module_in):
+  """Call this function to enable (de)serializationvixusrex3
+  """
   import inspect
   for name, obj in inspect.getmembers(module_in):
     if inspect.isclass(obj):
@@ -38,7 +36,7 @@ def update_json_class_index(module_in):
 def check_class(obj, allowed_types):
   results = [isinstance(obj, some_type) for some_type in allowed_types]
   # logging.debug(results)
-  return (True in results)
+  return True in results
 
 
 def check_list_item_types(some_list, allowed_types):
@@ -54,12 +52,11 @@ def recursively_merge(a, b):
     a_and_b = set(a.keys()) & set(b.keys())
     every_key = set(a.keys()) | set(b.keys())
     return {k: recursively_merge(a[k], b[k]) if k in a_and_b else
-    deepcopy(a[k] if k in a else b[k]) for k in every_key}
+        deepcopy(a[k] if k in a else b[k]) for k in every_key}
   elif isinstance(b, list) and isinstance(a, list):
     return list(set(a + b))
   else:
-    return b
-  return deepcopy(b)
+    return deepcopy(b)
 
 
 class JsonObject(object):
@@ -81,15 +78,14 @@ class JsonObject(object):
   @classmethod
   def make_from_dict(cls, input_dict):
     """Defines *our* canonical way of constructing a JSON object from a dict.
-    
+
     All other deserialization methods should use this.
 
     Note that this assumes that json_class_index is populated properly!
 
-      - ``from sanskrit_data.schema import *`` before using this should take care of it.
+    - ``from sanskrit_data.schema import *`` before using this should take care of it.
 
     :param input_dict:
-
     :return: A subclass of JsonObject
     """
     if input_dict is None:
@@ -135,8 +131,8 @@ class JsonObject(object):
         obj = cls.make_from_dict(jsonpickle.decode(fhandle.read()))
         return obj
     except Exception as e:
-      raise e
       return logging.error("Error reading " + filename + " : ".format(e))
+      raise e
 
   def dump_to_file(self, filename):
     try:
@@ -190,7 +186,8 @@ class JsonObject(object):
     if input_dict:
       for key, value in iter(input_dict.items()):
         if isinstance(value, list):
-          setattr(self, key, [JsonObject.make_from_dict(item) if isinstance(item, dict) else item for item in value])
+          setattr(self, key,
+                  [JsonObject.make_from_dict(item) if isinstance(item, dict) else item for item in value])
         elif isinstance(value, dict):
           setattr(self, key, JsonObject.make_from_dict(value))
         else:
@@ -201,21 +198,21 @@ class JsonObject(object):
 
   def to_json_map(self):
     """One convenient way of 'serializing' the object.
-    
+
     So, the type must be properly set.
     Many functions accept such json maps, just as they accept strings.
     """
     self.set_type_recursively()
-    jsonMap = {}
+    json_map = {}
     for key, value in iter(self.__dict__.items()):
       # logging.debug("%s %s", key, value)
       if isinstance(value, JsonObject):
-        jsonMap[key] = value.to_json_map()
+        json_map[key] = value.to_json_map()
       elif isinstance(value, list):
-        jsonMap[key] = [item.to_json_map() if isinstance(item, JsonObject) else item for item in value]
+        json_map[key] = [item.to_json_map() if isinstance(item, JsonObject) else item for item in value]
       else:
-        jsonMap[key] = value
-    return jsonMap
+        json_map[key] = value
+    return json_map
 
   def equals_ignore_id(self, other):
     # Makes a unicode copy.
@@ -254,7 +251,7 @@ class JsonObject(object):
 
   def validate(self, db_interface=None):
     """Validate the JSON serialization of this object using the schema member.
-    
+
     :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).
       This value may not be available: for example when called from the from_details methods.
 
@@ -363,7 +360,8 @@ class JsonObjectWithTarget(JsonObject):
       for target in targets:
         target_entity = target.get_target_entity(db_interface=db_interface)
         if not check_class(target_entity, allowed_types):
-          raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self, target_obj=target_entity)
+          raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self,
+                                      target_obj=target_entity)
 
   def validate(self, db_interface=None):
     super(JsonObjectWithTarget, self).validate(db_interface=db_interface)
@@ -381,6 +379,7 @@ class JsonObjectWithTarget(JsonObject):
       filter[TYPE_FIELD] = entity_type
     targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(filter)]
     return targetting_objs
+
 
 class JsonObjectNode(JsonObject):
   """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets."""
@@ -426,7 +425,8 @@ class JsonObjectNode(JsonObject):
     self.validate(db_interface=db_interface)
     self.content = self.content.update_collection(db_interface)
     for child in self.children:
-      if (not hasattr(child.content, "targets")) or child.content.targets is None or len(child.content.targets) == 0:
+      if (not hasattr(child.content, "targets")) or child.content.targets is None or len(
+          child.content.targets) == 0:
         child.content.targets = [child.content.target_class()]
       assert len(child.content.targets) == 1
       child.content.targets[0].container_id = str(self.content._id)

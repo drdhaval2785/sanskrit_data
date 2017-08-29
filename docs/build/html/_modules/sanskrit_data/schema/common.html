@@ -42,11 +42,6 @@
   <h1>Source code for sanskrit_data.schema.common</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A module containing some data container base classes.</span>
-
-<span class="sd">.. autodata:: json_class_index</span>
-<span class="sd">  :annotation: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</span>
-
-
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
@@ -67,6 +62,7 @@
 <span class="n">JSONPICKLE_TYPE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;py/object&quot;</span>
 <span class="n">TYPE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;jsonClass&quot;</span>
 
+<span class="c1">#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using update_json_class_index() calls at the end of each module file (such as this one) whose classes may be serialized.</span>
 <span class="n">json_class_index</span> <span class="o">=</span> <span class="p">{}</span>
 
 
@@ -80,7 +76,7 @@
 <div class="viewcode-block" id="check_class"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.check_class">[docs]</a><span class="k">def</span> <span class="nf">check_class</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
   <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">some_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">some_type</span> <span class="ow">in</span> <span class="n">allowed_types</span><span class="p">]</span>
   <span class="c1"># logging.debug(results)</span>
-  <span class="k">return</span> <span class="p">(</span><span class="kc">True</span> <span class="ow">in</span> <span class="n">results</span><span class="p">)</span></div>
+  <span class="k">return</span> <span class="kc">True</span> <span class="ow">in</span> <span class="n">results</span></div>
 
 
 <div class="viewcode-block" id="check_list_item_types"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.check_list_item_types">[docs]</a><span class="k">def</span> <span class="nf">check_list_item_types</span><span class="p">(</span><span class="n">some_list</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
@@ -96,12 +92,11 @@
     <span class="n">a_and_b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">every_key</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">a_and_b</span> <span class="k">else</span>
-    <span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">else</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">every_key</span><span class="p">}</span>
+        <span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">else</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">every_key</span><span class="p">}</span>
   <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
   <span class="k">else</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">b</span>
-  <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="JsonObject"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject">[docs]</a><span class="k">class</span> <span class="nc">JsonObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -123,15 +118,14 @@
 <div class="viewcode-block" id="JsonObject.make_from_dict"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.make_from_dict">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">make_from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Defines *our* canonical way of constructing a JSON object from a dict.</span>
-<span class="sd">    </span>
+
 <span class="sd">    All other deserialization methods should use this.</span>
 
 <span class="sd">    Note that this assumes that json_class_index is populated properly!</span>
 
-<span class="sd">      - ``from sanskrit_data.schema import *`` before using this should take care of it.</span>
+<span class="sd">    - ``from sanskrit_data.schema import *`` before using this should take care of it.</span>
 
 <span class="sd">    :param input_dict:</span>
-
 <span class="sd">    :return: A subclass of JsonObject</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">input_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -177,8 +171,8 @@
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">fhandle</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
         <span class="k">return</span> <span class="n">obj</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-      <span class="k">raise</span> <span class="n">e</span>
-      <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error reading &quot;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+      <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error reading &quot;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+      <span class="k">raise</span> <span class="n">e</span></div>
 
 <div class="viewcode-block" id="JsonObject.dump_to_file"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.dump_to_file">[docs]</a>  <span class="k">def</span> <span class="nf">dump_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
@@ -232,7 +226,8 @@
     <span class="k">if</span> <span class="n">input_dict</span><span class="p">:</span>
       <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">input_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-          <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">])</span>
+          <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span>
+                  <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">])</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
           <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
@@ -243,21 +238,21 @@
 
 <div class="viewcode-block" id="JsonObject.to_json_map"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.to_json_map">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;One convenient way of &#39;serializing&#39; the object.</span>
-<span class="sd">    </span>
+
 <span class="sd">    So, the type must be properly set.</span>
 <span class="sd">    Many functions accept such json maps, just as they accept strings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type_recursively</span><span class="p">()</span>
-    <span class="n">jsonMap</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">json_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
       <span class="c1"># logging.debug(&quot;%s %s&quot;, key, value)</span>
       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
-        <span class="n">jsonMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span>
+        <span class="n">json_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span>
       <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">jsonMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+        <span class="n">json_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">to_json_map</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
       <span class="k">else</span><span class="p">:</span>
-        <span class="n">jsonMap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-    <span class="k">return</span> <span class="n">jsonMap</span></div>
+        <span class="n">json_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">json_map</span></div>
 
 <div class="viewcode-block" id="JsonObject.equals_ignore_id"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.equals_ignore_id">[docs]</a>  <span class="k">def</span> <span class="nf">equals_ignore_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
     <span class="c1"># Makes a unicode copy.</span>
@@ -296,7 +291,7 @@
 
 <div class="viewcode-block" id="JsonObject.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Validate the JSON serialization of this object using the schema member.</span>
-<span class="sd">    </span>
+
 <span class="sd">    :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).</span>
 <span class="sd">      This value may not be available: for example when called from the from_details methods.</span>
 
@@ -405,7 +400,8 @@
       <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
         <span class="n">target_entity</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_target_entity</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_class</span><span class="p">(</span><span class="n">target_entity</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
-          <span class="k">raise</span> <span class="n">TargetValidationError</span><span class="p">(</span><span class="n">allowed_types</span><span class="o">=</span><span class="n">allowed_types</span><span class="p">,</span> <span class="n">targetting_obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_obj</span><span class="o">=</span><span class="n">target_entity</span><span class="p">)</span></div>
+          <span class="k">raise</span> <span class="n">TargetValidationError</span><span class="p">(</span><span class="n">allowed_types</span><span class="o">=</span><span class="n">allowed_types</span><span class="p">,</span> <span class="n">targetting_obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                      <span class="n">target_obj</span><span class="o">=</span><span class="n">target_entity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="JsonObjectWithTarget.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
@@ -423,6 +419,7 @@
       <span class="nb">filter</span><span class="p">[</span><span class="n">TYPE_FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">entity_type</span>
     <span class="n">targetting_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">filter</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">targetting_objs</span></div></div>
+
 
 <div class="viewcode-block" id="JsonObjectNode"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectNode</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.&quot;&quot;&quot;</span>
@@ -468,7 +465,8 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">update_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-      <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span>
+          <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">target_class</span><span class="p">()]</span>
       <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
       <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">container_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
