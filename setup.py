@@ -27,7 +27,7 @@ setup(
   # Versions should comply with PEP440.  For a discussion on single-sourcing
   # the version across setup.py and the project code, see
   # https://packaging.python.org/en/latest/single_source_version.html
-  version='0.3.5',
+  version='0.3.6',
 
   description='Standard and idiosyncratic schemata for Sanskrit data, with a library of validation, (de-)serialization, a database interface and other utilities.',
   long_description=long_description,
@@ -98,7 +98,7 @@ setup(
 
     'cloudant',
     # 'couchdb-python', # But ALERT: we're using an unreleased version; a distribution does not exist for Py3.5 as of 20170828.
-    'pymongo', # Includes the bson package.
+    'pymongo', 'six', # Includes the bson package.
   ],
 
   # List additional groups of dependencies here (e.g. development

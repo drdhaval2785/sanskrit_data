@@ -55,16 +55,16 @@ class Collection(DbInterface):
     self.mongo_collection = some_collection
 
   def find_by_id(self, id):
-    return self.find_one(filter={"_id": id})
+    return self.find_one(find_filter={"_id": id})
 
-  def find_one(self, filter):
-    _fix_id_filter(filter=filter)
-    result = self.mongo_collection.find_one(filter=filter)
+  def find_one(self, find_filter):
+    _fix_id_filter(filter=find_filter)
+    result = self.mongo_collection.find_one(find_filter=find_filter)
     _fix_id(doc=result)
     return result
 
-  def find(self, filter):
-    results = self.mongo_collection.find(filter)
+  def find(self, find_filter):
+    results = self.mongo_collection.find(find_filter)
     for result in results:
       _fix_id(doc=result)
       yield result

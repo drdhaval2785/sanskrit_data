@@ -71,27 +71,23 @@ class DbInterface(object):
     """
     pass
 
-  def find(self, filter):
+  def find(self, find_filter):
     """ Find matching objects from the database.
     
     Should be a generator and return an iterator: ie it should use the yield keyword.
 
-    :param dict filter: A mango or mongo query.
+    :param dict find_filter: A mango or mongo query.
     :return: Returns None if nothing is found. Else a python dict representing a JSON object.
     """
     pass
 
-  def find_one(self, filter):
+  def find_one(self, find_filter):
     """ Fine one matching object from the database.
     
-    :param filter: A mango or mongo query.
+    :param find_filter: A mango or mongo query.
     :return: Returns None if nothing is found. Else a python dict representing a JSON object.
     """
-    iterator = self.find(filter=filter)
-    try:
-      return iterator.next()
-    except StopIteration:
-      return None
+    return next(self.find(find_filter=find_filter), None)
 
   def update_index(self, name, fields, upsert=False):
     """Create or update (if upsert=True) an index over certain fields, with a given name."""

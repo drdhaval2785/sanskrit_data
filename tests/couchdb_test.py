@@ -50,7 +50,15 @@ class TestDBRoundTrip(unittest.TestCase):
     doc.xyz = "xyzvalue"
     updated_doc = self.test_db.update_doc(doc.to_json_map())
     logging.debug(updated_doc)
-    found_doc = self.test_db.find(filter={"xyz": "xyzvalue"}).next()
+    found_doc = next(self.test_db.find(find_filter={"xyz": "xyzvalue"}))
+    self.assertTrue(JsonObject.make_from_dict(updated_doc).equals_ignore_id(JsonObject.make_from_dict(found_doc)))
+
+  def test_find_one(self):
+    doc = JsonObject()
+    doc.xyz = "xyzvalue"
+    updated_doc = self.test_db.update_doc(doc.to_json_map())
+    logging.debug(updated_doc)
+    found_doc = self.test_db.find_one(find_filter={"xyz": "xyzvalue"})
     self.assertTrue(JsonObject.make_from_dict(updated_doc).equals_ignore_id(JsonObject.make_from_dict(found_doc)))
 
 

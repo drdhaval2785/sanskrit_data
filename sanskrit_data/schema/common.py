@@ -9,6 +9,7 @@ import logging
 import sys
 from copy import deepcopy
 
+from six import string_types
 import jsonpickle
 import jsonschema
 
@@ -224,7 +225,7 @@ class JsonObject(object):
         return {key: to_unicode(value) for key, value in iter(input.items())}
       elif isinstance(input, list):
         return [to_unicode(element) for element in input]
-      elif check_class(input, [str, unicode]):
+      elif isinstance(input, string_types):
         return input.encode('utf-8')
       else:
         return input

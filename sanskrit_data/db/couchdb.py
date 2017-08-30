@@ -107,9 +107,9 @@ class CloudantApiDatabase(DbInterface):
     except KeyError:
       return None
 
-  def find(self, filter):
+  def find(self, find_filter):
     from cloudant.query import Query
-    query = Query(self.db, selector=filter)
+    query = Query(self.db, selector=find_filter)
     for doc in query.result:
       yield strip_revision_in_copy(doc_map=doc)
 
@@ -190,6 +190,6 @@ class CouchdbApiDatabase(DbInterface):
   def find_by_indexed_key(self, index_name, key):
     raise Exception("not implemented")
 
-  def find(self, filter):
-    for row in self.db.find(query=filter):
+  def find(self, find_filter):
+    for row in self.db.find(query=find_filter):
       yield strip_revision_in_copy(row.doc)

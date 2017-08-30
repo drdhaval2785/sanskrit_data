@@ -170,7 +170,7 @@ class TestDBRoundTrip(unittest.TestCase):
       book_portion_2.update_collection(db)
 
     add_book()
-    book = common.JsonObject.make_from_dict(self.test_db.find_one(filter={"path": "myrepo/something"}))
+    book = common.JsonObject.make_from_dict(self.test_db.find_one(find_filter={"path": "myrepo/something"}))
     logging.debug(str(book))
     json_node = common.JsonObjectNode.from_details(content=book)
     json_node.fill_descendents(db_interface=self.test_db)

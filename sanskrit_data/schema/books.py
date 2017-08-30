@@ -138,7 +138,7 @@ class BookPortion(JsonObjectWithTarget):
 
   @classmethod
   def from_path(cls, path, db_interface):
-    book_portion_dict = db_interface.find_one(filter={"path": path})
+    book_portion_dict = db_interface.find_one(find_filter={"path": path})
     if book_portion_dict is None:
       return None
     else:
