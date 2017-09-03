@@ -22,7 +22,7 @@ JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
 #: Maps jsonClass values to the containing Python module object. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.
-json_classhint_to_module = {}
+json_class_index = {}
 
 
 def update_json_class_index(module_in):
@@ -33,7 +33,7 @@ def update_json_class_index(module_in):
   import inspect
   for name, obj in inspect.getmembers(module_in):
     if inspect.isclass(obj):
-      json_classhint_to_module[name] = obj.__module__
+      json_class_index[name] = obj
 
 
 def check_class(obj, allowed_types):
@@ -85,7 +85,7 @@ class JsonObject(object):
 
     All other deserialization methods should use this.
 
-    Note that this assumes that json_classhint_to_module is populated properly!
+    Note that this assumes that json_class_index is populated properly!
 
     - ``from sanskrit_data.schema import *`` before using this should take care of it.
 
@@ -101,7 +101,7 @@ class JsonObject(object):
     def recursively_set_jsonpickle_type(some_dict):
       wire_type = some_dict.pop(TYPE_FIELD, None)
       if wire_type:
-        some_dict[JSONPICKLE_TYPE_FIELD] = json_classhint_to_module[wire_type] + "." + wire_type
+        some_dict[JSONPICKLE_TYPE_FIELD] = json_class_index[wire_type].__module__ + "." + wire_type
       for key, value in iter(some_dict.items()):
         if isinstance(value, dict):
           recursively_set_jsonpickle_type(value)
@@ -387,7 +387,7 @@ class JsonObjectWithTarget(JsonObject):
     }
     targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(find_filter)]
     if entity_type is not None:
-      targetting_objs = filter(lambda obj: isinstance(obj, getattr(json_classhint_to_module[entity_type], entity_type)), targetting_objs)
+      targetting_objs = filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs)
     return targetting_objs
 
 
@@ -502,4 +502,4 @@ def get_schemas(module_in):
 
 # Essential for depickling to work.
 update_json_class_index(sys.modules[__name__])
-logging.debug(json_classhint_to_module)
+logging.debug(json_class_index)

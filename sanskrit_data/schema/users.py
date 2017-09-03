@@ -143,4 +143,4 @@ class User(JsonObject):
 
 # Essential for depickling to work.
 update_json_class_index(sys.modules[__name__])
-logging.debug(common.json_classhint_to_module)
+logging.debug(common.json_class_index)
