@@ -26,7 +26,7 @@ Similar libraries in various other languages are being built:
 
 # For users
 ## Installation
-- Install this library
+- Install this library (Replace pip2 with pip3 as needed)
     - Latest release: `sudo pip2 install sanskrit_data -U`
     - Development copy: `sudo pip2 install git+https://github.com/sanskrit-coders/sanskrit_data@master -U`
     - [Web](https://pypi.python.org/pypi/sanskrit_data).
