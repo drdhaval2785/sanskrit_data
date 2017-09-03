@@ -84,6 +84,12 @@
     <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
+<div class="viewcode-block" id="set_password"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.set_password">[docs]</a><span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="n">plain_password</span><span class="p">):</span>
+  <span class="kn">import</span> <span class="nn">bcrypt</span>
+  <span class="c1">#   (Using bcrypt, the salt is saved into the hash itself)</span>
+  <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">hashpw</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">gensalt</span><span class="p">())</span></div>
+
+
 <div class="viewcode-block" id="AuthenticationInfo"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo">[docs]</a><span class="k">class</span> <span class="nc">AuthenticationInfo</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
     <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
@@ -115,19 +121,15 @@
     <span class="kn">import</span> <span class="nn">bcrypt</span>
     <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">checkpw</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_secret_bcrypt</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AuthenticationInfo.set_password"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.set_password">[docs]</a>  <span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain_password</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">bcrypt</span>
-    <span class="c1">#   (Using bcrypt, the salt is saved into the hash itself)</span>
-    <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">hashpw</span><span class="p">(</span><span class="n">plain_password</span><span class="p">,</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">gensalt</span><span class="p">())</span></div>
-
 <div class="viewcode-block" id="AuthenticationInfo.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_secret_hashed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">AuthenticationInfo</span><span class="p">()</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">auth_user_id</span> <span class="o">=</span> <span class="n">auth_user_id</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">auth_provider</span> <span class="o">=</span> <span class="n">auth_provider</span>
     <span class="k">if</span> <span class="n">auth_secret_hashed</span><span class="p">:</span>
       <span class="n">obj</span><span class="o">.</span><span class="n">auth_secret_hashed</span> <span class="o">=</span> <span class="n">auth_secret_hashed</span>
     <span class="k">return</span> <span class="n">obj</span></div></div>
+
 
 <div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Represents a user of our service.&quot;&quot;&quot;</span>
@@ -156,7 +158,8 @@
 <div class="viewcode-block" id="User.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.User.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_provider</span><span class="p">,</span> <span class="n">user_type</span><span class="p">,</span> <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">permissions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
-    <span class="n">obj</span><span class="o">.</span><span class="n">authentication_infos</span> <span class="o">=</span> <span class="p">[</span><span class="n">AuthenticationInfo</span><span class="o">.</span><span class="n">from_details</span><span class="p">(</span><span class="n">auth_provider</span><span class="o">=</span><span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="o">=</span><span class="n">auth_user_id</span><span class="p">,</span> <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="n">auth_secret_hashed</span><span class="p">)]</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">authentication_infos</span> <span class="o">=</span> <span class="p">[</span><span class="n">AuthenticationInfo</span><span class="o">.</span><span class="n">from_details</span><span class="p">(</span><span class="n">auth_provider</span><span class="o">=</span><span class="n">auth_provider</span><span class="p">,</span> <span class="n">auth_user_id</span><span class="o">=</span><span class="n">auth_user_id</span><span class="p">,</span>
+                                                                <span class="n">auth_secret_hashed</span><span class="o">=</span><span class="n">auth_secret_hashed</span><span class="p">)]</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="n">nickname</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">user_type</span> <span class="o">=</span> <span class="n">user_type</span>
     <span class="k">if</span> <span class="n">permissions</span><span class="p">:</span>
@@ -182,7 +185,7 @@
 
 <span class="c1"># Essential for depickling to work.</span>
 <span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_class_index</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_classhint_to_module</span><span class="p">)</span>
 </pre></div>
 
           </div>

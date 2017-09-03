@@ -115,14 +115,14 @@
 
 <dl class="method">
 <dt id="sanskrit_data.db.DbInterface.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find</code><span class="sig-paren">(</span><em>find_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find matching objects from the database.</p>
 <p>Should be a generator and return an iterator: ie it should use the yield keyword.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – A mango or mongo query.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>find_filter</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – A mango or mongo query.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns None if nothing is found. Else a python dict representing a JSON object.</td>
 </tr>
@@ -152,13 +152,13 @@
 
 <dl class="method">
 <dt id="sanskrit_data.db.DbInterface.find_one">
-<code class="descname">find_one</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find_one" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find_one</code><span class="sig-paren">(</span><em>find_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find_one" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fine one matching object from the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> – A mango or mongo query.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>find_filter</strong> – A mango or mongo query.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns None if nothing is found. Else a python dict representing a JSON object.</td>
 </tr>

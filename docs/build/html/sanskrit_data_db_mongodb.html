@@ -67,21 +67,6 @@
 <code class="descname">get_database_interface</code><span class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.get_database_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.get_database_interface" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="sanskrit_data.db.mongodb.Client.get_db_collection_names">
-<code class="descname">get_db_collection_names</code><span class="sig-paren">(</span><em>db_collection_string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Client.get_db_collection_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Client.get_db_collection_names" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db_collection_string</strong> – A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An object with db and collection names.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -95,7 +80,7 @@
 
 <dl class="method">
 <dt id="sanskrit_data.db.mongodb.Collection.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.find" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find</code><span class="sig-paren">(</span><em>find_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.find" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -105,7 +90,7 @@
 
 <dl class="method">
 <dt id="sanskrit_data.db.mongodb.Collection.find_one">
-<code class="descname">find_one</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.find_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.find_one" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find_one</code><span class="sig-paren">(</span><em>find_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.find_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.find_one" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -113,6 +98,21 @@
 <code class="descname">update_doc</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#Collection.update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.Collection.update_doc" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="sanskrit_data.db.mongodb.get_db_collection_names">
+<code class="descclassname">sanskrit_data.db.mongodb.</code><code class="descname">get_db_collection_names</code><span class="sig-paren">(</span><em>db_collection_string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db/mongodb.html#get_db_collection_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.mongodb.get_db_collection_names" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db_collection_string</strong> – A string like someDb.someCollection or just someCollection, which is interpreted as someCollection.someCollection.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An object with db and collection names.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

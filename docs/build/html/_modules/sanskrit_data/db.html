@@ -47,6 +47,7 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ClientInterface&quot;</span><span class="p">,</span> <span class="s2">&quot;DbInterface&quot;</span><span class="p">,</span> <span class="s2">&quot;couchdb&quot;</span><span class="p">,</span> <span class="s2">&quot;mongodb&quot;</span><span class="p">]</span>
 
+
 <div class="viewcode-block" id="ClientInterface"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.ClientInterface">[docs]</a><span class="k">class</span> <span class="nc">ClientInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;A common interface to a database server or system.</span>
 
@@ -112,27 +113,23 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="DbInterface.find"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+<div class="viewcode-block" id="DbInterface.find"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">find_filter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Find matching objects from the database.</span>
 <span class="sd">    </span>
 <span class="sd">    Should be a generator and return an iterator: ie it should use the yield keyword.</span>
 
-<span class="sd">    :param dict filter: A mango or mongo query.</span>
+<span class="sd">    :param dict find_filter: A mango or mongo query.</span>
 <span class="sd">    :return: Returns None if nothing is found. Else a python dict representing a JSON object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="DbInterface.find_one"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find_one">[docs]</a>  <span class="k">def</span> <span class="nf">find_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+<div class="viewcode-block" id="DbInterface.find_one"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find_one">[docs]</a>  <span class="k">def</span> <span class="nf">find_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">find_filter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Fine one matching object from the database.</span>
 <span class="sd">    </span>
-<span class="sd">    :param filter: A mango or mongo query.</span>
+<span class="sd">    :param find_filter: A mango or mongo query.</span>
 <span class="sd">    :return: Returns None if nothing is found. Else a python dict representing a JSON object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-      <span class="k">return</span> <span class="n">iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-      <span class="k">return</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_filter</span><span class="o">=</span><span class="n">find_filter</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DbInterface.update_index"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.update_index">[docs]</a>  <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">upsert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create or update (if upsert=True) an index over certain fields, with a given name.&quot;&quot;&quot;</span>

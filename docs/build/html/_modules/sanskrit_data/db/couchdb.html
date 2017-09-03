@@ -75,11 +75,13 @@
     <span class="kn">import</span> <span class="nn">re</span>
     <span class="n">url_without_credentials</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">parse_result</span><span class="o">.</span><span class="n">username</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">parse_result</span><span class="o">.</span><span class="n">authorization</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">cloudant.client</span> <span class="k">import</span> <span class="n">CouchDB</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">CouchDB</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">parse_result</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="n">parse_result</span><span class="o">.</span><span class="n">authorization</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url_without_credentials</span><span class="p">,</span> <span class="n">connect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_renew</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">CouchDB</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">parse_result</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">auth_token</span><span class="o">=</span><span class="n">parse_result</span><span class="o">.</span><span class="n">authorization</span><span class="p">,</span>
+                          <span class="n">url</span><span class="o">=</span><span class="n">url_without_credentials</span><span class="p">,</span> <span class="n">connect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_renew</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># logging.debug(self.client)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CloudantApiClient.get_database"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+    <span class="c1"># noinspection PyTypeChecker</span>
     <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">db</span>
@@ -94,14 +96,13 @@
 
 
 <div class="viewcode-block" id="CloudantApiDatabase"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CloudantApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
-
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing db :&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
 
 <div class="viewcode-block" id="CloudantApiDatabase.update_doc"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.update_doc">[docs]</a>  <span class="k">def</span> <span class="nf">update_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">CloudantApiDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update_doc</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="n">doc</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;_id&quot;</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;_id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
       <span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">uuid4</span>
       <span class="n">doc</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
 
@@ -148,30 +149,33 @@
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="CloudantApiDatabase.find"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiDatabase.find"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">find_filter</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">cloudant.query</span> <span class="k">import</span> <span class="n">Query</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">find_filter</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">result</span><span class="p">:</span>
       <span class="k">yield</span> <span class="n">strip_revision_in_copy</span><span class="p">(</span><span class="n">doc_map</span><span class="o">=</span><span class="n">doc</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CloudantApiDatabase.find_by_indexed_key"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.find_by_indexed_key">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_indexed_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CloudantApiDatabase.get_index_doc_name"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.get_index_doc_name">[docs]</a>  <span class="k">def</span> <span class="nf">get_index_doc_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="CloudantApiDatabase.get_index_doc_name"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.get_index_doc_name">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_index_doc_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="k">return</span> <span class="s1">&#39;_design/&#39;</span> <span class="o">+</span> <span class="n">name</span></div>
 
 <div class="viewcode-block" id="CloudantApiDatabase.update_index"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.update_index">[docs]</a>  <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">upsert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_query_index</span><span class="p">(</span><span class="n">design_document_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_index_doc_name</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">),</span> <span class="n">index_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_query_indexes</span><span class="p">()</span> <span class="c1"># TODO: This only exists in cloudant database.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_query_indexes</span><span class="p">()</span>  <span class="c1"># TODO: This only exists in cloudant database.</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented: need to check if index is created.&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="CouchdbApiClient"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiClient</span><span class="p">(</span><span class="n">ClientInterface</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;.. note:: Prefer :class:`CloudantApiClient`.&quot;&quot;&quot;</span>
+
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">couchdb</span> <span class="k">import</span> <span class="n">Server</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
 
+  <span class="c1"># noinspection PyBroadException</span>
 <div class="viewcode-block" id="CouchdbApiClient.get_database"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient.get_database">[docs]</a>  <span class="k">def</span> <span class="nf">get_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">[</span><span class="n">db_name</span><span class="p">]</span>
@@ -184,8 +188,10 @@
 <div class="viewcode-block" id="CouchdbApiClient.delete_database"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiClient.delete_database">[docs]</a>  <span class="k">def</span> <span class="nf">delete_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span></div></div>
 
+
 <div class="viewcode-block" id="CouchdbApiDatabase"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase">[docs]</a><span class="k">class</span> <span class="nc">CouchdbApiDatabase</span><span class="p">(</span><span class="n">DbInterface</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;.. note:: Prefer :class:`CloudantApiDatabase`.&quot;&quot;&quot;</span>
+
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing db :&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
@@ -226,8 +232,8 @@
 <div class="viewcode-block" id="CouchdbApiDatabase.find_by_indexed_key"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_indexed_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;not implemented&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CouchdbApiDatabase.find"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="nb">filter</span><span class="p">):</span>
+<div class="viewcode-block" id="CouchdbApiDatabase.find"><a class="viewcode-back" href="../../../sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find">[docs]</a>  <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">find_filter</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">find_filter</span><span class="p">):</span>
       <span class="k">yield</span> <span class="n">strip_revision_in_copy</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">doc</span><span class="p">)</span></div></div>
 </pre></div>
 

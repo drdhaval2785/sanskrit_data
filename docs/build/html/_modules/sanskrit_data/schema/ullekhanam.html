@@ -60,7 +60,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">import</span> <span class="nn">common</span>
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema</span> <span class="k">import</span> <span class="n">common</span>
 <span class="kn">from</span> <span class="nn">sanskrit_data.schema.books</span> <span class="k">import</span> <span class="n">BookPortion</span>
 <span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">TextContent</span>
 
@@ -91,6 +91,7 @@
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;source_type&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
+  <span class="c1"># noinspection PyShadowingBuiltins</span>
 <div class="viewcode-block" id="AnnotationSource.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.AnnotationSource.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="n">source</span> <span class="o">=</span> <span class="n">AnnotationSource</span><span class="p">()</span>
@@ -132,7 +133,9 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">Annotation</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Annotation.set_base_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="c1"># noinspection PyAttributeOutsideInit</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
+    <span class="c1"># noinspection PyAttributeOutsideInit</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span></div></div>
 
 
@@ -169,29 +172,30 @@
     <span class="n">rectangle</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span>
     <span class="n">rectangle</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
     <span class="n">rectangle</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">rectangle</span>
+    <span class="k">return</span> <span class="n">rectangle</span></div>
 
-    <span class="c1"># Two (segments are &#39;equal&#39; if they overlap</span>
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-      <span class="n">xmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-      <span class="n">ymax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-      <span class="n">w</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">xmax</span>
-      <span class="n">h</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">ymax</span>
-      <span class="k">return</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="c1"># Two (segments are &#39;equal&#39; if they overlap</span>
+  <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">overalap_w</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">xmax</span>
+    <span class="n">overalap_h</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">ymax</span>
+    <span class="k">return</span> <span class="n">overalap_w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">overalap_h</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-      <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-      <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; overlaps &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
-        <span class="k">return</span> <span class="mi">0</span>
-      <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">or</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-      <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span></div></div>
+  <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; overlaps &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+      <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">or</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">)):</span>
+      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">1</span></div>
 
 
+<span class="c1"># noinspection PyMethodOverriding</span>
 <div class="viewcode-block" id="ImageTarget"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageTarget">[docs]</a><span class="k">class</span> <span class="nc">ImageTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Target</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -206,6 +210,7 @@
   <span class="p">}))</span>
 
   <span class="c1"># TODO use w, h instead.</span>
+  <span class="c1"># noinspection PyMethodOverriding</span>
 <div class="viewcode-block" id="ImageTarget.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="p">,</span> <span class="n">rectangle</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">ImageTarget</span><span class="p">()</span>
@@ -337,6 +342,7 @@
     <span class="k">return</span> <span class="n">target</span></div></div>
 
 
+<span class="c1"># noinspection PyMethodOverriding</span>
 <div class="viewcode-block" id="PadaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">PadaAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -366,7 +372,9 @@
 
 <div class="viewcode-block" id="PadaAnnotation.set_base_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.set_base_details">[docs]</a>  <span class="k">def</span> <span class="nf">set_base_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="c1"># noinspection PyAttributeOutsideInit</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">word</span>
+    <span class="c1"># noinspection PyAttributeOutsideInit</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span></div>
 
 <div class="viewcode-block" id="PadaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
@@ -378,6 +386,7 @@
 
 
 <span class="c1"># Targets: TextTarget pointing to TextAnnotation</span>
+<span class="c1"># noinspection PyMethodOverriding</span>
 <div class="viewcode-block" id="SubantaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SubantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">SubantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -412,6 +421,7 @@
     <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
+<span class="c1"># noinspection PyMethodOverriding,PyPep8Naming</span>
 <div class="viewcode-block" id="TinantaAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TinantaAnnotation">[docs]</a><span class="k">class</span> <span class="nc">TinantaAnnotation</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">PadaAnnotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -474,7 +484,7 @@
     <span class="p">},</span>
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;combined_string&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
-  
+
 <div class="viewcode-block" id="TextSambandhaAnnotation.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">TextSambandhaAnnotation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_text_padas</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">],</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
@@ -483,7 +493,6 @@
 <div class="viewcode-block" id="TextSambandhaAnnotation.get_allowed_target_classes"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.TextSambandhaAnnotation.get_allowed_target_classes">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">get_allowed_target_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">BookPortion</span><span class="p">,</span> <span class="n">TextAnnotation</span><span class="p">]</span></div></div>
-
 
 
 <span class="c1"># Targets: two or more PadaAnnotations</span>
@@ -509,11 +518,11 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="SandhiAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SandhiAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="n">sandhi_type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">SandhiAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">combined_string</span> <span class="o">=</span> <span class="n">combined_string</span>
-    <span class="n">annotation</span><span class="o">.</span><span class="n">sandhi_type</span> <span class="o">=</span> <span class="nb">type</span>
+    <span class="n">annotation</span><span class="o">.</span><span class="n">sandhi_type</span> <span class="o">=</span> <span class="n">sandhi_type</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">annotation</span></div></div>
 
@@ -546,18 +555,18 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">validate_targets</span><span class="p">(</span><span class="n">targets</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">component_padas</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="p">[</span><span class="n">PadaAnnotation</span><span class="p">],</span> <span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SamaasaAnnotation.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.SamaasaAnnotation.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">combined_string</span><span class="p">,</span> <span class="n">samaasa_type</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
     <span class="n">annotation</span> <span class="o">=</span> <span class="n">SamaasaAnnotation</span><span class="p">()</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">set_base_details</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">combined_string</span> <span class="o">=</span> <span class="n">combined_string</span>
-    <span class="n">annotation</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+    <span class="n">annotation</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">samaasa_type</span>
     <span class="n">annotation</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">annotation</span></div></div>
 
 
 <span class="c1"># Essential for depickling to work.</span>
 <span class="n">common</span><span class="o">.</span><span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_class_index</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_classhint_to_module</span><span class="p">)</span>
 </pre></div>
 
           </div>

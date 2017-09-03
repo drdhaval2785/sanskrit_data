@@ -90,7 +90,7 @@
 <em class="property">classmethod </em><code class="descname">make_from_dict</code><span class="sig-paren">(</span><em>input_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObject.make_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObject.make_from_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines <em>our</em> canonical way of constructing a JSON object from a dict.</p>
 <p>All other deserialization methods should use this.</p>
-<p>Note that this assumes that json_class_index is populated properly!</p>
+<p>Note that this assumes that json_classhint_to_module is populated properly!</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">from</span> <span class="pre">sanskrit_data.schema</span> <span class="pre">import</span> <span class="pre">*</span></code> before using this should take care of it.</li>
 </ul>
@@ -200,7 +200,7 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.fill_descendents">
-<code class="descname">fill_descendents</code><span class="sig-paren">(</span><em>db_interface</em>, <em>depth=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.fill_descendents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.fill_descendents" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fill_descendents</code><span class="sig-paren">(</span><em>db_interface</em>, <em>depth=10</em>, <em>entity_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.fill_descendents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.fill_descendents" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
@@ -333,9 +333,9 @@ This value may not be available: for example when called from the from_details m
 <dd></dd></dl>
 
 <dl class="data">
-<dt id="sanskrit_data.schema.common.json_class_index">
-<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> = {'JsonObjectWithTarget': 'sanskrit_data.schema.common', 'Target': 'sanskrit_data.schema.common', 'JsonObject': 'sanskrit_data.schema.common', 'TextContent': 'sanskrit_data.schema.common', 'TargetValidationError': 'sanskrit_data.schema.common', 'JsonObjectNode': 'sanskrit_data.schema.common'}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using <a class="reference internal" href="#sanskrit_data.schema.common.update_json_class_index" title="sanskrit_data.schema.common.update_json_class_index"><code class="xref py py-func docutils literal"><span class="pre">update_json_class_index()</span></code></a> calls at the end of each module file (such as this one) whose classes may be serialized.</p>
+<dt id="sanskrit_data.schema.common.json_classhint_to_module">
+<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_classhint_to_module</code><em class="property"> = {'JsonObjectWithTarget': 'sanskrit_data.schema.common', 'Target': 'sanskrit_data.schema.common', 'JsonObject': 'sanskrit_data.schema.common', 'TextContent': 'sanskrit_data.schema.common', 'TargetValidationError': 'sanskrit_data.schema.common', 'BookPortion': 'sanskrit_data.schema.books', 'JsonObjectNode': 'sanskrit_data.schema.common', 'PublicationDetails': 'sanskrit_data.schema.books', 'BookPositionTarget': 'sanskrit_data.schema.books'}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_classhint_to_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps jsonClass values to the containing Python module object. Useful for (de)serialization. Updated using <a class="reference internal" href="#sanskrit_data.schema.common.update_json_class_index" title="sanskrit_data.schema.common.update_json_class_index"><code class="xref py py-func docutils literal"><span class="pre">update_json_class_index()</span></code></a> calls at the end of each module file (such as this one) whose classes may be serialized.</p>
 </dd></dl>
 
 <dl class="function">

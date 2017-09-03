@@ -72,7 +72,7 @@
         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Any number describing the position of one BookPortion within another.&quot;</span>
       <span class="p">}</span>
     <span class="p">}</span>
-    <span class="p">})</span>
+  <span class="p">})</span>
 
 <div class="viewcode-block" id="BookPositionTarget.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPositionTarget.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">container_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -180,16 +180,17 @@
 
 <div class="viewcode-block" id="BookPortion.from_path"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion.from_path">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
-    <span class="n">book_portion_dict</span> <span class="o">=</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">})</span>
+    <span class="n">book_portion_dict</span> <span class="o">=</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">find_filter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">})</span>
     <span class="k">if</span> <span class="n">book_portion_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">book_portion</span> <span class="o">=</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">book_portion_dict</span><span class="p">)</span>
       <span class="k">return</span> <span class="n">book_portion</span></div></div>
 
+
 <span class="c1"># Essential for depickling to work.</span>
 <span class="n">common</span><span class="o">.</span><span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_class_index</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">json_classhint_to_module</span><span class="p">)</span>
 </pre></div>
 
           </div>
