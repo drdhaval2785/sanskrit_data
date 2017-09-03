@@ -12,7 +12,7 @@ Usage tips:
 
 - Enabling (de)serialization (if one has defined a data container class in a new module file)
 
-  - One needs to update :py:data:`~sanskrit_data.schema.common.json_class_index` - see the comment there for details.
+  - One needs to update :py:data:`~sanskrit_data.schema.common.json_classhint_to_module` - see the comment there for details.
 
 Data design
 -----------

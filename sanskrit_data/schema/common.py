@@ -21,8 +21,8 @@ logging.basicConfig(
 JSONPICKLE_TYPE_FIELD = "py/object"
 TYPE_FIELD = "jsonClass"
 
-#: Maps jsonClass values to Python object names. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.
-json_class_index = {}
+#: Maps jsonClass values to the containing Python module object. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.
+json_classhint_to_module = {}
 
 
 def update_json_class_index(module_in):
@@ -33,7 +33,7 @@ def update_json_class_index(module_in):
   import inspect
   for name, obj in inspect.getmembers(module_in):
     if inspect.isclass(obj):
-      json_class_index[name] = obj.__module__
+      json_classhint_to_module[name] = obj.__module__
 
 
 def check_class(obj, allowed_types):
@@ -85,7 +85,7 @@ class JsonObject(object):
 
     All other deserialization methods should use this.
 
-    Note that this assumes that json_class_index is populated properly!
+    Note that this assumes that json_classhint_to_module is populated properly!
 
     - ``from sanskrit_data.schema import *`` before using this should take care of it.
 
@@ -101,7 +101,7 @@ class JsonObject(object):
     def recursively_set_jsonpickle_type(some_dict):
       wire_type = some_dict.pop(TYPE_FIELD, None)
       if wire_type:
-        some_dict[JSONPICKLE_TYPE_FIELD] = json_class_index[wire_type] + "." + wire_type
+        some_dict[JSONPICKLE_TYPE_FIELD] = json_classhint_to_module[wire_type] + "." + wire_type
       for key, value in iter(some_dict.items()):
         if isinstance(value, dict):
           recursively_set_jsonpickle_type(value)
@@ -385,9 +385,9 @@ class JsonObjectWithTarget(JsonObject):
         }
       }
     }
-    if entity_type:
-      find_filter[TYPE_FIELD] = entity_type
     targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(find_filter)]
+    if entity_type is not None:
+      targetting_objs = filter(lambda obj: isinstance(obj, getattr(json_classhint_to_module[entity_type], entity_type)), targetting_objs)
     return targetting_objs
 
 
@@ -451,8 +451,8 @@ class JsonObjectNode(JsonObject):
     # Delete or disconnect children before deleting oneself.
     self.content.delete_in_collection(db_interface)
 
-  def fill_descendents(self, db_interface, depth=10):
-    targetting_objs = self.content.get_targetting_entities(db_interface=db_interface)
+  def fill_descendents(self, db_interface, depth=10, entity_type=None):
+    targetting_objs = self.content.get_targetting_entities(db_interface=db_interface, entity_type=entity_type)
     self.children = []
     if depth > 0:
       for targetting_obj in targetting_objs:
@@ -502,4 +502,4 @@ def get_schemas(module_in):
 
 # Essential for depickling to work.
 update_json_class_index(sys.modules[__name__])
-logging.debug(json_class_index)
+logging.debug(json_classhint_to_module)
