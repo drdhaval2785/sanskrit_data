@@ -9,7 +9,7 @@ This module defines:
 
 Similar libraries in various other languages are being built:
 
-- Scala (likely compatible with Java): [db-interface](https://github.com/sanskrit-coders/db-interface) .
+- Scala (likely compatible with Java): [db-interface](https://github.com/vedavaapi/db-interface) .
 
 ## Motivation
 - Various sanskrit modules need to communicate data amongst each other (for example through a REST API or database stores or even function calls). **Examples of the data being communicated** could be:
@@ -28,20 +28,20 @@ Similar libraries in various other languages are being built:
 ## Installation
 - Install this library (Replace pip2 with pip3 as needed)
     - Latest release: `sudo pip2 install sanskrit_data -U`
-    - Development copy: `sudo pip2 install git+https://github.com/sanskrit-coders/sanskrit_data@master -U`
+    - Development copy: `sudo pip2 install git+https://github.com/vedavaapi/sanskrit_data@master -U`
     - [Web](https://pypi.python.org/pypi/sanskrit_data).
 - Install libraries for the particular database you want to access through the sanskrit_data.db interface (as needed): pymongo, cloudant (for couchdb).
 
 ## Usage
 - Please see the generated python sphynx docs in one of the following places:
     - http://sanskrit-data.readthedocs.io
-    - [project page](https://sanskrit-coders.github.io/sanskrit_data/build/html/sanskrit_data.html).
+    - [project page](https://vedavaapi.github.io/sanskrit_data/build/html/sanskrit_data.html).
     - under docs/_build/html/index.html
 - Design considerations for data containers corresponding to the various submodules (such as books and annotations) are given below - or in the corresponding source files.
 
 # For contributors
 ## Contact
-Have a problem or question? Please head to [github](https://github.com/sanskrit-coders/sanskrit_data).
+Have a problem or question? Please head to [github](https://github.com/vedavaapi/sanskrit_data).
 
 ## Packaging
 * ~/.pypirc should have your pypi login credentials.
