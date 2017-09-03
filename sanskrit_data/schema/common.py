@@ -387,7 +387,7 @@ class JsonObjectWithTarget(JsonObject):
     }
     targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(find_filter)]
     if entity_type is not None:
-      targetting_objs = filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs)
+      targetting_objs = list(filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs))
     return targetting_objs
 
 
