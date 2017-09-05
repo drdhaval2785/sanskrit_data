@@ -85,7 +85,7 @@ class Collection(DbInterface):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
 
   def add_index(self, keys_dict, index_name):
-    self.mongo_collection.create_index(keys=keys_dict.items(), name=index_name, background=True)
+    self.mongo_collection.create_index(keys=list(keys_dict.items()), name=index_name, background=True)
 
 
 def _fix_id(doc):
