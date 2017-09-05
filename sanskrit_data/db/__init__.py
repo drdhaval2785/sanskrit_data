@@ -60,9 +60,6 @@ class DbInterface(object):
     """
     pass
 
-  def find_by_indexed_key(self, index_name, key):
-    pass
-
   def find_by_id(self, id):
     """
     
@@ -91,4 +88,11 @@ class DbInterface(object):
 
   def update_index(self, name, fields, upsert=False):
     """Create or update (if upsert=True) an index over certain fields, with a given name."""
+    pass
+
+  def add_index(self, keys_json, index_name):
+    """Index the database using certain fields.
+
+    :param keys_json: A document that contains the field and value pairs where the field is the index key and the value describes the type of index for that field. For an ascending index on a field, specify a value of 1; for descending index, specify a value of -1.
+    """
     pass

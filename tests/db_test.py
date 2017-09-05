@@ -3,9 +3,8 @@ from __future__ import absolute_import
 import logging
 import unittest
 
-from sanskrit_data.db.couchdb import CouchdbApiDatabase, CloudantApiClient, CloudantApiDatabase
-from sanskrit_data.schema.common import JsonObject
 import tests
+from sanskrit_data.schema.common import JsonObject
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -17,7 +16,10 @@ class TestDBRoundTrip(unittest.TestCase):
 
   def setUp(self):
     tests.set_configuration()
-    self.server = CloudantApiClient(tests.server_config["couchdb_host"])
+    # from sanskrit_data.db.couchdb import CloudantApiClient
+    # self.server = CloudantApiClient(tests.server_config["couchdb_host"])
+    from sanskrit_data.db import mongodb
+    self.server = mongodb.Client(url=tests.server_config["mongo_host"])
     self.test_db = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
 
   def tearDown(self):

@@ -59,7 +59,7 @@ class Collection(DbInterface):
 
   def find_one(self, find_filter):
     _fix_id_filter(filter=find_filter)
-    result = self.mongo_collection.find_one(find_filter=find_filter)
+    result = self.mongo_collection.find_one(filter=find_filter)
     _fix_id(doc=result)
     return result
 
@@ -83,6 +83,9 @@ class Collection(DbInterface):
 
   def delete_doc(self, doc_id):
     self.mongo_collection.delete_one({"_id": ObjectId(doc_id)})
+
+  def add_index(self, keys_json, index_name):
+    self.mongo_collection.create_index(key_or_list=keys_json, name=index_name, background=True )
 
 
 def _fix_id(doc):
