@@ -71,7 +71,7 @@ class AuthenticationInfo(JsonObject):
 
   VEDAVAAPI_AUTH = "vedavaapi"
 
-  def get_user_id(self):
+  def __str__(self):
     return self.auth_provider + "____" + self.auth_user_id
 
   def check_password(self, plain_password):
@@ -114,11 +114,9 @@ class User(JsonObject):
   )
 
   @classmethod
-  def from_details(cls, nickname, auth_user_id, auth_provider, user_type, auth_secret_hashed=None, permissions=None):
+  def from_details(cls, user_type, auth_infos, permissions=None):
     obj = User()
-    obj.authentication_infos = [AuthenticationInfo.from_details(auth_provider=auth_provider, auth_user_id=auth_user_id,
-                                                                auth_secret_hashed=auth_secret_hashed)]
-    obj.nickname = nickname
+    obj.authentication_infos = auth_infos
     obj.user_type = user_type
     if permissions:
       obj.permissions = permissions
@@ -138,9 +136,9 @@ class User(JsonObject):
     return False
 
   def get_user_ids(self):
-    return [auth_info.get_user_id() for auth_info in self.authentication_infos]
+    return [str(auth_info) for auth_info in self.authentication_infos]
 
 
-# Essential for depickling to work.
+    # Essential for depickling to work.
 update_json_class_index(sys.modules[__name__])
 logging.debug(common.json_class_index)
