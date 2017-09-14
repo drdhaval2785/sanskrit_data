@@ -45,7 +45,7 @@ class UserPermission(JsonObject):
 def hash_password(plain_password):
   import bcrypt
   #   (Using bcrypt, the salt is saved into the hash itself)
-  return bcrypt.hashpw(plain_password.encode('utf8'), bcrypt.gensalt())
+  return bcrypt.hashpw(plain_password.encode(encoding='utf8'), bcrypt.gensalt()).decode(encoding='utf8')
 
 
 class AuthenticationInfo(JsonObject):
@@ -82,7 +82,7 @@ class AuthenticationInfo(JsonObject):
   def check_password(self, plain_password):
     # Check hased password. Using bcrypt, the salt is saved into the hash itself
     import bcrypt
-    return bcrypt.checkpw(plain_password.encode('utf8'), self.auth_secret_bcrypt)
+    return bcrypt.checkpw(plain_password.encode(encoding='utf8'), self.auth_secret_bcrypt.encode(encoding='utf8'))
 
   @classmethod
   def from_details(cls, auth_user_id, auth_provider, auth_secret_hashed=None):
