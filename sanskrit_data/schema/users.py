@@ -42,7 +42,7 @@ class UserPermission(JsonObject):
     return obj
 
 
-def set_password(plain_password):
+def hash_password(plain_password):
   import bcrypt
   #   (Using bcrypt, the salt is saved into the hash itself)
   return bcrypt.hashpw(plain_password, bcrypt.gensalt())
@@ -63,7 +63,12 @@ class AuthenticationInfo(JsonObject):
           "enum": ["google", "vedavaapi"]
         },
         "auth_secret_bcrypt": {
-          "type": "string"
+          "type": "string",
+          "description": "This should be hashed, and merits being stored in a database."
+        },
+        "auth_secret_plain": {
+          "type": "string",
+          "description": "This should NEVER be set when stored in a database; but is good for client-server transmission purposes."
         }
       }
     }
@@ -75,7 +80,7 @@ class AuthenticationInfo(JsonObject):
     return self.auth_provider + "____" + self.auth_user_id
 
   def check_password(self, plain_password):
-    # Check hased password. Useing bcrypt, the salt is saved into the hash itself
+    # Check hased password. Using bcrypt, the salt is saved into the hash itself
     import bcrypt
     return bcrypt.checkpw(plain_password, self.auth_secret_bcrypt)
 
@@ -87,6 +92,18 @@ class AuthenticationInfo(JsonObject):
     if auth_secret_hashed:
       obj.auth_secret_hashed = auth_secret_hashed
     return obj
+
+  def set_bcrypt_password(self):
+    if hasattr(self, "auth_secret_plain") and self.auth_secret_plain != "" and self.auth_secret_plain is not None:
+      self.auth_secret_bcrypt = hash_password(plain_password=self.auth_secret_plain)
+      delattr(self, "auth_secret_plain")
+
+  def validate_schema(self):
+    super(AuthenticationInfo, self).validate_schema()
+    from jsonschema import ValidationError
+    self.set_bcrypt_password()
+    if self.auth_secret_hashed == "" or self.auth_secret_hashed is None:
+      raise ValidationError(message="auth_secret_hashed should be absent or non-empty.")
 
 
 class User(JsonObject):
@@ -121,6 +138,10 @@ class User(JsonObject):
     if permissions:
       obj.permissions = permissions
     return obj
+
+  def validate_schema(self):
+    super(User, self).validate_schema()
+
 
   def check_permission(self, service, action):
     def fullmatch(pattern, string, flags=0):

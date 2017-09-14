@@ -241,6 +241,7 @@ class JsonObject(object):
     return dict1 == dict2
 
   def update_collection(self, db_interface):
+    """Do JSON validation and write to database."""
     self.set_type_recursively()
     if hasattr(self, "schema"):
       self.validate(db_interface)
@@ -254,9 +255,9 @@ class JsonObject(object):
     return db_interface.delete_doc(self._id)
 
   def validate(self, db_interface=None):
-    """Validate the JSON serialization of this object using the schema member.
+    """Validate the JSON serialization of this object using the schema member. Called before database writes.
 
-    :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).
+    :param db_interface: Potentially useful in subclasses to perform validations (eg. is the target_id valid).
       This value may not be available: for example when called from the from_details methods.
 
     :return: a boolean.
@@ -272,6 +273,16 @@ class JsonObject(object):
     from jsonschema import SchemaError
     try:
       jsonschema.validate(json_map, self.schema)
+
+      # Subobjects could have specialized validation rules, specified using validate_schema overrides. Hence we specially call those methods.
+      for key, value in iter(self.__dict__.items()):
+        # logging.debug("%s %s", key, value)
+        if isinstance(value, JsonObject):
+          value.validate_schema()
+        elif isinstance(value, list):
+          json_map[key] = [item.validate_schema() if isinstance(item, JsonObject) else item for item in value]
+        else:
+          pass
     except SchemaError as e:
       logging.error(jsonpickle.dumps(self.schema))
       raise e
