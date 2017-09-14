@@ -102,8 +102,8 @@ class AuthenticationInfo(JsonObject):
     super(AuthenticationInfo, self).validate_schema()
     from jsonschema import ValidationError
     self.set_bcrypt_password()
-    if self.auth_secret_hashed == "" or self.auth_secret_hashed is None:
-      raise ValidationError(message="auth_secret_hashed should be absent or non-empty.")
+    if hasattr(self, "auth_secret_hashed") and (self.auth_secret_hashed == "" or self.auth_secret_hashed is None):
+      raise ValidationError(message="auth_secret_hashed should be non-empty if present.")
 
 
 class User(JsonObject):
