@@ -1,3 +1,11 @@
+"""
+Intro
+-----
+
+- For general context and class diagram, refer to :mod:`~sanskrit_data.schema`.
+
+
+"""
 import logging
 import sys
 
