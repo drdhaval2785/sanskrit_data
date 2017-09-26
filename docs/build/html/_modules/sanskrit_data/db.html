@@ -45,6 +45,9 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="c1"># Sphinx uses the all list to check every module is loaded, but in some cases it is not and a warning is generated:</span>
+<span class="c1">#   missing attribute mentioned in :members: or __all__: module</span>
+<span class="sd">&quot;&quot;&quot;Allows users to do ``from xyz import *`` &quot;&quot;&quot;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ClientInterface&quot;</span><span class="p">,</span> <span class="s2">&quot;DbInterface&quot;</span><span class="p">,</span> <span class="s2">&quot;couchdb&quot;</span><span class="p">,</span> <span class="s2">&quot;mongodb&quot;</span><span class="p">]</span>
 
 
@@ -102,9 +105,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="DbInterface.find_by_indexed_key"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find_by_indexed_key">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_indexed_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="k">pass</span></div>
-
 <div class="viewcode-block" id="DbInterface.find_by_id"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.find_by_id">[docs]</a>  <span class="k">def</span> <span class="nf">find_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    </span>
@@ -133,6 +133,13 @@
 
 <div class="viewcode-block" id="DbInterface.update_index"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.update_index">[docs]</a>  <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">upsert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create or update (if upsert=True) an index over certain fields, with a given name.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="DbInterface.add_index"><a class="viewcode-back" href="../../sanskrit_data_db.html#sanskrit_data.db.DbInterface.add_index">[docs]</a>  <span class="k">def</span> <span class="nf">add_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys_json</span><span class="p">,</span> <span class="n">index_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Index the database using certain fields.</span>
+
+<span class="sd">    :param keys_json: A document that contains the field and value pairs where the field is the index key and the value describes the type of index for that field. For an ascending index on a field, specify a value of 1; for descending index, specify a value of -1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div></div>
 </pre></div>
 

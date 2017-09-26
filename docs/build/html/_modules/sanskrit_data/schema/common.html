@@ -64,7 +64,7 @@
 <span class="n">TYPE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;jsonClass&quot;</span>
 
 <span class="c1">#: Maps jsonClass values to the containing Python module object. Useful for (de)serialization. Updated using :func:`update_json_class_index` calls at the end of each module file (such as this one) whose classes may be serialized.</span>
-<span class="n">json_classhint_to_module</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">json_class_index</span> <span class="o">=</span> <span class="p">{}</span>
 
 
 <div class="viewcode-block" id="update_json_class_index"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.update_json_class_index">[docs]</a><span class="k">def</span> <span class="nf">update_json_class_index</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
@@ -75,7 +75,7 @@
   <span class="kn">import</span> <span class="nn">inspect</span>
   <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-      <span class="n">json_classhint_to_module</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__module__</span></div>
+      <span class="n">json_class_index</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span></div>
 
 
 <div class="viewcode-block" id="check_class"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.check_class">[docs]</a><span class="k">def</span> <span class="nf">check_class</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
@@ -127,7 +127,7 @@
 
 <span class="sd">    All other deserialization methods should use this.</span>
 
-<span class="sd">    Note that this assumes that json_classhint_to_module is populated properly!</span>
+<span class="sd">    Note that this assumes that json_class_index is populated properly!</span>
 
 <span class="sd">    - ``from sanskrit_data.schema import *`` before using this should take care of it.</span>
 
@@ -143,7 +143,7 @@
     <span class="k">def</span> <span class="nf">recursively_set_jsonpickle_type</span><span class="p">(</span><span class="n">some_dict</span><span class="p">):</span>
       <span class="n">wire_type</span> <span class="o">=</span> <span class="n">some_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
       <span class="k">if</span> <span class="n">wire_type</span><span class="p">:</span>
-        <span class="n">some_dict</span><span class="p">[</span><span class="n">JSONPICKLE_TYPE_FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_classhint_to_module</span><span class="p">[</span><span class="n">wire_type</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">wire_type</span>
+        <span class="n">some_dict</span><span class="p">[</span><span class="n">JSONPICKLE_TYPE_FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_class_index</span><span class="p">[</span><span class="n">wire_type</span><span class="p">]</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">wire_type</span>
       <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">some_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
           <span class="n">recursively_set_jsonpickle_type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -283,6 +283,7 @@
     <span class="k">return</span> <span class="n">dict1</span> <span class="o">==</span> <span class="n">dict2</span></div>
 
 <div class="viewcode-block" id="JsonObject.update_collection"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do JSON validation and write to database.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_type_recursively</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
@@ -296,9 +297,9 @@
     <span class="k">return</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">delete_doc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="JsonObject.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Validate the JSON serialization of this object using the schema member.</span>
+    <span class="sd">&quot;&quot;&quot;Validate the JSON serialization of this object using the schema member. Called before database writes.</span>
 
-<span class="sd">    :param db_interface: Potentially useful in subclasses to perfrom validations (eg. is the target_id valid).</span>
+<span class="sd">    :param db_interface: Potentially useful in subclasses to perform validations (eg. is the target_id valid).</span>
 <span class="sd">      This value may not be available: for example when called from the from_details methods.</span>
 
 <span class="sd">    :return: a boolean.</span>
@@ -314,6 +315,16 @@
     <span class="kn">from</span> <span class="nn">jsonschema</span> <span class="k">import</span> <span class="n">SchemaError</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="n">jsonschema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">json_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
+
+      <span class="c1"># Subobjects could have specialized validation rules, specified using validate_schema overrides. Hence we specially call those methods.</span>
+      <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="c1"># logging.debug(&quot;%s %s&quot;, key, value)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
+          <span class="n">value</span><span class="o">.</span><span class="n">validate_schema</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+          <span class="n">json_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">validate_schema</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">pass</span>
     <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">))</span>
       <span class="k">raise</span> <span class="n">e</span>
@@ -429,7 +440,7 @@
     <span class="p">}</span>
     <span class="n">targetting_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">make_from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">db_interface</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">find_filter</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">entity_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">targetting_objs</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">json_classhint_to_module</span><span class="p">[</span><span class="n">entity_type</span><span class="p">],</span> <span class="n">entity_type</span><span class="p">)),</span> <span class="n">targetting_objs</span><span class="p">)</span>
+      <span class="n">targetting_objs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">json_class_index</span><span class="p">[</span><span class="n">entity_type</span><span class="p">]),</span> <span class="n">targetting_objs</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">targetting_objs</span></div></div>
 
 
@@ -544,7 +555,7 @@
 
 <span class="c1"># Essential for depickling to work.</span>
 <span class="n">update_json_class_index</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">])</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">json_classhint_to_module</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">json_class_index</span><span class="p">)</span>
 </pre></div>
 
           </div>

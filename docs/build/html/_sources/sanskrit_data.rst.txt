@@ -7,6 +7,8 @@ sanskrit_data's documentation
   :show-inheritance:
 
 
+Submodules
+-------------
 .. toctree::
   :maxdepth: 5
 

@@ -99,6 +99,20 @@
 <p>A common interface to a database.</p>
 <p>Accessing databases through implementations of this interface enables one to switch databases more easily down the line.</p>
 <dl class="method">
+<dt id="sanskrit_data.db.DbInterface.add_index">
+<code class="descname">add_index</code><span class="sig-paren">(</span><em>keys_json</em>, <em>index_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.add_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.add_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Index the database using certain fields.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys_json</strong> – A document that contains the field and value pairs where the field is the index key and the value describes the type of index for that field. For an ascending index on a field, specify a value of 1; for descending index, specify a value of -1.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="sanskrit_data.db.DbInterface.delete_doc">
 <code class="descname">delete_doc</code><span class="sig-paren">(</span><em>doc_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.delete_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.delete_doc" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -146,11 +160,6 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="sanskrit_data.db.DbInterface.find_by_indexed_key">
-<code class="descname">find_by_indexed_key</code><span class="sig-paren">(</span><em>index_name</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find_by_indexed_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find_by_indexed_key" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="sanskrit_data.db.DbInterface.find_one">
 <code class="descname">find_one</code><span class="sig-paren">(</span><em>find_filter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/db.html#DbInterface.find_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.db.DbInterface.find_one" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fine one matching object from the database.</p>
@@ -190,11 +199,24 @@
 
 </dd></dl>
 
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db_mongodb.html">sanskrit_data.db.mongodb</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db_couchdb.html">sanskrit_data.db.couchdb</a></li>
 </ul>
+</div>
+</div>
+<div class="section" id="package-diagram">
+<h2>Package diagram<a class="headerlink" href="#package-diagram" title="Permalink to this headline">¶</a></h2>
+<p>Open the below image in a new tab and zoom in for clarity.</p>
+<a class="reference external image-reference" href="_images/packages_sanskrit_data_db.png"><img alt="_images/packages_sanskrit_data_db.png" src="_images/packages_sanskrit_data_db.png" /></a>
+</div>
+<div class="section" id="class-diagram">
+<h2>Class diagram<a class="headerlink" href="#class-diagram" title="Permalink to this headline">¶</a></h2>
+<p>Open the below image in a new tab and zoom in for clarity.</p>
+<a class="reference external image-reference" href="_images/classes_sanskrit_data_db.png"><img alt="_images/classes_sanskrit_data_db.png" src="_images/classes_sanskrit_data_db.png" /></a>
 </div>
 </div>
 
@@ -217,8 +239,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_schema.html">sanskrit_data.schema</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sanskrit_data.db</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_db_mongodb.html">sanskrit_data.db.mongodb</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_db_couchdb.html">sanskrit_data.db.couchdb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_db_mongodb.html">sanskrit_data.db.mongodb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_db_couchdb.html">sanskrit_data.db.couchdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#package-diagram">Package diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#class-diagram">Class diagram</a></li>
 </ul>
 </li>
 </ul>

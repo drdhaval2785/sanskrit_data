@@ -51,6 +51,7 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#J"><strong>J</strong></a>
  | <a href="#M"><strong>M</strong></a>
@@ -65,10 +66,16 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation">Annotation (class in sanskrit_data.schema.ullekhanam)</a>
+      <li><a href="sanskrit_data_db.html#sanskrit_data.db.DbInterface.add_index">add_index() (sanskrit_data.db.DbInterface method)</a>
+
+      <ul>
+        <li><a href="sanskrit_data_db_mongodb.html#sanskrit_data.db.mongodb.Collection.add_index">(sanskrit_data.db.mongodb.Collection method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.Annotation">Annotation (class in sanskrit_data.schema.ullekhanam)</a>
+</li>
       <li><a href="sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.AnnotationSource">AnnotationSource (class in sanskrit_data.schema.ullekhanam)</a>
 </li>
       <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo">AuthenticationInfo (class in sanskrit_data.schema.users)</a>
@@ -198,8 +205,6 @@
       <li><a href="sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CloudantApiDatabase.find_by_indexed_key">find_by_indexed_key() (sanskrit_data.db.couchdb.CloudantApiDatabase method)</a>
 
       <ul>
-        <li><a href="sanskrit_data_db.html#sanskrit_data.db.DbInterface.find_by_indexed_key">(sanskrit_data.db.DbInterface method)</a>
-</li>
         <li><a href="sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.find_by_indexed_key">(sanskrit_data.db.couchdb.CouchdbApiDatabase method)</a>
 </li>
       </ul></li>
@@ -325,11 +330,17 @@
 </li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectWithTarget.get_targetting_entities">get_targetting_entities() (sanskrit_data.schema.common.JsonObjectWithTarget method)</a>
 </li>
-      <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.get_user_id">get_user_id() (sanskrit_data.schema.users.AuthenticationInfo method)</a>
-</li>
       <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.User.get_user_ids">get_user_ids() (sanskrit_data.schema.users.User method)</a>
 </li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.get_wire_typeid">get_wire_typeid() (sanskrit_data.schema.common.JsonObject class method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.hash_password">hash_password() (in module sanskrit_data.schema.users)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -349,7 +360,7 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.json_classhint_to_module">json_classhint_to_module (in module sanskrit_data.schema.common)</a>
+      <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.json_class_index">json_class_index (in module sanskrit_data.schema.common)</a>
 </li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject">JsonObject (class in sanskrit_data.schema.common)</a>
 </li>
@@ -489,13 +500,13 @@
         <li><a href="sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.PadaAnnotation.set_base_details">(sanskrit_data.schema.ullekhanam.PadaAnnotation method)</a>
 </li>
       </ul></li>
+      <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.set_bcrypt_password">set_bcrypt_password() (sanskrit_data.schema.users.AuthenticationInfo method)</a>
+</li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.set_from_dict">set_from_dict() (sanskrit_data.schema.common.JsonObject method)</a>
 </li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.set_from_id">set_from_id() (sanskrit_data.schema.common.JsonObject method)</a>
 </li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.set_jsonpickle_type_recursively">set_jsonpickle_type_recursively() (sanskrit_data.schema.common.JsonObject method)</a>
-</li>
-      <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.set_password">set_password() (in module sanskrit_data.schema.users)</a>
 </li>
       <li><a href="sanskrit_data_db_couchdb.html#sanskrit_data.db.couchdb.CouchdbApiDatabase.set_revision">set_revision() (sanskrit_data.db.couchdb.CouchdbApiDatabase method)</a>
 </li>
@@ -602,7 +613,13 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObject.validate_schema">validate_schema() (sanskrit_data.schema.common.JsonObject method)</a>
+
+      <ul>
+        <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.validate_schema">(sanskrit_data.schema.users.AuthenticationInfo method)</a>
 </li>
+        <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.User.validate_schema">(sanskrit_data.schema.users.User method)</a>
+</li>
+      </ul></li>
       <li><a href="sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectWithTarget.validate_targets">validate_targets() (sanskrit_data.schema.common.JsonObjectWithTarget method)</a>
 </li>
       <li><a href="sanskrit_data_schema_users.html#sanskrit_data.schema.users.AuthenticationInfo.VEDAVAAPI_AUTH">VEDAVAAPI_AUTH (sanskrit_data.schema.users.AuthenticationInfo attribute)</a>

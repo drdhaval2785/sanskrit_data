@@ -62,14 +62,19 @@
 <em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>auth_user_id</em>, <em>auth_provider</em>, <em>auth_secret_hashed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="sanskrit_data.schema.users.AuthenticationInfo.get_user_id">
-<code class="descname">get_user_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.get_user_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.get_user_id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="attribute">
 <dt id="sanskrit_data.schema.users.AuthenticationInfo.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_user_id': {'type': 'string'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_secret_bcrypt': {'type': 'string'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_secret_plain': {'type': 'string', 'description': 'This should NEVER be set when stored in a database; but is good for client-server transmission purposes.'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_user_id': {'type': 'string'}, 'auth_secret_bcrypt': {'type': 'string', 'description': 'This should be hashed, and merits being stored in a database.'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.set_bcrypt_password">
+<code class="descname">set_bcrypt_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.set_bcrypt_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.set_bcrypt_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.AuthenticationInfo.validate_schema">
+<code class="descname">validate_schema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#AuthenticationInfo.validate_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.AuthenticationInfo.validate_schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -86,7 +91,7 @@
 
 <dl class="classmethod">
 <dt id="sanskrit_data.schema.users.User.from_details">
-<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>nickname</em>, <em>auth_user_id</em>, <em>auth_provider</em>, <em>user_type</em>, <em>auth_secret_hashed=None</em>, <em>permissions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.from_details" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>user_type</em>, <em>auth_infos</em>, <em>permissions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -96,7 +101,12 @@
 
 <dl class="attribute">
 <dt id="sanskrit_data.schema.users.User.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'enum': ['User'], 'type': 'string'}, 'user_type': {'enum': ['human', 'bot'], 'type': 'string'}, 'authentication_infos': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_secret_bcrypt': {'type': 'string'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_user_id': {'type': 'string'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}, 'type': 'array'}, 'permissions': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'actions': {'items': {'enum': ['read', 'write', 'admin'], 'type': 'string'}, 'type': 'array', 'description': 'Should be an enum in the future.'}, 'service': {'enum': ['.*', 'ullekhanam'], 'type': 'string', 'description': 'Allowable values should be predetermined regular expressions.'}, 'jsonClass': {'enum': ['UserPermission'], 'type': 'string'}}}, 'type': 'array'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.User.schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'enum': ['User'], 'type': 'string'}, 'user_type': {'enum': ['human', 'bot'], 'type': 'string'}, 'authentication_infos': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'auth_secret_plain': {'type': 'string', 'description': 'This should NEVER be set when stored in a database; but is good for client-server transmission purposes.'}, 'auth_provider': {'enum': ['google', 'vedavaapi'], 'type': 'string'}, 'auth_user_id': {'type': 'string'}, 'auth_secret_bcrypt': {'type': 'string', 'description': 'This should be hashed, and merits being stored in a database.'}, 'jsonClass': {'enum': ['AuthenticationInfo'], 'type': 'string'}}}, 'type': 'array'}, 'permissions': {'items': {'required': ['jsonClass'], 'type': 'object', 'properties': {'actions': {'items': {'enum': ['read', 'write', 'admin'], 'type': 'string'}, 'type': 'array', 'description': 'Should be an enum in the future.'}, 'service': {'enum': ['.*', 'ullekhanam'], 'type': 'string', 'description': 'Allowable values should be predetermined regular expressions.'}, 'jsonClass': {'enum': ['UserPermission'], 'type': 'string'}}}, 'type': 'array'}}}</em><a class="headerlink" href="#sanskrit_data.schema.users.User.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.users.User.validate_schema">
+<code class="descname">validate_schema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#User.validate_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.User.validate_schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -118,8 +128,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sanskrit_data.schema.users.set_password">
-<code class="descclassname">sanskrit_data.schema.users.</code><code class="descname">set_password</code><span class="sig-paren">(</span><em>plain_password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#set_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.set_password" title="Permalink to this definition">¶</a></dt>
+<dt id="sanskrit_data.schema.users.hash_password">
+<code class="descclassname">sanskrit_data.schema.users.</code><code class="descname">hash_password</code><span class="sig-paren">(</span><em>plain_password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/users.html#hash_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.users.hash_password" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
