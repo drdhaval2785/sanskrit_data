@@ -404,9 +404,13 @@ class JsonObjectWithTarget(JsonObject):
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
 class JsonObjectNode(JsonObject):
-  """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets."""
+  """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.
+
+  `A video describing its use <https://youtu.be/neVeKcxzeQI>`_.
+  """
   schema = recursively_merge(
     JsonObject.schema, {
+      "id": "JsonObjectNode",
       "properties": {
         TYPE_FIELD: {
           "enum": ["JsonObjectNode"]
@@ -414,7 +418,7 @@ class JsonObjectNode(JsonObject):
         "content": JsonObject.schema,
         "children": {
           "type": "array",
-          "items": JsonObjectWithTarget.schema
+          '$ref': "JsonObjectNode"
         }
       },
       "required": [TYPE_FIELD]

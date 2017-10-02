@@ -446,9 +446,13 @@
 
 <span class="c1"># noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker</span>
 <div class="viewcode-block" id="JsonObjectNode"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode">[docs]</a><span class="k">class</span> <span class="nc">JsonObjectNode</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot;Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.</span>
+
+<span class="sd">  `A video describing its use &lt;https://youtu.be/neVeKcxzeQI&gt;`_.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span>
     <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;JsonObjectNode&quot;</span><span class="p">,</span>
       <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
           <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;JsonObjectNode&quot;</span><span class="p">]</span>
@@ -456,7 +460,7 @@
         <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
         <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">{</span>
           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">JsonObjectWithTarget</span><span class="o">.</span><span class="n">schema</span>
+          <span class="s1">&#39;$ref&#39;</span><span class="p">:</span> <span class="s2">&quot;JsonObjectNode&quot;</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TYPE_FIELD</span><span class="p">]</span>

@@ -180,6 +180,10 @@ class ImageTarget(Target):
 
 
 class ImageAnnotation(Annotation):
+  """ Mark a certain fragment of an image.
+
+  `An introductory video <https://www.youtube.com/watch?v=SHzD3f5nPt0&t=29s>`_
+  """
   schema = common.recursively_merge(Annotation.schema, ({
     "type": "object",
     "description": "A rectangle within an image, picked by a particular annotation source.",

@@ -55,6 +55,7 @@
 <span class="sd">-  JSON schema mindmap</span>
 <span class="sd">   `here &lt;https://drive.mindmup.com/map?state=%7B%22ids%22:%5B%220B1_QBT-hoqqVbHc4QTV3Q2hjdTQ%22%5D,%22action%22:%22open%22,%22userId%22:%22109000762913288837175%22%7D&gt;`__</span>
 <span class="sd">   (Updated as needed).</span>
+<span class="sd">- For general context and class diagram, refer to :mod:`~sanskrit_data.schema`.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -221,6 +222,10 @@
 
 
 <div class="viewcode-block" id="ImageAnnotation"><a class="viewcode-back" href="../../../sanskrit_data_schema_ullekhanam.html#sanskrit_data.schema.ullekhanam.ImageAnnotation">[docs]</a><span class="k">class</span> <span class="nc">ImageAnnotation</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot; Mark a certain fragment of an image.</span>
+
+<span class="sd">  `An introductory video &lt;https://www.youtube.com/watch?v=SHzD3f5nPt0&amp;t=29s&gt;`_</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">Annotation</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A rectangle within an image, picked by a particular annotation source.&quot;</span><span class="p">,</span>

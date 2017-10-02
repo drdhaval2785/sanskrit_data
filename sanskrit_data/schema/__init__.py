@@ -60,6 +60,7 @@ Python data containers and utilities
    code specific to certain data classes.
 -  **Separate Database-specific elements through an interface**. We
    should be able to easily switch to a different database.
+- The schema class field contains the corresponding JSON schema. `An introductory video describing how such schema are to be read <https://www.youtube.com/watch?v=SHzD3f5nPt0&t=29s>`_.
 
 Books and annotations
 ~~~~~~~~~~~~~~~~~~~~~

@@ -3,19 +3,22 @@ from __future__ import absolute_import
 
 import json
 import logging
-import os
 import unittest
 
-import tests
 import sanskrit_data.schema.books
-from sanskrit_data.schema import ullekhanam, common
+from sanskrit_data.schema import common
 
 logging.basicConfig(
   level=logging.DEBUG,
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
 
-class TestDBRoundTrip(unittest.TestCase):
+class SchemaTest(unittest.TestCase):
+  def test_getSchemas(self):
+    logging.info(common.get_schemas(common))
+    from sanskrit_data.schema import books
+    logging.info(common.get_schemas(books))
+
   def test_PickleDepickle(self):
     book_portion = sanskrit_data.schema.books.BookPortion.from_details(
       title="halAyudhakoshaH", authors=["halAyudhaH"], path="myrepo/halAyudha",

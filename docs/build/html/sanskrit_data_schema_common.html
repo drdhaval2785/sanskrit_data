@@ -194,6 +194,7 @@ This value may not be available: for example when called from the from_details m
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">JsonObjectNode</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
 <p>Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.</p>
+<p><a class="reference external" href="https://youtu.be/neVeKcxzeQI">A video describing its use</a>.</p>
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.delete_in_collection">
 <code class="descname">delete_in_collection</code><span class="sig-paren">(</span><em>db_interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.delete_in_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.delete_in_collection" title="Permalink to this definition">¶</a></dt>
@@ -211,7 +212,7 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="attribute">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'items': {'required': ['jsonClass'], 'type': 'object', 'description': 'A JsonObject with a target field.', 'properties': {'targets': {'items': {'required': ['container_id', 'jsonClass'], 'type': 'object', 'properties': {'container_id': {'type': 'string'}, 'jsonClass': {'enum': ['Target'], 'type': 'string'}}}, 'type': 'array', 'description': 'This field lets us define a directed graph involving JsonObjects stored in a database.'}, 'jsonClass': {'type': 'string'}}}, 'type': 'array'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'type': 'array', '$ref': 'JsonObjectNode'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}, 'id': 'JsonObjectNode'}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -374,10 +375,15 @@ This value may not be available: for example when called from the from_details m
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#intro">Intro</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#data-design">Data design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#python-data-containers-and-utilities">Python data containers and utilities</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">sanskrit_data.schema.common</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema_users.html">sanskrit_data.schema.users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#class-diagram">Class diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sanskrit_data_schema.html#module-diagram">Module diagram</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="sanskrit_data_schema.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">sanskrit_data.schema.common</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema_books.html">sanskrit_data.schema.books</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema_ullekhanam.html">sanskrit_data.schema.ullekhanam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sanskrit_data_schema_users.html">sanskrit_data.schema.users</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sanskrit_data_db.html">sanskrit_data.db</a></li>
