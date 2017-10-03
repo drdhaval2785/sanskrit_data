@@ -436,7 +436,7 @@ class JsonObjectNode(JsonObject):
         raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(),
                                     target_obj=self.content)
     for child in self.children:
-      child.validate_children_types(db_interface=None)
+      child.validate_children_types()
 
   def validate(self, db_interface=None):
     # Note that the below recursively validates ALL members (including content and children).
