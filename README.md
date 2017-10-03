@@ -27,8 +27,8 @@ Similar libraries in various other languages are being built:
 # For users
 ## Installation
 - Install this library (Replace pip2 with pip3 as needed)
-    - Latest release: `sudo pip2 install sanskrit_data -U`
-    - Development copy: `sudo pip2 install git+https://github.com/vedavaapi/sanskrit_data@master -U`
+    - Latest release: `sudo pip3 install sanskrit_data -U`
+    - Development copy: `sudo pip3 install git+https://github.com/vedavaapi/sanskrit_data@master -U`
     - [Web](https://pypi.python.org/pypi/sanskrit_data).
 - Install libraries for the particular database you want to access through the sanskrit_data.db interface (as needed): pymongo, cloudant (for couchdb).
 

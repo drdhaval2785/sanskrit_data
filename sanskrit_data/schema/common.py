@@ -418,7 +418,10 @@ class JsonObjectNode(JsonObject):
         "content": JsonObject.schema,
         "children": {
           "type": "array",
-          '$ref': "JsonObjectNode"
+          "items": {
+            'type': 'object',
+            '$ref': "JsonObjectNode"
+          }
         }
       },
       "required": [TYPE_FIELD]
