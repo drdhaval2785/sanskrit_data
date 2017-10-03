@@ -287,6 +287,7 @@ class JsonObject(object):
       logging.error(jsonpickle.dumps(self.schema))
       raise e
     except ValidationError as e:
+      logging.error(e.message)
       logging.error(self)
       logging.error(self.schema)
       logging.error(json_map)
@@ -428,15 +429,20 @@ class JsonObjectNode(JsonObject):
     }
   )
 
-  def validate(self, db_interface=None):
-    super(JsonObjectNode, self).validate(db_interface=None)
+  """Recursively valdiate target-types."""
+  def validate_children_types(self):
     for child in self.children:
       if not check_class(self.content, child.content.get_allowed_target_classes()):
         raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(),
                                     target_obj=self.content)
-
     for child in self.children:
-      child.validate(db_interface=None)
+      child.validate_children_types(db_interface=None)
+
+  def validate(self, db_interface=None):
+    # Note that the below recursively validates ALL members (including content and children).
+    super(JsonObjectNode, self).validate(db_interface=None)
+    self.validate_children_types()
+
 
   @classmethod
   def from_details(cls, content, children=None):
@@ -452,7 +458,9 @@ class JsonObjectNode(JsonObject):
     return node
 
   def update_collection(self, db_interface):
-    self.validate(db_interface=db_interface)
+    # But we don't call self.validate() as child.content.targets mayn't be set.
+    self.validate_children_types()
+    # The content is validated within the below call.
     self.content = self.content.update_collection(db_interface)
     for child in self.children:
       if (not hasattr(child.content, "targets")) or child.content.targets is None or len(
