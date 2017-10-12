@@ -157,11 +157,12 @@ class User(JsonObject):
       import re
       return re.match("(?:" + pattern + r")\Z", string, flags=flags)
 
-    for permission in self.permissions:
-      if fullmatch(pattern=permission.service, string=service):
-        for permitted_action in permission.actions:
-          if fullmatch(pattern=permitted_action, string=action):
-            return True
+    if hasattr(self, "permissions"):
+      for permission in self.permissions:
+        if fullmatch(pattern=permission.service, string=service):
+          for permitted_action in permission.actions:
+            if fullmatch(pattern=permitted_action, string=action):
+              return True
     return False
 
   def get_user_ids(self):
