@@ -71,7 +71,7 @@ class Annotation(JsonObjectWithTarget):
       "targets": {
         "type": "array",
         "description": "The entity being annotated.",
-        "minLength": 1,
+        "minItems": 1,
         "items": Target.schema
       }
     },
