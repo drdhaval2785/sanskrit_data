@@ -15,7 +15,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, Text
+from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, Text, NamedEntity
 
 
 class BookPositionTarget(Target):
@@ -56,49 +56,42 @@ class PublicationDetails(JsonObject):
         "type": "string"
       },
       "publisher": {
-        "type": "string"
+        "type": NamedEntity.schema
+      },
+      "canonical_source": {
+        "type": "string",
+      },
+      "issue_page": {
+        "type": "string",
       },
     }
   }))
 
 
-class BookMetadata(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, ({
+class CreationDetails(NamedEntity):
+  """Many names are possible for the same work (eg. meghasandeshaH vs meghadUtam) - hence we extend the NamedEntity schema."""
+  schema = common.recursively_merge(NamedEntity.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {
-        "enum": ["Language"]
-      },
-      "name": {
-        "type": Text.schema,
+        "enum": ["CreationDetails"]
       },
       "authors": {
         "type": "array",
         "items": {
-          "type": Text.schema
+          "type": NamedEntity.schema
         }
-      },
-      "canonicalSource": {
-        "type": "string",
-      },
-      "issuePage": {
-        "type": "string",
-      },
+      }
     },
     "required": ["name"]
   }))
 
-  # noinspection PyPep8Naming
   @classmethod
-  def from_details(cls, name, authors=None, canonicalSource=None, issuePage=None):
-    obj = BookMetadata()
+  def from_details(cls, name, authors=None):
+    obj = CreationDetails()
     obj.name = name
     if authors is not None:
       obj.authors = authors
-    if canonicalSource is not None:
-      obj.canonicalSource = canonicalSource
-    if issuePage is not None:
-      obj.issuePage = issuePage
     return obj
 
 
@@ -110,20 +103,14 @@ class BookPortion(JsonObjectWithTarget):
       TYPE_FIELD: {
         "enum": ["BookPortion"]
       },
-      "title": {
-        "type": "string"
+      "creation_details": {
+        "type":  CreationDetails.schema
       },
       "path": {
         "type": "string"
       },
       "thumbnail_path": {
         "type": "string"
-      },
-      "authors": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
       },
       "base_data": {
         "type": "string",
@@ -140,7 +127,7 @@ class BookPortion(JsonObjectWithTarget):
         "items": BookPositionTarget.schema,
         "description": "Target for BookPortion of which this BookPortion is a part. It is an array only for consistency. "
                        "For any given BookPortion, one can get the right order of contained BookPortions by seeking all "
-                       "BookPortions referring to it in the targets list, and sorting them by their target position values."
+                       "BookPortions referring to it in the targets list, and sorting them by their target.position values."
       }
     },
   }))

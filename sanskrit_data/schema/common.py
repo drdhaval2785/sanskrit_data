@@ -523,6 +523,7 @@ class Text(JsonObject):
       },
       "script_renderings": {
         "type": "array",
+        "minLength": 1,
         "items": ScriptRendering.schema
       },
       "language_code": {
@@ -537,6 +538,45 @@ class Text(JsonObject):
     obj.script_renderings = script_renderings
     if language_code is not None:
       obj.language_code = language_code
+    return obj
+
+  @classmethod
+  def from_text_string(cls, text_string, language_code=None, encoding_scheme=None):
+    obj = Text()
+    obj.script_renderings = [ScriptRendering.from_details(text=text_string, encoding_scheme=encoding_scheme)]
+    if language_code is not None:
+      obj.language_code = language_code
+    return obj
+
+
+class NamedEntity(JsonObject):
+  """The same name written in different languages have different spellings - oft due to differing case endings and conventions: kAlidAsaH vs Kalidasa. Hence this container."""
+  schema = recursively_merge(JsonObject.schema, ({
+    "type": "object",
+    "properties": {
+      TYPE_FIELD: {
+        "enum": ["NamedEntity"]
+      },
+      "names": {
+        "type": "array",
+        "items": {
+          "type": Text.schema,
+          "minLength": 1
+        }
+      }
+    }
+  }))
+
+  @classmethod
+  def from_details(cls, names):
+    obj =  NamedEntity()
+    obj.names = names
+    return obj
+
+  @classmethod
+  def from_name_string(cls, name, language_code=None, encoding_scheme=None):
+    obj =  NamedEntity()
+    obj.names = [Text.from_text_string(text_string=name, language_code=language_code, encoding_scheme=encoding_scheme)]
     return obj
 
 
