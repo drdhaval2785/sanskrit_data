@@ -559,10 +559,8 @@ class NamedEntity(JsonObject):
       },
       "names": {
         "type": "array",
-        "items": {
-          "type": Text.schema,
-          "minLength": 1
-        }
+        "items": Text.schema,
+        "minLength": 1
       }
     }
   }))

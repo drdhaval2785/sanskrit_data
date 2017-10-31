@@ -78,9 +78,7 @@ class CreationDetails(NamedEntity):
       },
       "authors": {
         "type": "array",
-        "items": {
-          "type": NamedEntity.schema
-        }
+        "items": NamedEntity.schema
       }
     },
     "required": ["name"]
