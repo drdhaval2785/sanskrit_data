@@ -57,7 +57,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">sanskrit_data.schema</span> <span class="k">import</span> <span class="n">common</span>
-<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">TextContent</span><span class="p">,</span> <span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">Target</span>
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">TYPE_FIELD</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Text</span>
 
 
 <div class="viewcode-block" id="BookPositionTarget"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPositionTarget">[docs]</a><span class="k">class</span> <span class="nc">BookPositionTarget</span><span class="p">(</span><span class="n">Target</span><span class="p">):</span>
@@ -104,6 +104,46 @@
   <span class="p">}))</span></div>
 
 
+<div class="viewcode-block" id="BookMetadata"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookMetadata">[docs]</a><span class="k">class</span> <span class="nc">BookMetadata</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;canonicalSource&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;issuePage&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+  <span class="p">}))</span>
+
+  <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="BookMetadata.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookMetadata.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">canonicalSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">issuePage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">BookMetadata</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+    <span class="k">if</span> <span class="n">canonicalSource</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">canonicalSource</span> <span class="o">=</span> <span class="n">canonicalSource</span>
+    <span class="k">if</span> <span class="n">issuePage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">issuePage</span> <span class="o">=</span> <span class="n">issuePage</span>
+    <span class="k">return</span> <span class="n">obj</span></div></div>
+
+
 <div class="viewcode-block" id="BookPortion"><a class="viewcode-back" href="../../../sanskrit_data_schema_books.html#sanskrit_data.schema.books.BookPortion">[docs]</a><span class="k">class</span> <span class="nc">BookPortion</span><span class="p">(</span><span class="n">JsonObjectWithTarget</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -136,7 +176,7 @@
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;book, part, chapter, verse, line etc..&quot;</span>
       <span class="p">},</span>
-      <span class="s2">&quot;curated_content&quot;</span><span class="p">:</span> <span class="n">TextContent</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+      <span class="s2">&quot;curated_content&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
       <span class="s2">&quot;targets&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;maxLength&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
         <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">BookPositionTarget</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>

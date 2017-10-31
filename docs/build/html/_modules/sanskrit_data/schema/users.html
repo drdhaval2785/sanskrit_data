@@ -199,11 +199,12 @@
       <span class="kn">import</span> <span class="nn">re</span>
       <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;(?:&quot;</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;)\Z&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">permission</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">permissions</span><span class="p">:</span>
-      <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permission</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">service</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">permitted_action</span> <span class="ow">in</span> <span class="n">permission</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
-          <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permitted_action</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">action</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;permissions&quot;</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">permission</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">permissions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permission</span><span class="o">.</span><span class="n">service</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">service</span><span class="p">):</span>
+          <span class="k">for</span> <span class="n">permitted_action</span> <span class="ow">in</span> <span class="n">permission</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">permitted_action</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">action</span><span class="p">):</span>
+              <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="User.get_user_ids"><a class="viewcode-back" href="../../../sanskrit_data_schema_users.html#sanskrit_data.schema.users.User.get_user_ids">[docs]</a>  <span class="k">def</span> <span class="nf">get_user_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

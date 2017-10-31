@@ -21,7 +21,7 @@ import sys
 
 from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion
-from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, TextContent
+from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, ScriptRendering, Text
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -221,7 +221,7 @@ class TextAnnotation(Annotation):
       common.TYPE_FIELD: {
         "enum": ["TextAnnotation"]
       },
-      "content": TextContent.schema,
+      "content": Text.schema,
     },
     "required": ["content"]
   }))
@@ -319,10 +319,10 @@ class PadaAnnotation(Annotation):
         "items": TextTarget.schema
       },
       "word": {
-        "type": "string"
+        "type": Text.schema
       },
       "root": {
-        "type": "string"
+        "type": Text.schema
       }
     },
   }))
@@ -467,7 +467,7 @@ class SandhiAnnotation(Annotation):
         "enum": ["SandhiAnnotation"]
       },
       "combined_string": {
-        "type": "string"
+        "type": Text.schema
       },
       "sandhi_type": {
         "type": "string"

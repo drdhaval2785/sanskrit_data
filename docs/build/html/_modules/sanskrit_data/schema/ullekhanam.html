@@ -63,7 +63,7 @@
 
 <span class="kn">from</span> <span class="nn">sanskrit_data.schema</span> <span class="k">import</span> <span class="n">common</span>
 <span class="kn">from</span> <span class="nn">sanskrit_data.schema.books</span> <span class="k">import</span> <span class="n">BookPortion</span>
-<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">TextContent</span>
+<span class="kn">from</span> <span class="nn">sanskrit_data.schema.common</span> <span class="k">import</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">JsonObjectWithTarget</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">ScriptRendering</span><span class="p">,</span> <span class="n">Text</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
   <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
@@ -263,7 +263,7 @@
       <span class="n">common</span><span class="o">.</span><span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TextAnnotation&quot;</span><span class="p">]</span>
       <span class="p">},</span>
-      <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">TextContent</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
+      <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
@@ -361,10 +361,10 @@
         <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">TextTarget</span><span class="o">.</span><span class="n">schema</span>
       <span class="p">},</span>
       <span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span>
       <span class="p">},</span>
       <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span>
       <span class="p">}</span>
     <span class="p">},</span>
   <span class="p">}))</span>
@@ -509,7 +509,7 @@
         <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SandhiAnnotation&quot;</span><span class="p">]</span>
       <span class="p">},</span>
       <span class="s2">&quot;combined_string&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">Text</span><span class="o">.</span><span class="n">schema</span>
       <span class="p">},</span>
       <span class="s2">&quot;sandhi_type&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>

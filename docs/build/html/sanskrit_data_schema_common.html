@@ -212,8 +212,9 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="attribute">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'type': 'array', '$ref': 'JsonObjectNode'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}, 'id': 'JsonObjectNode'}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'content': {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'type': 'string'}}}, 'children': {'items': {'type': 'object', '$ref': 'JsonObjectNode'}, 'type': 'array'}, 'jsonClass': {'enum': ['JsonObjectNode'], 'type': 'string'}}, 'id': 'JsonObjectNode'}</em><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively valdiate target-types.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.update_collection">
@@ -223,6 +224,11 @@ This value may not be available: for example when called from the from_details m
 <dl class="method">
 <dt id="sanskrit_data.schema.common.JsonObjectNode.validate">
 <code class="descname">validate</code><span class="sig-paren">(</span><em>db_interface=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sanskrit_data.schema.common.JsonObjectNode.validate_children_types">
+<code class="descname">validate_children_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#JsonObjectNode.validate_children_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.JsonObjectNode.validate_children_types" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -266,6 +272,22 @@ This value may not be available: for example when called from the from_details m
 </dd></dl>
 
 <dl class="class">
+<dt id="sanskrit_data.schema.common.ScriptRendering">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">ScriptRendering</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#ScriptRendering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.ScriptRendering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
+<dl class="classmethod">
+<dt id="sanskrit_data.schema.common.ScriptRendering.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>text</em>, <em>encoding_scheme=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#ScriptRendering.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.ScriptRendering.from_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sanskrit_data.schema.common.ScriptRendering.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['text', 'jsonClass'], 'type': 'object', 'properties': {'encoding_scheme': {'type': 'string'}, 'text': {'type': 'string'}, 'jsonClass': {'enum': ['ScriptRendering'], 'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.ScriptRendering.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sanskrit_data.schema.common.Target">
 <em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">Target</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#Target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.Target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
@@ -304,17 +326,17 @@ This value may not be available: for example when called from the from_details m
 </dd></dl>
 
 <dl class="class">
-<dt id="sanskrit_data.schema.common.TextContent">
-<em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">TextContent</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#TextContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.TextContent" title="Permalink to this definition">¶</a></dt>
+<dt id="sanskrit_data.schema.common.Text">
+<em class="property">class </em><code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">Text</code><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#Text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.Text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sanskrit_data.schema.common.JsonObject" title="sanskrit_data.schema.common.JsonObject"><code class="xref py py-class docutils literal"><span class="pre">sanskrit_data.schema.common.JsonObject</span></code></a></p>
 <dl class="classmethod">
-<dt id="sanskrit_data.schema.common.TextContent.from_details">
-<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>text</em>, <em>language='UNK'</em>, <em>encoding='UNK'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#TextContent.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.TextContent.from_details" title="Permalink to this definition">¶</a></dt>
+<dt id="sanskrit_data.schema.common.Text.from_details">
+<em class="property">classmethod </em><code class="descname">from_details</code><span class="sig-paren">(</span><em>script_renderings</em>, <em>language_code=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sanskrit_data/schema/common.html#Text.from_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sanskrit_data.schema.common.Text.from_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sanskrit_data.schema.common.TextContent.schema">
-<code class="descname">schema</code><em class="property"> = {'required': ['text', 'jsonClass'], 'type': 'object', 'properties': {'text': {'type': 'string'}, 'jsonClass': {'enum': ['TextContent'], 'type': 'string'}, 'language': {'type': 'string'}, 'encoding': {'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.TextContent.schema" title="Permalink to this definition">¶</a></dt>
+<dt id="sanskrit_data.schema.common.Text.schema">
+<code class="descname">schema</code><em class="property"> = {'required': ['jsonClass'], 'type': 'object', 'properties': {'jsonClass': {'enum': ['Text'], 'type': 'string'}, 'script_renderings': {'items': {'type': {'required': ['text', 'jsonClass'], 'type': 'object', 'properties': {'encoding_scheme': {'type': 'string'}, 'text': {'type': 'string'}, 'jsonClass': {'enum': ['ScriptRendering'], 'type': 'string'}}}}, 'type': 'array'}, 'language_code': {'type': 'string'}}}</em><a class="headerlink" href="#sanskrit_data.schema.common.Text.schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -336,7 +358,7 @@ This value may not be available: for example when called from the from_details m
 
 <dl class="data">
 <dt id="sanskrit_data.schema.common.json_class_index">
-<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> = {'JsonObjectWithTarget': &lt;class 'sanskrit_data.schema.common.JsonObjectWithTarget'&gt;, 'Target': &lt;class 'sanskrit_data.schema.common.Target'&gt;, 'JsonObject': &lt;class 'sanskrit_data.schema.common.JsonObject'&gt;, 'TextContent': &lt;class 'sanskrit_data.schema.common.TextContent'&gt;, 'TargetValidationError': &lt;class 'sanskrit_data.schema.common.TargetValidationError'&gt;, 'BookPortion': &lt;class 'sanskrit_data.schema.books.BookPortion'&gt;, 'JsonObjectNode': &lt;class 'sanskrit_data.schema.common.JsonObjectNode'&gt;, 'PublicationDetails': &lt;class 'sanskrit_data.schema.books.PublicationDetails'&gt;, 'BookPositionTarget': &lt;class 'sanskrit_data.schema.books.BookPositionTarget'&gt;}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sanskrit_data.schema.common.</code><code class="descname">json_class_index</code><em class="property"> = {'JsonObjectWithTarget': &lt;class 'sanskrit_data.schema.common.JsonObjectWithTarget'&gt;, 'Target': &lt;class 'sanskrit_data.schema.common.Target'&gt;, 'JsonObject': &lt;class 'sanskrit_data.schema.common.JsonObject'&gt;, 'BookMetadata': &lt;class 'sanskrit_data.schema.books.BookMetadata'&gt;, 'TargetValidationError': &lt;class 'sanskrit_data.schema.common.TargetValidationError'&gt;, 'BookPortion': &lt;class 'sanskrit_data.schema.books.BookPortion'&gt;, 'ScriptRendering': &lt;class 'sanskrit_data.schema.common.ScriptRendering'&gt;, 'JsonObjectNode': &lt;class 'sanskrit_data.schema.common.JsonObjectNode'&gt;, 'Text': &lt;class 'sanskrit_data.schema.common.Text'&gt;, 'PublicationDetails': &lt;class 'sanskrit_data.schema.books.PublicationDetails'&gt;, 'BookPositionTarget': &lt;class 'sanskrit_data.schema.books.BookPositionTarget'&gt;}</em><a class="headerlink" href="#sanskrit_data.schema.common.json_class_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps jsonClass values to the containing Python module object. Useful for (de)serialization. Updated using <a class="reference internal" href="#sanskrit_data.schema.common.update_json_class_index" title="sanskrit_data.schema.common.update_json_class_index"><code class="xref py py-func docutils literal"><span class="pre">update_json_class_index()</span></code></a> calls at the end of each module file (such as this one) whose classes may be serialized.</p>
 </dd></dl>
 

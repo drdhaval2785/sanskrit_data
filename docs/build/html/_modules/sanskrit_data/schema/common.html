@@ -329,6 +329,7 @@
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">))</span>
       <span class="k">raise</span> <span class="n">e</span>
     <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">)</span>
       <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">json_map</span><span class="p">)</span>
@@ -460,22 +461,30 @@
         <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span>
         <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">{</span>
           <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-          <span class="s1">&#39;$ref&#39;</span><span class="p">:</span> <span class="s2">&quot;JsonObjectNode&quot;</span>
+          <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;$ref&#39;</span><span class="p">:</span> <span class="s2">&quot;JsonObjectNode&quot;</span>
+          <span class="p">}</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">TYPE_FIELD</span><span class="p">]</span>
     <span class="p">}</span>
   <span class="p">)</span>
 
-<div class="viewcode-block" id="JsonObjectNode.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">JsonObjectNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+  <span class="sd">&quot;&quot;&quot;Recursively valdiate target-types.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="JsonObjectNode.validate_children_types"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode.validate_children_types">[docs]</a>  <span class="k">def</span> <span class="nf">validate_children_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
       <span class="k">if</span> <span class="ow">not</span> <span class="n">check_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">get_allowed_target_classes</span><span class="p">()):</span>
         <span class="k">raise</span> <span class="n">TargetValidationError</span><span class="p">(</span><span class="n">targetting_obj</span><span class="o">=</span><span class="n">child</span><span class="p">,</span> <span class="n">allowed_types</span><span class="o">=</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">get_allowed_target_classes</span><span class="p">(),</span>
                                     <span class="n">target_obj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-      <span class="n">child</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+      <span class="n">child</span><span class="o">.</span><span class="n">validate_children_types</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="JsonObjectNode.validate"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode.validate">[docs]</a>  <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Note that the below recursively validates ALL members (including content and children).</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">JsonObjectNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validate_children_types</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="JsonObjectNode.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode.from_details">[docs]</a>  <span class="nd">@classmethod</span>
   <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -491,7 +500,9 @@
     <span class="k">return</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="JsonObjectNode.update_collection"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.JsonObjectNode.update_collection">[docs]</a>  <span class="k">def</span> <span class="nf">update_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_interface</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">db_interface</span><span class="o">=</span><span class="n">db_interface</span><span class="p">)</span>
+    <span class="c1"># But we don&#39;t call self.validate() as child.content.targets mayn&#39;t be set.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validate_children_types</span><span class="p">()</span>
+    <span class="c1"># The content is validated within the below call.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">update_collection</span><span class="p">(</span><span class="n">db_interface</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
       <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">child</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span>
@@ -518,34 +529,59 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="TextContent"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.TextContent">[docs]</a><span class="k">class</span> <span class="nc">TextContent</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<div class="viewcode-block" id="ScriptRendering"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.ScriptRendering">[docs]</a><span class="k">class</span> <span class="nc">ScriptRendering</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
   <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
     <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TextContent&quot;</span><span class="p">]</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ScriptRendering&quot;</span><span class="p">]</span>
       <span class="p">},</span>
       <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
       <span class="p">},</span>
-      <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;encoding_scheme&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
       <span class="p">},</span>
     <span class="p">},</span>
     <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
   <span class="p">}))</span>
 
-<div class="viewcode-block" id="TextContent.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.TextContent.from_details">[docs]</a>  <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">):</span>
-    <span class="n">text_content</span> <span class="o">=</span> <span class="n">TextContent</span><span class="p">()</span>
-    <span class="n">text_content</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
-    <span class="n">text_content</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span>
-    <span class="n">text_content</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span>
-    <span class="n">text_content</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">text_content</span></div></div>
+<div class="viewcode-block" id="ScriptRendering.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.ScriptRendering.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">encoding_scheme</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">ScriptRendering</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="k">if</span> <span class="n">encoding_scheme</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">encoding_scheme</span> <span class="o">=</span> <span class="n">encoding_scheme</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">obj</span></div></div>
+
+
+<div class="viewcode-block" id="Text"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.Text">[docs]</a><span class="k">class</span> <span class="nc">Text</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+  <span class="n">schema</span> <span class="o">=</span> <span class="n">recursively_merge</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">TYPE_FIELD</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Text&quot;</span><span class="p">]</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;script_renderings&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">ScriptRendering</span><span class="o">.</span><span class="n">schema</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;language_code&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="p">}))</span>
+
+<div class="viewcode-block" id="Text.from_details"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.Text.from_details">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">from_details</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">script_renderings</span><span class="p">,</span> <span class="n">language_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">script_renderings</span> <span class="o">=</span> <span class="n">script_renderings</span>
+    <span class="k">if</span> <span class="n">language_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">obj</span><span class="o">.</span><span class="n">language_code</span> <span class="o">=</span> <span class="n">language_code</span>
+    <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
 <div class="viewcode-block" id="get_schemas"><a class="viewcode-back" href="../../../sanskrit_data_schema_common.html#sanskrit_data.schema.common.get_schemas">[docs]</a><span class="k">def</span> <span class="nf">get_schemas</span><span class="p">(</span><span class="n">module_in</span><span class="p">):</span>
@@ -555,6 +591,7 @@
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">):</span>
       <span class="n">schemas</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">schema</span>
   <span class="k">return</span> <span class="n">schemas</span></div>
+
 
 
 <span class="c1"># Essential for depickling to work.</span>

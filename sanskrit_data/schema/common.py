@@ -487,20 +487,17 @@ class JsonObjectNode(JsonObject):
         self.children.append(child)
 
 
-class TextContent(JsonObject):
+class ScriptRendering(JsonObject):
   schema = recursively_merge(JsonObject.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {
-        "enum": ["TextContent"]
+        "enum": ["ScriptRendering"]
       },
       "text": {
         "type": "string",
       },
-      "language": {
-        "type": "string",
-      },
-      "encoding": {
+      "encoding_scheme": {
         "type": "string",
       },
     },
@@ -508,13 +505,41 @@ class TextContent(JsonObject):
   }))
 
   @classmethod
-  def from_details(cls, text, language="UNK", encoding="UNK"):
-    text_content = TextContent()
-    text_content.text = text
-    text_content.language = language
-    text_content.encoding = encoding
-    text_content.validate()
-    return text_content
+  def from_details(cls, text, encoding_scheme=None):
+    obj = ScriptRendering()
+    obj.text = text
+    if encoding_scheme is not None:
+      obj.encoding_scheme = encoding_scheme
+    obj.validate()
+    return obj
+
+
+class Text(JsonObject):
+  schema = recursively_merge(JsonObject.schema, ({
+    "type": "object",
+    "properties": {
+      TYPE_FIELD: {
+        "enum": ["Text"]
+      },
+      "script_renderings": {
+        "type": "array",
+        "items": {
+          "type": ScriptRendering.schema
+        }
+      },
+      "language_code": {
+        "type": "string",
+      },
+    }
+  }))
+
+  @classmethod
+  def from_details(cls, script_renderings, language_code=None):
+    obj = Text()
+    obj.script_renderings = script_renderings
+    if language_code is not None:
+      obj.language_code = language_code
+    return obj
 
 
 def get_schemas(module_in):
@@ -524,6 +549,7 @@ def get_schemas(module_in):
     if inspect.isclass(obj) and hasattr(obj, "schema"):
       schemas[name] = obj.schema
   return schemas
+
 
 
 # Essential for depickling to work.

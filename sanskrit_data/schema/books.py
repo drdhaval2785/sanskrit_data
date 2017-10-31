@@ -15,7 +15,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import JsonObjectWithTarget, TextContent, TYPE_FIELD, JsonObject, Target
+from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, Text
 
 
 class BookPositionTarget(Target):
@@ -62,6 +62,46 @@ class PublicationDetails(JsonObject):
   }))
 
 
+class BookMetadata(JsonObject):
+  schema = common.recursively_merge(JsonObject.schema, ({
+    "type": "object",
+    "properties": {
+      TYPE_FIELD: {
+        "enum": ["Language"]
+      },
+      "name": {
+        "type": Text.schema,
+      },
+      "authors": {
+        "type": "array",
+        "items": {
+          "type": Text.schema
+        }
+      },
+      "canonicalSource": {
+        "type": "string",
+      },
+      "issuePage": {
+        "type": "string",
+      },
+    },
+    "required": ["name"]
+  }))
+
+  # noinspection PyPep8Naming
+  @classmethod
+  def from_details(cls, name, authors=None, canonicalSource=None, issuePage=None):
+    obj = BookMetadata()
+    obj.name = name
+    if authors is not None:
+      obj.authors = authors
+    if canonicalSource is not None:
+      obj.canonicalSource = canonicalSource
+    if issuePage is not None:
+      obj.issuePage = issuePage
+    return obj
+
+
 class BookPortion(JsonObjectWithTarget):
   schema = common.recursively_merge(JsonObject.schema, ({
     "type": "object",
@@ -94,7 +134,7 @@ class BookPortion(JsonObjectWithTarget):
         "type": "string",
         "description": "book, part, chapter, verse, line etc.."
       },
-      "curated_content": TextContent.schema,
+      "curated_content": Text.schema,
       "targets": {
         "maxLength": 1,
         "items": BookPositionTarget.schema,

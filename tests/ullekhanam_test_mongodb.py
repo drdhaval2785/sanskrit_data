@@ -67,7 +67,7 @@ class TestDBRoundTrip(unittest.TestCase):
   def test_TextAnnotation(self):
     text_annotation_original = ullekhanam.TextAnnotation.from_details(targets=[],
                                                                       source=ullekhanam.AnnotationSource.from_details("system_inferred", "xyz.py"),
-                                                                      content=common.TextContent.from_details(text=u"इदं नभसि म्भीषण"))
+                                                                      content=common.ScriptRendering.from_details(text=u"इदं नभसि म्भीषण"))
 
     db = self.test_db
     logging.debug(text_annotation_original.to_json_map())
@@ -90,7 +90,7 @@ class TestDBRoundTrip(unittest.TestCase):
     text_annotation = ullekhanam.TextAnnotation.from_details(targets=[
       common.Target.from_details(container_id=book_portion._id)],
       source=ullekhanam.AnnotationSource.from_details("system_inferred", "xyz.py"),
-      content=common.TextContent.from_details(text=u"रामो विग्रवान् धर्मः।"))
+      content=common.ScriptRendering.from_details(text=u"रामो विग्रवान् धर्मः।"))
     logging.debug(text_annotation.to_json_map())
 
     text_annotation = text_annotation.update_collection(db)
@@ -140,7 +140,7 @@ class TestDBRoundTrip(unittest.TestCase):
         pada_annotation_rAmaH,
         pada_annotation_vigrahavAn]),
       source=samsAdhanI_source,
-      combined_string=u"रामो विग्रहवान्")
+      combined_text=u"रामो विग्रहवान्")
     sandhi_annotation_rAmovigrahavAn = sandhi_annotation_rAmovigrahavAn.update_collection(db)
     logging.debug(sandhi_annotation_rAmovigrahavAn.to_json_map())
 
@@ -150,7 +150,7 @@ class TestDBRoundTrip(unittest.TestCase):
         pada_annotation_rAmaH,
         pada_annotation_avigrahavAn]),
       source=samsAdhanI_source,
-      combined_string=u"रामो विग्रहवान्")
+      combined_text=u"रामो विग्रहवान्")
     logging.debug(sandhi_annotation_rAmoavigrahavAn.to_json_map())
 
   def test_JsonObjectNode(self):
