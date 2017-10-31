@@ -523,7 +523,7 @@ class Text(JsonObject):
       },
       "script_renderings": {
         "type": "array",
-        "minLength": 1,
+        "minItems": 1,
         "items": ScriptRendering.schema
       },
       "language_code": {
