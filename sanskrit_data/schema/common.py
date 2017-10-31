@@ -9,6 +9,7 @@ import logging
 import sys
 from copy import deepcopy
 
+from jsonschema.exceptions import best_match
 from six import string_types
 import jsonpickle
 import jsonschema
@@ -284,13 +285,18 @@ class JsonObject(object):
         else:
           pass
     except SchemaError as e:
-      logging.error(jsonpickle.dumps(self.schema))
+      logging.error("Exception message: " + e.message)
+      logging.error("Schema is: " + jsonpickle.dumps(self.schema))
+      logging.error("Context is: " + str(e.context))
+      logging.error("Best match is: " + best_match(errors=[e]))
       raise e
     except ValidationError as e:
-      logging.error(e.message)
-      logging.error(self)
-      logging.error(self.schema)
-      logging.error(json_map)
+      logging.error("Exception message: " + e.message)
+      logging.error("self is: " + self)
+      logging.error("Schema is: " + jsonpickle.dumps(self.schema))
+      logging.error("Context is: " + str(e.context))
+      logging.error("Best match is: " + best_match(errors=[e]))
+      logging.error("json_map is: " + json_map)
       raise e
 
   @classmethod
