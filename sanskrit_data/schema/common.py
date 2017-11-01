@@ -436,6 +436,7 @@ class JsonObjectNode(JsonObject):
   )
 
   """Recursively valdiate target-types."""
+
   def validate_children_types(self):
     for child in self.children:
       if not check_class(self.content, child.content.get_allowed_target_classes()):
@@ -448,7 +449,6 @@ class JsonObjectNode(JsonObject):
     # Note that the below recursively validates ALL members (including content and children).
     super(JsonObjectNode, self).validate(db_interface=None)
     self.validate_children_types()
-
 
   @classmethod
   def from_details(cls, content, children=None):
@@ -469,9 +469,10 @@ class JsonObjectNode(JsonObject):
     # The content is validated within the below call.
     self.content = self.content.update_collection(db_interface)
     for child in self.children:
-      if (not hasattr(child.content, "targets")) or child.content.targets is None or len(
-          child.content.targets) == 0:
+      # Initialize the target array if it does not already exist.
+      if (not hasattr(child.content, "targets")) or child.content.targets is None or len(child.content.targets) == 0:
         child.content.targets = [child.content.target_class()]
+
       assert len(child.content.targets) == 1
       child.content.targets[0].container_id = str(self.content._id)
       child.update_collection(db_interface)
@@ -573,13 +574,13 @@ class NamedEntity(JsonObject):
 
   @classmethod
   def from_details(cls, names):
-    obj =  NamedEntity()
+    obj = NamedEntity()
     obj.names = names
     return obj
 
   @classmethod
   def from_name_string(cls, name, language_code=None, encoding_scheme=None):
-    obj =  NamedEntity()
+    obj = NamedEntity()
     obj.names = [Text.from_text_string(text_string=name, language_code=language_code, encoding_scheme=encoding_scheme)]
     return obj
 
@@ -591,7 +592,6 @@ def get_schemas(module_in):
     if inspect.isclass(obj) and hasattr(obj, "schema"):
       schemas[name] = obj.schema
   return schemas
-
 
 
 # Essential for depickling to work.
