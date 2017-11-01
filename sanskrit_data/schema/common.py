@@ -292,7 +292,7 @@ class JsonObject(object):
       raise e
     except ValidationError as e:
       logging.error("Exception message: " + e.message)
-      logging.error("self is: " + self)
+      logging.error("self is: " + str(self))
       logging.error("Schema is: " + jsonpickle.dumps(self.schema))
       logging.error("Context is: " + str(e.context))
       logging.error("Best match is: " + str(best_match(errors=[e])))

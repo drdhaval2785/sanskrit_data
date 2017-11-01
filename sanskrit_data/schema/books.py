@@ -78,14 +78,13 @@ class CreationDetails(NamedEntity):
         "type": "array",
         "items": NamedEntity.schema
       }
-    },
-    "required": ["name"]
+    }
   }))
 
   @classmethod
-  def from_details(cls, name, authors=None):
+  def from_details(cls, names, authors=None):
     obj = CreationDetails()
-    obj.name = name
+    obj.names = names
     if authors is not None:
       obj.authors = authors
     return obj
