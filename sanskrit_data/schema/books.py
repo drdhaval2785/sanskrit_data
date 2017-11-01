@@ -101,9 +101,7 @@ class BookPortion(JsonObjectWithTarget):
       TYPE_FIELD: {
         "enum": ["BookPortion"]
       },
-      "creation_details": {
-        "type":  CreationDetails.schema
-      },
+      "creation_details": CreationDetails.schema,
       "path": {
         "type": "string"
       },
