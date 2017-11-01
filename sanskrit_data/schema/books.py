@@ -55,9 +55,7 @@ class PublicationDetails(JsonObject):
       "release_time": {
         "type": "string"
       },
-      "publisher": {
-        "type": NamedEntity.schema
-      },
+      "publisher": NamedEntity.schema,
       "canonical_source": {
         "type": "string",
       },
