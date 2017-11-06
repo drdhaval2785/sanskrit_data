@@ -578,6 +578,31 @@ class OriginAnnotation(Annotation):
   }))
 
 
+class Topic(NamedEntity):
+  schema = common.recursively_merge_json_schemas(NamedEntity.schema, ({
+    "type": "object",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["Topic"]
+      }
+    }
+  }))
+
+
+class TopicAnnotation(Annotation):
+  """See schema.description."""
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
+    "type": "object",
+    "description": "A given text may be quoted from some other book. This annotation helps specify such origin.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["TopicAnnotation"]
+      },
+      "topic": Topic.schema,
+    },
+  }))
+
+
 class RatingAnnotation(Annotation):
   """See schema.description."""
   schema = common.recursively_merge_json_schemas(Annotation.schema, ({
