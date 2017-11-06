@@ -21,7 +21,7 @@ import sys
 
 from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion, CreationDetails
-from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, ScriptRendering, Text
+from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, ScriptRendering, Text, NamedEntity
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -216,7 +216,7 @@ class ImageAnnotation(Annotation):
 class TextAnnotation(Annotation):
   schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
-    "description": "Annotation of some (sub)text from within the object (image or another text) being annotated.",
+    "description": "Annotation of some (sub)text from within the object (image or another text) being annotated. Tells: 'what is written in this image? or text portion?",
     "properties": {
       common.TYPE_FIELD: {
         "enum": ["TextAnnotation"]
@@ -242,11 +242,54 @@ class TextAnnotation(Annotation):
 class CommentAnnotation(TextAnnotation):
   schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
     "description": "A comment that can be associated with nearly any Annotation or BookPortion.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["CommentAnnotation"]
+      },
+    }
   }))
 
   @classmethod
   def get_allowed_target_classes(cls):
     return [BookPortion, Annotation]
+
+
+class QuoteAnnotation(TextAnnotation):
+  schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
+    "description": "A quote, a memorable text fragment.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["QuoteAnnotation"]
+      },
+    }
+  }))
+
+  @classmethod
+  def get_allowed_target_classes(cls):
+    return [BookPortion, Annotation]
+
+
+class Metre(NamedEntity):
+  schema = common.recursively_merge_json_schemas(NamedEntity.schema, ({
+    "type": "object",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["Metre"]
+      }
+    }
+  }))
+
+
+class MetreAnnotation(Annotation):
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
+    "description": "A metre, which may be ",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["MetreAnnotation"]
+      },
+      "metre": Metre.schema
+    }
+  }))
 
 
 class TextOffsetAddress(JsonObject):
