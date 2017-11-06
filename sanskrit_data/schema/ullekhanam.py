@@ -254,6 +254,21 @@ class CommentAnnotation(TextAnnotation):
     return [BookPortion, Annotation]
 
 
+class TranslationAnnotation(TextAnnotation):
+  schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
+    "description": "A comment that can be associated with nearly any Annotation or BookPortion.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["TranslationAnnotation"]
+      },
+    }
+  }))
+
+  @classmethod
+  def get_allowed_target_classes(cls):
+    return [BookPortion, Annotation]
+
+
 class QuoteAnnotation(TextAnnotation):
   schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
     "description": "A quote, a memorable text fragment.",
