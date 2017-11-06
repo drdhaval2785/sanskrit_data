@@ -6,7 +6,7 @@ from sanskrit_data.schema.common import TYPE_FIELD, JsonObject, Text
 
 
 class QuoteText(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "Quote details.",
     "properties": {

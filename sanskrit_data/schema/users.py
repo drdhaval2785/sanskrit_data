@@ -10,7 +10,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import JsonObject, recursively_merge, TYPE_FIELD, update_json_class_index
+from sanskrit_data.schema.common import JsonObject, recursively_merge_json_schemas, TYPE_FIELD, update_json_class_index
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -19,7 +19,7 @@ logging.basicConfig(
 
 
 class UserPermission(JsonObject):
-  schema = recursively_merge(
+  schema = recursively_merge_json_schemas(
     JsonObject.schema, {
       "properties": {
         TYPE_FIELD: {
@@ -57,7 +57,7 @@ def hash_password(plain_password):
 
 
 class AuthenticationInfo(JsonObject):
-  schema = recursively_merge(
+  schema = recursively_merge_json_schemas(
     JsonObject.schema, {
       "properties": {
         TYPE_FIELD: {
@@ -116,7 +116,7 @@ class AuthenticationInfo(JsonObject):
 
 class User(JsonObject):
   """Represents a user of our service."""
-  schema = recursively_merge(
+  schema = recursively_merge_json_schemas(
     JsonObject.schema, {
       "properties": {
         TYPE_FIELD: {

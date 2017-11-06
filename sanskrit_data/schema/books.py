@@ -19,7 +19,7 @@ from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonOb
 
 
 class BookPositionTarget(Target):
-  schema = common.recursively_merge(Target.schema, {
+  schema = common.recursively_merge_json_schemas(Target.schema, {
     "type": "object",
     "description": "A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.",
     "properties": {
@@ -45,7 +45,7 @@ class BookPositionTarget(Target):
 
 
 class PublicationDetails(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "Publication details of a BookPortion.",
     "properties": {
@@ -68,7 +68,7 @@ class PublicationDetails(JsonObject):
 
 class CreationDetails(NamedEntity):
   """Many names are possible for the same work (eg. meghasandeshaH vs meghadUtam) - hence we extend the NamedEntity schema."""
-  schema = common.recursively_merge(NamedEntity.schema, ({
+  schema = common.recursively_merge_json_schemas(NamedEntity.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {
@@ -91,7 +91,7 @@ class CreationDetails(NamedEntity):
 
 
 class BookPortion(JsonObjectWithTarget):
-  schema = common.recursively_merge(JsonObject.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.",
     "properties": {

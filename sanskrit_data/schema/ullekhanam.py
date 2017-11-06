@@ -30,7 +30,7 @@ logging.basicConfig(
 
 
 class AnnotationSource(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "Source of the annotation which contains this node.",
     common.TYPE_FIELD: {
@@ -61,7 +61,7 @@ class AnnotationSource(JsonObject):
 
 
 class Annotation(JsonObjectWithTarget):
-  schema = common.recursively_merge(JsonObjectWithTarget.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObjectWithTarget.schema, ({
     "type": "object",
     "properties": {
       common.TYPE_FIELD: {
@@ -99,7 +99,7 @@ class Annotation(JsonObjectWithTarget):
 
 
 class Rectangle(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, ({
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "A rectangle within an image.",
     "properties": {
@@ -156,7 +156,7 @@ class Rectangle(JsonObject):
 
 # noinspection PyMethodOverriding
 class ImageTarget(Target):
-  schema = common.recursively_merge(Target.schema, ({
+  schema = common.recursively_merge_json_schemas(Target.schema, ({
     "type": "object",
     "description": "The rectangle within the image being targetted.",
     "properties": {
@@ -184,7 +184,7 @@ class ImageAnnotation(Annotation):
 
   `An introductory video <https://www.youtube.com/watch?v=SHzD3f5nPt0&t=29s>`_
   """
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "A rectangle within an image, picked by a particular annotation source.",
     "properties": {
@@ -214,7 +214,7 @@ class ImageAnnotation(Annotation):
 
 # Targets: ImageAnnotation(s) or  TextAnnotation or BookPortion
 class TextAnnotation(Annotation):
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "Annotation of some (sub)text from within the object (image or another text) being annotated.",
     "properties": {
@@ -240,7 +240,7 @@ class TextAnnotation(Annotation):
 
 
 class CommentAnnotation(TextAnnotation):
-  schema = common.recursively_merge(TextAnnotation.schema, ({
+  schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
     "description": "A comment that can be associated with nearly any Annotation or BookPortion.",
   }))
 
@@ -250,7 +250,7 @@ class CommentAnnotation(TextAnnotation):
 
 
 class TextOffsetAddress(JsonObject):
-  schema = common.recursively_merge(JsonObject.schema, {
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, {
     "type": "object",
     "description": "A way to specify a substring.",
     "properties": {
@@ -275,7 +275,7 @@ class TextOffsetAddress(JsonObject):
 
 
 class TextTarget(Target):
-  schema = common.recursively_merge(Target.schema, ({
+  schema = common.recursively_merge_json_schemas(Target.schema, ({
     "type": "object",
     "description": "A way to specify a particular substring within a string.",
     "properties": {
@@ -307,7 +307,7 @@ class TextTarget(Target):
 
 # noinspection PyMethodOverriding
 class PadaAnnotation(Annotation):
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "A grammatical pada - subanta or tiNanta.",
     "properties": {
@@ -347,7 +347,7 @@ class PadaAnnotation(Annotation):
 # Targets: TextTarget pointing to TextAnnotation
 # noinspection PyMethodOverriding
 class SubantaAnnotation(PadaAnnotation):
-  schema = common.recursively_merge(PadaAnnotation.schema, ({
+  schema = common.recursively_merge_json_schemas(PadaAnnotation.schema, ({
     "type": "object",
     "description": "Anything ending with a sup affix. Includes avyaya-s.",
     "properties": {
@@ -382,7 +382,7 @@ class SubantaAnnotation(PadaAnnotation):
 
 # noinspection PyMethodOverriding,PyPep8Naming
 class TinantaAnnotation(PadaAnnotation):
-  schema = common.recursively_merge(PadaAnnotation.schema, ({
+  schema = common.recursively_merge_json_schemas(PadaAnnotation.schema, ({
     "type": "object",
     "description": "Anything ending with a tiN affix.",
     "properties": {
@@ -417,7 +417,7 @@ class TinantaAnnotation(PadaAnnotation):
 
 # Targets: a pair of textAnnotation or BookPortion objects
 class TextSambandhaAnnotation(Annotation):
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "Describes connection between two text portions. Such connection is directional (ie it connects words in a source sentence to words in a target sentence.)",
     "properties": {
@@ -456,7 +456,7 @@ class TextSambandhaAnnotation(Annotation):
 
 # Targets: two or more PadaAnnotations
 class SandhiAnnotation(Annotation):
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "properties": {
       common.TYPE_FIELD: {
@@ -486,7 +486,7 @@ class SandhiAnnotation(Annotation):
 
 # Targets: one PadaAnnotation (the samasta-pada)
 class SamaasaAnnotation(Annotation):
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "properties": {
       common.TYPE_FIELD: {
@@ -523,7 +523,7 @@ class SamaasaAnnotation(Annotation):
 
 class OriginAnnotation(Annotation):
   """See schema.description."""
-  schema = common.recursively_merge(Annotation.schema, ({
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "A given text may be quoted from some other book. This annotation helps specify such origin.",
     "properties": {
@@ -531,6 +531,22 @@ class OriginAnnotation(Annotation):
         "enum": ["OriginAnnotation"]
       },
       "originDetails": CreationDetails.schema,
+    },
+  }))
+
+
+class RatingAnnotation(Annotation):
+  """See schema.description."""
+  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
+    "type": "object",
+    "description": "A given text may be quoted from some other book. This annotation helps specify such origin.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["RatingAnnotation"]
+      },
+      "rating": {
+        "type": "number"
+      },
     },
   }))
 

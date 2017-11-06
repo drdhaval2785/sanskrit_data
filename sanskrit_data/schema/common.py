@@ -49,16 +49,20 @@ def check_list_item_types(some_list, allowed_types):
   return not (False in check_class_results)
 
 
-def recursively_merge(a, b, merge_list_members=False):
+def recursively_merge_json_schemas(a, b, jsonPath=""):
   assert a.__class__ == b.__class__, str(a.__class__) + " vs " + str(b.__class__)
 
   if isinstance(b, dict) and isinstance(a, dict):
     a_and_b = set(a.keys()) & set(b.keys())
     every_key = set(a.keys()) | set(b.keys())
-    return {
-      k: recursively_merge(a[k], b[k], merge_list_members=merge_list_members) if k in a_and_b
-      else deepcopy(a[k] if k in a else b[k]) for k in every_key}
-  elif isinstance(b, list) and isinstance(a, list) and merge_list_members:
+    merged_dict = {}
+    for k in every_key:
+      if k in a_and_b:
+        merged_dict[k] = recursively_merge_json_schemas(a[k], b[k], jsonPath=jsonPath + "/" + k)
+      else:
+        merged_dict[k] = deepcopy(a[k] if k in a else b[k])
+    return merged_dict
+  elif isinstance(b, list) and isinstance(a, list) and not jsonPath.endswith(TYPE_FIELD + "/enum"):
     # TODO: What if we have a list of dicts?
     return list(set(a + b))
   else:
@@ -325,7 +329,7 @@ class TargetValidationError(Exception):
 
 # noinspection PyProtectedMember
 class Target(JsonObject):
-  schema = recursively_merge(JsonObject.schema, {
+  schema = recursively_merge_json_schemas(JsonObject.schema, {
     "type": "object",
     "properties": {
       TYPE_FIELD: {
@@ -361,7 +365,7 @@ class Target(JsonObject):
 class JsonObjectWithTarget(JsonObject):
   """A JsonObject with a target field."""
 
-  schema = recursively_merge(JsonObject.schema, ({
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "A JsonObject with a target field.",
     "properties": {
@@ -416,7 +420,7 @@ class JsonObjectNode(JsonObject):
 
   `A video describing its use <https://youtu.be/neVeKcxzeQI>`_.
   """
-  schema = recursively_merge(
+  schema = recursively_merge_json_schemas(
     JsonObject.schema, {
       "id": "JsonObjectNode",
       "properties": {
@@ -496,7 +500,7 @@ class JsonObjectNode(JsonObject):
 
 
 class ScriptRendering(JsonObject):
-  schema = recursively_merge(JsonObject.schema, ({
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {
@@ -523,7 +527,7 @@ class ScriptRendering(JsonObject):
 
 
 class Text(JsonObject):
-  schema = recursively_merge(JsonObject.schema, ({
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {
@@ -559,7 +563,7 @@ class Text(JsonObject):
 
 class NamedEntity(JsonObject):
   """The same name written in different languages have different spellings - oft due to differing case endings and conventions: kAlidAsaH vs Kalidasa. Hence this container."""
-  schema = recursively_merge(JsonObject.schema, ({
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "properties": {
       TYPE_FIELD: {

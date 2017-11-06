@@ -2,7 +2,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import TYPE_FIELD, JsonObject, Text, recursively_merge
+from sanskrit_data.schema.common import TYPE_FIELD, JsonObject, Text, recursively_merge_json_schemas
 
 
 
