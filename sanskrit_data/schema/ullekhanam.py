@@ -20,7 +20,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.books import BookPortion
+from sanskrit_data.schema.books import BookPortion, CreationDetails
 from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, ScriptRendering, Text
 
 logging.basicConfig(
@@ -318,12 +318,8 @@ class PadaAnnotation(Annotation):
         "type": "array",
         "items": TextTarget.schema
       },
-      "word": {
-        "type": Text.schema
-      },
-      "root": {
-        "type": Text.schema
-      }
+      "word": Text.schema,
+      "root": Text.schema,
     },
   }))
 
@@ -466,9 +462,7 @@ class SandhiAnnotation(Annotation):
       common.TYPE_FIELD: {
         "enum": ["SandhiAnnotation"]
       },
-      "combined_string": {
-        "type": Text.schema
-      },
+      "combined_string": Text.schema,
       "sandhi_type": {
         "type": "string"
       }
@@ -492,7 +486,7 @@ class SandhiAnnotation(Annotation):
 
 # Targets: one PadaAnnotation (the samasta-pada)
 class SamaasaAnnotation(Annotation):
-  schema = common.recursively_merge(Target.schema, ({
+  schema = common.recursively_merge(Annotation.schema, ({
     "type": "object",
     "properties": {
       common.TYPE_FIELD: {
@@ -503,7 +497,7 @@ class SamaasaAnnotation(Annotation):
         "description": "Pointers to PadaAnnotation objects corresponding to components of the samasta-pada",
         "items": Target.schema
       },
-      "type": {
+      "samaasa_type": {
         "type": "string"
       }
     },
@@ -525,6 +519,20 @@ class SamaasaAnnotation(Annotation):
     annotation.type = samaasa_type
     annotation.validate()
     return annotation
+
+
+class OriginAnnotation(Annotation):
+  """See schema.description."""
+  schema = common.recursively_merge(Annotation.schema, ({
+    "type": "object",
+    "description": "A given text may be quoted from some other book. This annotation helps specify such origin.",
+    "properties": {
+      common.TYPE_FIELD: {
+        "enum": ["OriginAnnotation"]
+      },
+      "originDetails": CreationDetails.schema,
+    },
+  }))
 
 
 # Essential for depickling to work.

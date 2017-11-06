@@ -49,16 +49,17 @@ def check_list_item_types(some_list, allowed_types):
   return not (False in check_class_results)
 
 
-def recursively_merge(a, b):
+def recursively_merge(a, b, merge_list_members=False):
   assert a.__class__ == b.__class__, str(a.__class__) + " vs " + str(b.__class__)
 
   if isinstance(b, dict) and isinstance(a, dict):
     a_and_b = set(a.keys()) & set(b.keys())
     every_key = set(a.keys()) | set(b.keys())
     return {
-      k: recursively_merge(a[k], b[k]) if k in a_and_b
+      k: recursively_merge(a[k], b[k], merge_list_members=merge_list_members) if k in a_and_b
       else deepcopy(a[k] if k in a else b[k]) for k in every_key}
-  elif isinstance(b, list) and isinstance(a, list):
+  elif isinstance(b, list) and isinstance(a, list) and merge_list_members:
+    # TODO: What if we have a list of dicts?
     return list(set(a + b))
   else:
     return deepcopy(b)
