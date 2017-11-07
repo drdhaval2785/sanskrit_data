@@ -144,6 +144,7 @@ class Rectangle(JsonObject):
   def __ne__(self, other):
     return not self.__eq__(other)
 
+  # noinspection PyTypeChecker
   def __cmp__(self, other):
     if self == other:
       logging.info(str(self) + " overlaps " + str(other))

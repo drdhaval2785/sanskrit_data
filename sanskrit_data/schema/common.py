@@ -49,7 +49,7 @@ def check_list_item_types(some_list, allowed_types):
   return not (False in check_class_results)
 
 
-def recursively_merge_json_schemas(a, b, jsonPath=""):
+def recursively_merge_json_schemas(a, b, json_path=""):
   assert a.__class__ == b.__class__, str(a.__class__) + " vs " + str(b.__class__)
 
   if isinstance(b, dict) and isinstance(a, dict):
@@ -58,11 +58,11 @@ def recursively_merge_json_schemas(a, b, jsonPath=""):
     merged_dict = {}
     for k in every_key:
       if k in a_and_b:
-        merged_dict[k] = recursively_merge_json_schemas(a[k], b[k], jsonPath=jsonPath + "/" + k)
+        merged_dict[k] = recursively_merge_json_schemas(a[k], b[k], json_path=json_path + "/" + k)
       else:
         merged_dict[k] = deepcopy(a[k] if k in a else b[k])
     return merged_dict
-  elif isinstance(b, list) and isinstance(a, list) and not jsonPath.endswith(TYPE_FIELD + "/enum"):
+  elif isinstance(b, list) and isinstance(a, list) and not json_path.endswith(TYPE_FIELD + "/enum"):
     # TODO: What if we have a list of dicts?
     return list(set(a + b))
   else:
@@ -203,6 +203,7 @@ class JsonObject(object):
         else:
           setattr(self, key, value)
 
+  # noinspection PyShadowingBuiltins
   def set_from_id(self, db_interface, id):
     return self.set_from_dict(db_interface.find_by_id(id=id))
 
@@ -226,15 +227,15 @@ class JsonObject(object):
 
   def equals_ignore_id(self, other):
     # Makes a unicode copy.
-    def to_unicode(input):
-      if isinstance(input, dict):
-        return {key: to_unicode(value) for key, value in iter(input.items())}
-      elif isinstance(input, list):
-        return [to_unicode(element) for element in input]
-      elif isinstance(input, string_types):
-        return input.encode('utf-8')
+    def to_unicode(text):
+      if isinstance(text, dict):
+        return {key: to_unicode(value) for key, value in iter(text.items())}
+      elif isinstance(text, list):
+        return [to_unicode(element) for element in text]
+      elif isinstance(text, string_types):
+        return text.encode('utf-8')
       else:
-        return input
+        return text
 
     dict1 = to_unicode(self.to_json_map())
     dict1.pop("_id", None)
@@ -301,9 +302,10 @@ class JsonObject(object):
       logging.error("Schema is: " + jsonpickle.dumps(self.schema))
       logging.error("Context is: " + str(e.context))
       logging.error("Best match is: " + str(best_match(errors=[e])))
-      logging.error("json_map is: " + json_map)
+      logging.error("json_map is: " + jsonpickle.dumps(json_map))
       raise e
 
+  # noinspection PyShadowingBuiltins
   @classmethod
   def from_id(cls, id, db_interface):
     """Returns None if nothing is found."""

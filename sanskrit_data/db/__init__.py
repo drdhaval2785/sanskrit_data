@@ -63,6 +63,7 @@ class DbInterface(object):
     """
     pass
 
+  # noinspection PyShadowingBuiltins
   def find_by_id(self, id):
     """
     
@@ -96,6 +97,7 @@ class DbInterface(object):
   def add_index(self, keys_json, index_name):
     """Index the database using certain fields.
 
+    :param index_name:
     :param keys_json: A document that contains the field and value pairs where the field is the index key and the value describes the type of index for that field. For an ascending index on a field, specify a value of 1; for descending index, specify a value of -1.
     """
     pass

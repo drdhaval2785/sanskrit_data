@@ -1,6 +1,7 @@
 """.. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`."""
 
 import logging
+# noinspection PyPackageRequirements
 from bson import ObjectId
 
 from sanskrit_data.db import DbInterface, ClientInterface
@@ -54,11 +55,12 @@ class Collection(DbInterface):
     logging.info("Initializing collection :" + str(some_collection))
     self.mongo_collection = some_collection
 
+  # noinspection PyShadowingBuiltins
   def find_by_id(self, id):
     return self.find_one(find_filter={"_id": id})
 
   def find_one(self, find_filter):
-    _fix_id_filter(filter=find_filter)
+    _fix_id_filter(filter_dict=find_filter)
     result = self.mongo_collection.find_one(filter=find_filter)
     _fix_id(doc=result)
     return result
@@ -72,11 +74,11 @@ class Collection(DbInterface):
   def update_doc(self, doc):
     from pymongo import ReturnDocument
     if "_id" in doc:
-      filter = {"_id": ObjectId(doc["_id"])}
+      filter_dict = {"_id": ObjectId(doc["_id"])}
       doc.pop("_id", None)
     else:
-      filter = doc
-    updated_doc = self.mongo_collection.find_one_and_update(filter, {"$set": doc}, upsert=True,
+      filter_dict = doc
+    updated_doc = self.mongo_collection.find_one_and_update(filter_dict, {"$set": doc}, upsert=True,
                                                             return_document=ReturnDocument.AFTER)
     _fix_id(doc=updated_doc)
     return updated_doc
@@ -93,6 +95,6 @@ def _fix_id(doc):
     doc["_id"] = str(doc["_id"])
 
 
-def _fix_id_filter(filter):
-  if "_id" in filter:
-    filter["_id"] = ObjectId(filter["_id"])
+def _fix_id_filter(filter_dict):
+  if "_id" in filter_dict:
+    filter_dict["_id"] = ObjectId(filter_dict["_id"])

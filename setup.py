@@ -98,7 +98,7 @@ setup(
 
     'cloudant',
     # 'couchdb-python', # But ALERT: we're using an unreleased version; a distribution does not exist for Py3.5 as of 20170828.
-    'pymongo', 'six', # Includes the bson package.
+    'pymongo', 'six', 'flask', # Includes the bson package.
   ],
 
   # List additional groups of dependencies here (e.g. development

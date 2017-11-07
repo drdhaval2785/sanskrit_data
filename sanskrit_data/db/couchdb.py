@@ -93,9 +93,10 @@ class CloudantApiDatabase(DbInterface):
       db_doc.fetch()
       db_doc.delete()
     else:
-      logging.warn("Trying to delete non-existant doc " + doc_id)
+      logging.warning("Trying to delete non-existant doc " + doc_id)
       pass
 
+  # noinspection PyShadowingBuiltins
   def find_by_id(self, id):
     try:
       db_doc = self.db[id]
@@ -137,7 +138,7 @@ class CouchdbApiClient(ClientInterface):
   def get_database(self, db_name):
     try:
       return self.server[db_name]
-    except:
+    except e:
       return self.server.create(db_name)
 
   def get_database_interface(self, db_name):
@@ -180,6 +181,7 @@ class CouchdbApiDatabase(DbInterface):
     except ResourceNotFound:
       pass
 
+  # noinspection PyShadowingBuiltins
   def find_by_id(self, id):
     from couchdb import ResourceNotFound
     try:

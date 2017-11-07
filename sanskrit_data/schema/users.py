@@ -103,6 +103,7 @@ class AuthenticationInfo(JsonObject):
 
   def set_bcrypt_password(self):
     if hasattr(self, "auth_secret_plain") and self.auth_secret_plain != "" and self.auth_secret_plain is not None:
+      # noinspection PyAttributeOutsideInit
       self.auth_secret_bcrypt = hash_password(plain_password=self.auth_secret_plain)
       delattr(self, "auth_secret_plain")
 
@@ -150,7 +151,6 @@ class User(JsonObject):
   def validate_schema(self):
     super(User, self).validate_schema()
 
-
   def check_permission(self, service, action):
     def fullmatch(pattern, string, flags=0):
       """Emulate python-3.4 re.fullmatch()."""
@@ -170,5 +170,7 @@ class User(JsonObject):
 
 
     # Essential for depickling to work.
+
+
 update_json_class_index(sys.modules[__name__])
 logging.debug(common.json_class_index)
