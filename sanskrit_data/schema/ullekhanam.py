@@ -239,8 +239,9 @@ class TextAnnotation(Annotation):
     annotation.validate()
     return annotation
 
-  @staticmethod
-  def add_indexes(db_interface):
+  @classmethod
+  def add_indexes(cls, db_interface):
+    super(TextAnnotation, cls).add_indexes(db_interface=db_interface)
     db_interface.add_index(keys_dict={
       "content.search_strings": 1
     }, index_name="content_search_strings")

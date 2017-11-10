@@ -315,8 +315,8 @@ class JsonObject(object):
       item = cls.make_from_dict(item_dict)
     return item
 
-  @staticmethod
-  def add_indexes(db_interface):
+  @classmethod
+  def add_indexes(cls, db_interface):
     db_interface.add_index(keys_dict={
       "jsonClass": 1
     }, index_name="jsonClass")
@@ -421,8 +421,9 @@ class JsonObjectWithTarget(JsonObject):
       targetting_objs = list(filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs))
     return targetting_objs
 
-  @staticmethod
-  def add_indexes(db_interface):
+  @classmethod
+  def add_indexes(cls, db_interface):
+    super(JsonObjectWithTarget, cls).add_indexes(db_interface=db_interface)
     db_interface.add_index(keys_dict={
       "targets.container_id": 1
     }, index_name="targets_container_id")
