@@ -315,6 +315,12 @@ class JsonObject(object):
       item = cls.make_from_dict(item_dict)
     return item
 
+  @staticmethod
+  def add_indexes(db_interface):
+    db_interface.add_index(keys_dict={
+      "jsonClass": 1
+    }, index_name="jsonClass")
+
 
 class TargetValidationError(Exception):
   def __init__(self, allowed_types, target_obj, targetting_obj):
@@ -414,6 +420,12 @@ class JsonObjectWithTarget(JsonObject):
     if entity_type is not None:
       targetting_objs = list(filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs))
     return targetting_objs
+
+  @staticmethod
+  def add_indexes(db_interface):
+    db_interface.add_index(keys_dict={
+      "targets.container_id": 1
+    }, index_name="targets_container_id")
 
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
@@ -542,6 +554,14 @@ class Text(JsonObject):
       },
       "language_code": {
         "type": "string",
+      },
+      "search_strings": {
+        "type": "array",
+        "items": "string",
+        "description": "Search strings which should match this text. "
+                       "It could be derived from script_renderings - "
+                       "by a simple copy (intended for use with a text index) "
+                       "or some intelligent tokenization thereof."
       },
     }
   }))

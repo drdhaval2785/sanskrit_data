@@ -166,6 +166,28 @@ class BookPortion(JsonObjectWithTarget):
       book_portion = JsonObject.make_from_dict(book_portion_dict)
       return book_portion
 
+  @staticmethod
+  def add_indexes(db_interface):
+    db_interface.add_index(keys_dict={
+      "creation_details.names.script_renderings.text": 1
+    }, index_name="creation_details_names_script_renderings_text")
+    db_interface.add_index(keys_dict={
+      "creation_details.authors.names.script_renderings.text": 1
+    }, index_name="creation_details_authors_names_script_renderings_text")
+    db_interface.add_index(keys_dict={
+      "curated_content.script_renderings.text": 1
+    }, index_name="curated_content_script_renderings_text")
+
+    db_interface.add_index(keys_dict={
+      "creation_details.names.search_strings": 1
+    }, index_name="creation_details_names_search_strings")
+    db_interface.add_index(keys_dict={
+      "creation_details.authors.names.search_strings": 1
+    }, index_name="creation_details_authors_names_search_strings")
+    db_interface.add_index(keys_dict={
+      "curated_content.search_strings": 1
+    }, index_name="curated_content_search_strings")
+
 
 # Essential for depickling to work.
 common.update_json_class_index(sys.modules[__name__])

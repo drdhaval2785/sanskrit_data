@@ -239,6 +239,12 @@ class TextAnnotation(Annotation):
     annotation.validate()
     return annotation
 
+  @staticmethod
+  def add_indexes(db_interface):
+    db_interface.add_index(keys_dict={
+      "content.search_strings": 1
+    }, index_name="content_search_strings")
+
 
 class CommentAnnotation(TextAnnotation):
   schema = common.recursively_merge_json_schemas(TextAnnotation.schema, ({
