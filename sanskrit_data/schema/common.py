@@ -558,7 +558,9 @@ class Text(JsonObject):
       },
       "search_strings": {
         "type": "array",
-        "items": "string",
+        "items": {
+          "type": "string"
+        },
         "description": "Search strings which should match this text. "
                        "It could be derived from script_renderings - "
                        "by a simple copy (intended for use with a text index) "
