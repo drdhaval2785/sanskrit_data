@@ -27,7 +27,6 @@ class UserPermission(JsonObject):
         },
         "service": {
           "type": "string",
-          "enum": [".*", "ullekhanam"],
           "description": "Allowable values should be predetermined regular expressions."
         },
         "actions": {
