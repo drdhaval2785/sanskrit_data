@@ -21,7 +21,7 @@ class TestDBRoundTrip(unittest.TestCase):
     tests.set_configuration()
     from sanskrit_data.db import mongodb
     self.server = mongodb.Client(url=tests.server_config["mongo_host"])
-    self.test_db = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
+    self.test_db = self.server.get_database_interface(db_name_backend=self.TEST_DB_NAME)
 
   def tearDown(self):
     pass
@@ -140,7 +140,7 @@ class TestDBRoundTrip(unittest.TestCase):
         pada_annotation_rAmaH,
         pada_annotation_vigrahavAn]),
       source=samsAdhanI_source,
-      combined_text=u"रामो विग्रहवान्")
+      combined_string=Text.from_text_string(text_string=u"रामो विग्रहवान्"))
     sandhi_annotation_rAmovigrahavAn = sandhi_annotation_rAmovigrahavAn.update_collection(db)
     logging.debug(sandhi_annotation_rAmovigrahavAn.to_json_map())
 
@@ -150,7 +150,7 @@ class TestDBRoundTrip(unittest.TestCase):
         pada_annotation_rAmaH,
         pada_annotation_avigrahavAn]),
       source=samsAdhanI_source,
-      combined_text=u"रामो विग्रहवान्")
+      combined_string=Text.from_text_string(text_string=u"रामो विग्रहवान्"))
     logging.debug(sandhi_annotation_rAmoavigrahavAn.to_json_map())
 
   def test_JsonObjectNode(self):

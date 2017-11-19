@@ -24,10 +24,11 @@ class ClientInterface(object):
     """
     pass
 
-  def get_database_interface(self, db_name):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None):
     """Create or get a suitable :class:`DbInterface` subclass.
 
-    :param str db_name: Name of the database which needs to be accessed (The database is created if it does not already exist).
+    :param db_name_frontend:
+    :param str db_name_backend: Name of the database which needs to be accessed (The database is created if it does not already exist).
     :returns DbInterface db: A database interface implementation for accessing this database.
     """
     pass
@@ -49,6 +50,7 @@ class DbInterface(object):
   def update_doc(self, doc):
     """ Update or insert a json object, represented as a dict.
     
+    :param db_name_frontend:
     :param dict doc: _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
     :return: updated dict with _id set.
     """

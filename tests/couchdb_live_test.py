@@ -18,7 +18,7 @@ class TestLiveDB(unittest.TestCase):
   def setUp(self):
     tests.set_configuration()
     self.server = CloudantApiClient(tests.server_config["couchdb_host"])
-    self.live_db_interface = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
+    self.live_db_interface = self.server.get_database_interface(db_name_backend=self.TEST_DB_NAME)
     self.db = self.live_db_interface.db
 
   def test_update_doc(self):

@@ -29,6 +29,7 @@ class CloudantApiClient(ClientInterface):
   def __init__(self, url):
     # logging.debug(url)
     import yurl
+    # noinspection PyArgumentList
     parse_result = yurl.URL(url=url)
     import re
     url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
@@ -46,17 +47,19 @@ class CloudantApiClient(ClientInterface):
     else:
       return self.client.create_database(db_name)
 
-  def get_database_interface(self, db_name):
-    return CloudantApiDatabase(db=self.get_database(db_name=db_name))
+  def get_database_interface(self, db_name_backend, db_name_frontend=None):
+    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
+    db = CloudantApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final)
 
   def delete_database(self, db_name):
     self.client.delete_database(db_name)
 
 
 class CloudantApiDatabase(DbInterface):
-  def __init__(self, db):
+  def __init__(self, db, db_name_frontend=None):
     logging.info("Initializing db :" + str(db))
     self.db = db
+    self.db_name_frontend = db_name_frontend
 
   def update_doc(self, doc):
     super(CloudantApiDatabase, self).update_doc(doc=doc)
@@ -141,8 +144,9 @@ class CouchdbApiClient(ClientInterface):
     except e:
       return self.server.create(db_name)
 
-  def get_database_interface(self, db_name):
-    return CouchdbApiDatabase(db=self.get_database(db_name=db_name))
+  def get_database_interface(self, db_name_backend, db_name_frontend=None):
+    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
+    return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final)
 
   def delete_database(self, db_name):
     self.server.delete(db_name)
@@ -151,9 +155,10 @@ class CouchdbApiClient(ClientInterface):
 class CouchdbApiDatabase(DbInterface):
   """.. note:: Prefer :class:`CloudantApiDatabase`."""
 
-  def __init__(self, db):
+  def __init__(self, db, db_name_frontend):
     logging.info("Initializing db :" + str(db))
     self.db = db
+    self.db_name_frontend = db_name_frontend
 
   def set_revision(self, doc_map):
     from couchdb import ResourceNotFound

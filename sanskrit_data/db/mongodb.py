@@ -41,8 +41,9 @@ class Client(ClientInterface):
     db_details = get_db_collection_names(db_collection_string=db_name)
     return self.client[db_details["db"]][db_details["collection"]]
 
-  def get_database_interface(self, db_name):
-    return Collection(some_collection=self.get_database(db_name=db_name))
+  def get_database_interface(self, db_name_backend, db_name_frontend=None):
+    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
+    return Collection(some_collection=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final)
 
   def delete_database(self, db_name):
     """Deletes a collection, does not bother with the database."""
@@ -51,9 +52,10 @@ class Client(ClientInterface):
 
 
 class Collection(DbInterface):
-  def __init__(self, some_collection):
+  def __init__(self, some_collection, db_name_frontend):
     logging.info("Initializing collection :" + str(some_collection))
     self.mongo_collection = some_collection
+    self.db_name_frontend = db_name_frontend
 
   # noinspection PyShadowingBuiltins
   def find_by_id(self, id):

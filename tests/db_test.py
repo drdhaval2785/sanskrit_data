@@ -20,7 +20,7 @@ class TestDBRoundTrip(unittest.TestCase):
     # self.server = CloudantApiClient(tests.server_config["couchdb_host"])
     from sanskrit_data.db import mongodb
     self.server = mongodb.Client(url=tests.server_config["mongo_host"])
-    self.test_db = self.server.get_database_interface(db_name=self.TEST_DB_NAME)
+    self.test_db = self.server.get_database_interface(db_name_backend=self.TEST_DB_NAME)
 
   def tearDown(self):
     self.server.delete_database(self.TEST_DB_NAME)
