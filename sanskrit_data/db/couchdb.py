@@ -47,19 +47,20 @@ class CloudantApiClient(ClientInterface):
     else:
       return self.client.create_database(db_name)
 
-  def get_database_interface(self, db_name_backend, db_name_frontend=None):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
     db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
-    db = CloudantApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final)
+    db = CloudantApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
 
   def delete_database(self, db_name):
     self.client.delete_database(db_name)
 
 
 class CloudantApiDatabase(DbInterface):
-  def __init__(self, db, db_name_frontend=None):
+  def __init__(self, db, db_name_frontend=None, external_file_store=None):
     logging.info("Initializing db :" + str(db))
     self.db = db
     self.db_name_frontend = db_name_frontend
+    self.external_file_store = external_file_store
 
   def update_doc(self, doc):
     super(CloudantApiDatabase, self).update_doc(doc=doc)
@@ -144,9 +145,9 @@ class CouchdbApiClient(ClientInterface):
     except e:
       return self.server.create(db_name)
 
-  def get_database_interface(self, db_name_backend, db_name_frontend=None):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
     db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
-    return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final)
+    return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
 
   def delete_database(self, db_name):
     self.server.delete(db_name)
@@ -155,10 +156,11 @@ class CouchdbApiClient(ClientInterface):
 class CouchdbApiDatabase(DbInterface):
   """.. note:: Prefer :class:`CloudantApiDatabase`."""
 
-  def __init__(self, db, db_name_frontend):
+  def __init__(self, db, db_name_frontend, external_file_store=None):
     logging.info("Initializing db :" + str(db))
     self.db = db
     self.db_name_frontend = db_name_frontend
+    self.external_file_store = external_file_store
 
   def set_revision(self, doc_map):
     from couchdb import ResourceNotFound

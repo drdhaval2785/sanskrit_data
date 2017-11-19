@@ -67,8 +67,8 @@ class Annotation(JsonObjectWithTarget):
   }))
 
   def validate(self, db_interface=None, user=None):
-    if "user" in self.source.source_type:
-      self.source.id = user_id
+    if user is not None and user.get_first_user_id_or_none() is not None:
+      self.source.id = user.get_first_user_id_or_none()
     super(Annotation, self).validate(db_interface=db_interface, user=user)
 
   @classmethod

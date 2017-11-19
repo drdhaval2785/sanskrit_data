@@ -167,6 +167,12 @@ class User(JsonObject):
   def get_user_ids(self):
     return [str(auth_info) for auth_info in self.authentication_infos]
 
+  def get_first_user_id_or_none(self):
+    user_ids = self.get_user_ids()
+    if len(user_ids) > 0:
+      return user_ids[0]
+    else:
+      return None
 
     # Essential for depickling to work.
 
