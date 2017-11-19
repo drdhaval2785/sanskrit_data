@@ -66,10 +66,10 @@ class Annotation(JsonObjectWithTarget):
     "required": ["targets", "source"]
   }))
 
-  def validate(self, db_interface=None, user_id=None):
+  def validate(self, db_interface=None, user=None):
     if "user" in self.source.source_type:
       self.source.id = user_id
-    super(Annotation, self).validate(db_interface=db_interface, user_id=user_id)
+    super(Annotation, self).validate(db_interface=db_interface, user=user)
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -494,8 +494,8 @@ class TextSambandhaAnnotation(Annotation):
     "required": ["combined_string"]
   }))
 
-  def validate(self, db_interface=None, user_id=None):
-    super(TextSambandhaAnnotation, self).validate(db_interface=db_interface, user_id=user_id)
+  def validate(self, db_interface=None, user=None):
+    super(TextSambandhaAnnotation, self).validate(db_interface=db_interface, user=user)
     self.validate_targets(targets=self.source_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
     self.validate_targets(targets=self.target_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
 
@@ -557,8 +557,8 @@ class SamaasaAnnotation(Annotation):
   def get_allowed_target_classes(cls):
     return [PadaAnnotation]
 
-  def validate(self, db_interface=None, user_id=None):
-    super(SamaasaAnnotation, self).validate(db_interface=db_interface, user_id=user_id)
+  def validate(self, db_interface=None, user=None):
+    super(SamaasaAnnotation, self).validate(db_interface=db_interface, user=user)
     self.validate_targets(targets=self.component_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
 
   @classmethod

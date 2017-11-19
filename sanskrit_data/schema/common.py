@@ -247,11 +247,11 @@ class JsonObject(object):
     # logging.debug(dict2)
     return dict1 == dict2
 
-  def update_collection(self, db_interface, user_id=None):
+  def update_collection(self, db_interface, user=None):
     """Do JSON validation and write to database."""
     self.set_type_recursively()
     if hasattr(self, "schema"):
-      self.validate(db_interface, user_id=user_id)
+      self.validate(db_interface=db_interface, user=user)
     updated_doc = db_interface.update_doc(self.to_json_map())
     updated_obj = JsonObject.make_from_dict(updated_doc)
     return updated_obj
@@ -261,9 +261,10 @@ class JsonObject(object):
     assert hasattr(self, "_id"), "_id not present!"
     return db_interface.delete_doc(self._id)
 
-  def validate(self, db_interface=None, user_id=None):
+  def validate(self, db_interface=None, user=None):
     """Validate the JSON serialization of this object using the schema member. Called before database writes.
 
+    :param user:
     :param db_interface: Potentially useful in subclasses to perform validations (eg. is the target_id valid).
       This value may not be available: for example when called from the from_details methods.
 
@@ -399,8 +400,8 @@ class JsonObjectWithTarget(JsonObject):
           raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self,
                                       target_obj=target_entity)
 
-  def validate(self, db_interface=None, user_id=None):
-    super(JsonObjectWithTarget, self).validate(db_interface=db_interface, user_id=user_id)
+  def validate(self, db_interface=None, user=None):
+    super(JsonObjectWithTarget, self).validate(db_interface=db_interface, user=user)
     if hasattr(self, "targets"):
       self.validate_targets(targets=self.targets, allowed_types=self.get_allowed_target_classes(),
                             db_interface=db_interface)
@@ -497,9 +498,9 @@ class JsonObjectNode(JsonObject):
     for child in self.children:
       child.validate_children_types()
 
-  def validate(self, db_interface=None, user_id=None):
+  def validate(self, db_interface=None, user=None):
     # Note that the below recursively validates ALL members (including content and children).
-    super(JsonObjectNode, self).validate(db_interface=None, user_id=user_id)
+    super(JsonObjectNode, self).validate(db_interface=db_interface, user=user)
     self.validate_children_types()
 
   @classmethod
@@ -515,11 +516,11 @@ class JsonObjectNode(JsonObject):
     node.validate(db_interface=None)
     return node
 
-  def update_collection(self, db_interface, user_id=None):
+  def update_collection(self, db_interface, user=None):
     # But we don't call self.validate() as child.content.targets mayn't be set.
     self.validate_children_types()
     # The content is validated within the below call.
-    self.content = self.content.update_collection(db_interface, user_id=user_id)
+    self.content = self.content.update_collection(db_interface=db_interface, user=user)
     for child in self.children:
       # Initialize the target array if it does not already exist.
       if (not hasattr(child.content, "targets")) or child.content.targets is None or len(child.content.targets) == 0:
