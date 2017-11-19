@@ -431,11 +431,11 @@ class JsonObjectWithTarget(JsonObject):
 
 
 class DataSource(JsonObject):
-  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "Source of the json-data which contains this node. Eg. Uploader details in case of books, annotator in case of annotations."
                    " Consider naming the field that contains this object `source` to make querying uniform.",
-    common.TYPE_FIELD: {
+    TYPE_FIELD: {
       "enum": ["DataSource"]
     },
     "properties": {
