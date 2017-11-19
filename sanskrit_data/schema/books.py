@@ -109,6 +109,8 @@ class BookPortion(JsonObjectWithTarget):
         "type": "string",
         "enum": ["image", "text"]
       },
+
+      # naming the field that contains this object `source` to make querying uniform (ref Annotation.source).
       "source": DataSource.schema,
       "publication_details": PublicationDetails.schema,
       "portion_class": {
