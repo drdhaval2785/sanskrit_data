@@ -15,7 +15,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, Text, NamedEntity
+from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, DataSource, Text, NamedEntity
 
 
 class BookPositionTarget(Target):
@@ -109,6 +109,7 @@ class BookPortion(JsonObjectWithTarget):
         "type": "string",
         "enum": ["image", "text"]
       },
+      "source": DataSource.schema,
       "publication_details": PublicationDetails.schema,
       "portion_class": {
         "type": "string",

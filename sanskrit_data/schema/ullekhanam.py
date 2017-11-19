@@ -21,7 +21,7 @@ import sys
 
 from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion, CreationDetails
-from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, ScriptRendering, Text, NamedEntity
+from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, DataSource, ScriptRendering, Text, NamedEntity
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -29,25 +29,13 @@ logging.basicConfig(
 )
 
 
-class AnnotationSource(JsonObject):
-  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
+class AnnotationSource(DataSource):
+  schema = common.recursively_merge_json_schemas(DataSource.schema , ({
     "type": "object",
     "description": "Source of the annotation which contains this node.",
     common.TYPE_FIELD: {
       "enum": ["AnnotationSource"]
-    },
-    "properties": {
-      "source_type": {
-        "type": "string",
-        "enum": ["system_inferred", "user_supplied"],
-        "description": "Does this annotation come from a machine, or a human? source_ prefix avoids keyword conflicts in some languages.",
-      },
-      "id": {
-        "type": "string",
-        "description": "Something to identify the particular annotation source.",
-      }
-    },
-    "required": ["source_type"]
+    }
   }))
 
   # noinspection PyShadowingBuiltins

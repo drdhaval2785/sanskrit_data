@@ -429,6 +429,37 @@ class JsonObjectWithTarget(JsonObject):
     }, index_name="targets_container_id")
 
 
+class DataSource(JsonObject):
+  schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
+    "type": "object",
+    "description": "Source of the json-data which contains this node. Eg. Uploader details in case of books, annotator in case of annotations.",
+    common.TYPE_FIELD: {
+      "enum": ["DataSource"]
+    },
+    "properties": {
+      "source_type": {
+        "type": "string",
+        "enum": ["system_inferred", "user_supplied"],
+        "description": "Does this data come from a machine, or a human? source_ prefix avoids keyword conflicts in some languages.",
+      },
+      "id": {
+        "type": "string",
+        "description": "Something to identify the particular data source.",
+      }
+    },
+    "required": ["source_type"]
+  }))
+
+  # noinspection PyShadowingBuiltins
+  @classmethod
+  def from_details(cls, source_type, id):
+    source = DataSource()
+    source.source_type = source_type
+    source.id = id
+    source.validate_schema()
+    return source
+
+
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
 class JsonObjectNode(JsonObject):
   """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.
