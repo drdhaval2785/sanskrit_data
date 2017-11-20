@@ -538,7 +538,7 @@ class JsonObjectNode(JsonObject):
 
       assert len(child.content.targets) == 1
       child.content.targets[0].container_id = str(self.content._id)
-      child.update_collection(db_interface)
+      child.update_collection(db_interface=db_interface, user=user)
 
   def delete_in_collection(self, db_interface):
     self.fill_descendents(db_interface=db_interface, depth=100)
