@@ -73,7 +73,7 @@ class Annotation(JsonObjectWithTarget):
   def update_collection(self, db_interface, user=None):
     if not hasattr(self.source, "id") and user is not None and user.get_first_user_id_or_none() is not None:
       self.source.id = user.get_first_user_id_or_none()
-    super(Annotation, self).update_collection(db_interface=db_interface, user=user)
+    return super(Annotation, self).update_collection(db_interface=db_interface, user=user)
 
   @classmethod
   def get_allowed_target_classes(cls):
