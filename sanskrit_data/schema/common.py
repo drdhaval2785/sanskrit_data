@@ -461,6 +461,16 @@ class DataSource(JsonObject):
     source.validate_schema()
     return source
 
+  def validate(self, db_interface=None, user=None):
+    if (hasattr(self, "id") and user is None or
+          (self.id not in user.get_user_ids() and
+             not user.check_permission(service=db_interface.db_name_frontend, action="admin"))):
+      raise ValidationError("Impersonation as " + self.id + " not allowed for this user.")
+    if ("user" in self.source_type and not hasattr(self, "id")):
+      raise ValidationError("User id compulsary for user sources.")
+    super(DataSource, self).validate(db_interface=db_interface, user=user)
+
+
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
 class JsonObjectNode(JsonObject):

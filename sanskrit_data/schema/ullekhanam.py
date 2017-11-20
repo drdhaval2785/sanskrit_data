@@ -67,10 +67,7 @@ class Annotation(JsonObjectWithTarget):
   }))
 
   def validate(self, db_interface=None, user=None):
-    if (hasattr(self.source, "id") and user is None or
-      (self.source.id not in user.get_user_ids() and
-       not user.check_permission(service=db_interface.db_name_frontend, action="admin"))):
-      raise ValidationError("Impersonation as " + self.source.id + " not allowed for this user.")
+    self.source.validate(db_interface=db_interface, user=user)
     super(Annotation, self).validate(db_interface=db_interface, user=user)
 
   def update_collection(self, db_interface, user=None):
