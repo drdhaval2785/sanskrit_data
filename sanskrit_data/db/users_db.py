@@ -1,10 +1,13 @@
 import logging
 from sanskrit_data.db import DbInterface, mongodb
+from sanskrit_data.schema.users import User
+from sanskrit_data.db.couchdb import CloudantApiDatabase
 
 logging.basicConfig(
   level=logging.DEBUG,
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
+
 
 class UsersInterface(DbInterface):
   """Operations on User objects in an Db"""
@@ -33,9 +36,6 @@ class UsersInterface(DbInterface):
 class UsersMongodb(mongodb.Collection, UsersInterface):
   def __init__(self, some_collection):
     super(UsersMongodb, self).__init__(some_collection=some_collection, db_name_frontend="users")
-
-
-from sanskrit_data.db.couchdb import CloudantApiDatabase
 
 
 class UsersCouchdb(CloudantApiDatabase, UsersInterface):
