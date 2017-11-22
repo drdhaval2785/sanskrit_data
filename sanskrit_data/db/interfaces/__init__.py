@@ -13,11 +13,13 @@ class ClientInterface(object):
     """
     pass
 
-  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None, db_type=None):
     """Create or get a suitable :class:`DbInterface` subclass.
 
     :param db_name_frontend: An ID for use with the schema.users module, to verify user access to the database as needed.
     :param str db_name_backend: Name of the database which needs to be accessed (The database is created if it does not already exist).
+    :param external_file_store:
+    :param db_type:
     :returns DbInterface db: A database interface implementation for accessing this database.
     """
     pass
