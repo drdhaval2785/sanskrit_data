@@ -188,7 +188,8 @@ class ValidationAnnotationSource(AnnotationSource):
       # source_type is a compulsory attribute, because that validation is done separately and a suitable error is thrown.
       if hasattr(self, "source_type") and self.source_type == "user_supplied":
         if user is not None and db_interface is not None:
-          self.by_admin = user.is_admin(service=db_interface.db_name_frontend)
+          if not hasattr(self, "id") or self.id in user.get_user_ids():
+            self.by_admin = user.is_admin(service=db_interface.db_name_frontend)
 
   def validate(self, db_interface=None, user=None):
     super(ValidationAnnotationSource, self).validate(db_interface=db_interface, user=user)
@@ -217,9 +218,6 @@ class ValidationAnnotation(Annotation):
 
   def update_collection(self, db_interface, user=None):
     self.source.infer_by_admin(db_interface=db_interface, user=user)
-    # If user is not (None or an admin), and if source.id matches the user, set by_admin=False.
-    if not hasattr(self.source, "id") and user is not None and user.get_first_user_id_or_none() is not None:
-      self.by_admin = user.is_admin(service=db_interface.db_name_frontend)
     return super(ValidationAnnotation, self).update_collection(db_interface=db_interface, user=user)
 
 
