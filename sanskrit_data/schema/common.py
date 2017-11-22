@@ -465,7 +465,7 @@ class DataSource(JsonObject):
     if not hasattr(self, "source_type"):
       self.source_type = "user_supplied" if (user is not None and user.is_human()) else "system_inferred"
     if not hasattr(self, "id") and user is not None and user.get_first_user_id_or_none() is not None:
-      self.source.id = user.get_first_user_id_or_none()
+      self.id = user.get_first_user_id_or_none()
 
   def is_id_impersonated_by_non_admin(self, db_interface=None, user=None):
     """A None user is assumed to be a valid authorized backend script."""
