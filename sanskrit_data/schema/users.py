@@ -164,6 +164,12 @@ class User(JsonObject):
               return True
     return False
 
+  def is_admin(self, service):
+    return self.check_permission(service=service, action="admin")
+
+  def is_human(self):
+    return hasattr(self, "user_type") and self.user_type == "human"
+
   def get_user_ids(self):
     return [str(auth_info) for auth_info in self.authentication_infos]
 
