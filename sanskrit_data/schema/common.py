@@ -467,15 +467,15 @@ class DataSource(JsonObject):
     if not hasattr(self, "id") and user is not None and user.get_first_user_id_or_none() is not None:
       self.source.id = user.get_first_user_id_or_none()
 
-  def is_id_impersonated_by_non_admin(self, user=None):
+  def is_id_impersonated_by_non_admin(self, db_interface=None, user=None):
     """A None user is assumed to be a valid authorized backend script."""
-    if hasattr(self, "id") and user is not None :
+    if hasattr(self, "id") and user is not None and db_interface is not None:
       if self.id not in user.get_user_ids() and not user.is_admin(service=db_interface.db_name_frontend):
         return True
     return False
 
   def validate(self, db_interface=None, user=None):
-    if self.is_id_impersonated_by_non_admin(user=user):
+    if self.is_id_impersonated_by_non_admin(db_interface=db_interface, user=user):
       raise ValidationError("Impersonation by %(id_1)s as %(id_2)s not allowed for this user." % dict(id_1=user.get_first_user_id_or_none(), id_2=self.id))
     if "user" in self.source_type and not hasattr(self, "id"):
       raise ValidationError("User id compulsary for user sources.")
