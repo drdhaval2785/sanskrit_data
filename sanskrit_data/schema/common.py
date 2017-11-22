@@ -461,6 +461,12 @@ class DataSource(JsonObject):
     source.validate_schema()
     return source
 
+  def setup_source(self, db_interface=None, user=None):
+    if not hasattr(self, "source_type"):
+      self.source_type = "user_supplied" if (user is not None and user.is_human()) else "system_inferred"
+    if not hasattr(self, "id") and user is not None and user.get_first_user_id_or_none() is not None:
+      self.source.id = user.get_first_user_id_or_none()
+
   def is_id_impersonated_by_non_admin(self, user=None):
     """A None user is assumed to be a valid authorized backend script."""
     if hasattr(self, "id") and user is not None :
@@ -477,7 +483,6 @@ class DataSource(JsonObject):
       if user is not None and user.is_human() and not user.is_admin(service=db_interface.db_name_frontend):
         raise ValidationError("Impersonation by %(id_1)s as a bot not allowed for this user." % dict(id_1=user.get_first_user_id_or_none()))
     super(DataSource, self).validate(db_interface=db_interface, user=user)
-
 
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker

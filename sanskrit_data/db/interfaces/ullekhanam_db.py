@@ -2,7 +2,7 @@ import re
 
 import sanskrit_data.schema.books
 import sanskrit_data.schema.common
-from sanskrit_data.db import DbInterface
+from sanskrit_data.db.interfaces import DbInterface
 from docimage import *
 
 logging.basicConfig(
@@ -16,7 +16,7 @@ class BookPortionsInterface(DbInterface):
 
   def import_all(self, rootdir, pattern=None):
     logging.info("Importing books into database from " + rootdir)
-    cmd = "find " + rootdir + " \( \( -path '*/.??*' \) -prune \) , \( -path '*book_v2.json' \) -follow -print; true"
+    cmd = "find " + rootdir + r" \( \( -path '*/.??*' \) -prune \) , \( -path '*book_v2.json' \) -follow -print; true"
     logging.info(cmd)
     try:
       from vedavaapi_py_api.common.file_helper import run_command
@@ -97,19 +97,3 @@ class BookPortionsInterface(DbInterface):
       annotation = annotation.update_collection(self)
       new_annotations.append(annotation)
     return new_annotations
-
-
-from sanskrit_data.db.mongodb import Collection
-
-
-class BookPortionsMongodb(Collection, BookPortionsInterface):
-  def __init__(self, some_collection, db_name_frontend, external_file_store=None):
-    super(BookPortionsMongodb, self).__init__(some_collection=some_collection, db_name_frontend=db_name_frontend, external_file_store=external_file_store)
-
-
-from sanskrit_data.db.couchdb import CloudantApiDatabase
-
-
-class BookPortionsCouchdb(CloudantApiDatabase, BookPortionsInterface):
-  def __init__(self, some_collection, db_name_frontend, external_file_store=None):
-    super(BookPortionsCouchdb, self).__init__(db=some_collection, db_name_frontend=db_name_frontend, external_file_store=external_file_store)

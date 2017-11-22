@@ -1,10 +1,13 @@
 """.. note:: For undocumented classes and methods, please see superclass documentation in :mod:`sanskrit_data.db`."""
 
 import logging
+
 # noinspection PyPackageRequirements
 from bson import ObjectId
 
-from sanskrit_data.db import DbInterface, ClientInterface
+from sanskrit_data.db.interfaces import ClientInterface, DbInterface
+from sanskrit_data.db.interfaces.ullekhanam_db import BookPortionsInterface
+from sanskrit_data.db.interfaces.users_db import UsersInterface
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -26,29 +29,6 @@ def get_db_collection_names(db_collection_string):
   if len(name_parts) == 2:
     obj["collection"] = name_parts[1]
   return obj
-
-
-class Client(ClientInterface):
-  def __init__(self, url):
-    try:
-      from pymongo import MongoClient
-      self.client = MongoClient(host=url)
-    except Exception as e:
-      logging.error("Error initializing MongoDB database; aborting.")
-      raise e
-
-  def get_database(self, db_name):
-    db_details = get_db_collection_names(db_collection_string=db_name)
-    return self.client[db_details["db"]][db_details["collection"]]
-
-  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
-    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
-    return Collection(some_collection=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
-
-  def delete_database(self, db_name):
-    """Deletes a collection, does not bother with the database."""
-    db_details = get_db_collection_names(db_collection_string=db_name)
-    self.client[db_details["db"]].drop_collection(db_details["collection"])
 
 
 class Collection(DbInterface):
@@ -101,3 +81,45 @@ def _fix_id(doc):
 def _fix_id_filter(filter_dict):
   if "_id" in filter_dict:
     filter_dict["_id"] = ObjectId(filter_dict["_id"])
+
+
+class BookPortionsMongodb(Collection, BookPortionsInterface):
+  def __init__(self, some_collection, db_name_frontend, external_file_store=None):
+    super(BookPortionsMongodb, self).__init__(some_collection=some_collection, db_name_frontend=db_name_frontend, external_file_store=external_file_store)
+
+
+class UsersMongodb(Collection, UsersInterface):
+  def __init__(self, some_collection, db_name_frontend="users"):
+    super(UsersMongodb, self).__init__(some_collection=some_collection, db_name_frontend=db_name_frontend)
+
+
+class Client(ClientInterface):
+  def __init__(self, url):
+    try:
+      from pymongo import MongoClient
+      self.client = MongoClient(host=url)
+    except Exception as e:
+      logging.error("Error initializing MongoDB database; aborting.")
+      raise e
+
+  def get_database(self, db_name):
+    db_details = get_db_collection_names(db_collection_string=db_name)
+    return self.client[db_details["db"]][db_details["collection"]]
+
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None, db_type=None):
+    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
+    if db_type == "ullekhanam_db":
+      return BookPortionsMongodb(some_collection=self.get_database(db_name=db_name_backend),
+                                 db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
+    elif db_type == "users_db":
+      db_name_frontend_final = db_name_frontend if db_name_frontend is not None else "users"
+      return UsersMongodb(some_collection=self.get_database(db_name=db_name_backend),
+                          db_name_frontend=db_name_frontend_final)
+    else:
+      return Collection(some_collection=self.get_database(db_name=db_name_backend),
+                        db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
+
+  def delete_database(self, db_name):
+    """Deletes a collection, does not bother with the database."""
+    db_details = get_db_collection_names(db_collection_string=db_name)
+    self.client[db_details["db"]].drop_collection(db_details["collection"])

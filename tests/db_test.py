@@ -18,7 +18,7 @@ class TestDBRoundTrip(unittest.TestCase):
     tests.set_configuration()
     # from sanskrit_data.db.couchdb import CloudantApiClient
     # self.server = CloudantApiClient(tests.server_config["couchdb_host"])
-    from sanskrit_data.db import mongodb
+    from sanskrit_data.db.implementations import mongodb
     self.server = mongodb.Client(url=tests.server_config["mongo_host"])
     self.test_db = self.server.get_database_interface(db_name_backend=self.TEST_DB_NAME)
 

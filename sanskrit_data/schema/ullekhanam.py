@@ -71,8 +71,7 @@ class Annotation(JsonObjectWithTarget):
     super(Annotation, self).validate(db_interface=db_interface, user=user)
 
   def update_collection(self, db_interface, user=None):
-    if not hasattr(self.source, "id") and user is not None and user.get_first_user_id_or_none() is not None:
-      self.source.id = user.get_first_user_id_or_none()
+    self.source.setup_source(db_interface=db_interface, user=user)
     return super(Annotation, self).update_collection(db_interface=db_interface, user=user)
 
   @classmethod
@@ -191,6 +190,10 @@ class ValidationAnnotationSource(AnnotationSource):
           if not hasattr(self, "id") or self.id in user.get_user_ids():
             self.by_admin = user.is_admin(service=db_interface.db_name_frontend)
 
+  def setup_source(self, db_interface=None, user=None):
+    self.infer_by_admin(db_interface=db_interface, user=user)
+    super(ValidationAnnotationSource, self).setup_source(db_interface=db_interface, user=user)
+
   def validate(self, db_interface=None, user=None):
     super(ValidationAnnotationSource, self).validate(db_interface=db_interface, user=user)
     # Only if the writer user is an admin or None, allow by_admin to be set to true (even when the admin is impersonating another user).
@@ -215,10 +218,6 @@ class ValidationAnnotation(Annotation):
       "source": ValidationAnnotationSource.schema
     },
   }))
-
-  def update_collection(self, db_interface, user=None):
-    self.source.infer_by_admin(db_interface=db_interface, user=user)
-    return super(ValidationAnnotation, self).update_collection(db_interface=db_interface, user=user)
 
 
 class ImageAnnotation(Annotation):

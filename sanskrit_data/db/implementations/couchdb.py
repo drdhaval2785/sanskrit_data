@@ -6,7 +6,9 @@ from __future__ import absolute_import
 import copy
 import logging
 
-from sanskrit_data.db import DbInterface, ClientInterface
+from sanskrit_data.db.interfaces import ClientInterface, DbInterface
+from sanskrit_data.db.interfaces.users_db import UsersInterface
+from sanskrit_data.db.interfaces.ullekhanam_db import BookPortionsInterface
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -23,36 +25,6 @@ def strip_revision_in_copy(doc_map):
   new_doc = copy.deepcopy(doc_map)
   new_doc.pop("_rev", None)
   return new_doc
-
-
-class CloudantApiClient(ClientInterface):
-  def __init__(self, url):
-    # logging.debug(url)
-    import yurl
-    # noinspection PyArgumentList
-    parse_result = yurl.URL(url=url)
-    import re
-    url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
-    from cloudant.client import CouchDB
-    self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization,
-                          url=url_without_credentials, connect=True, auto_renew=True)
-    # logging.debug(self.client)
-    assert self.client is not None, logging.error(self.client)
-
-  def get_database(self, db_name):
-    # noinspection PyTypeChecker
-    db = self.client.get(db_name, default=None)
-    if db is not None:
-      return db
-    else:
-      return self.client.create_database(db_name)
-
-  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
-    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
-    db = CloudantApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
-
-  def delete_database(self, db_name):
-    self.client.delete_database(db_name)
 
 
 class CloudantApiDatabase(DbInterface):
@@ -131,26 +103,52 @@ class CloudantApiDatabase(DbInterface):
     raise Exception("Not implemented: need to check if index is created.")
 
 
-class CouchdbApiClient(ClientInterface):
-  """.. note:: Prefer :class:`CloudantApiClient`."""
+class BookPortionsCouchdb(CloudantApiDatabase, BookPortionsInterface):
+  def __init__(self, some_collection, db_name_frontend, external_file_store=None):
+    super(BookPortionsCouchdb, self).__init__(db=some_collection, db_name_frontend=db_name_frontend, external_file_store=external_file_store)
 
+
+class UsersCouchdb(CloudantApiDatabase, UsersInterface):
+  def __init__(self, some_collection, db_name_frontend="users"):
+    super(UsersCouchdb, self).__init__(db=some_collection, db_name_frontend=db_name_frontend)
+
+
+class CloudantApiClient(ClientInterface):
   def __init__(self, url):
-    from couchdb import Server
-    self.server = Server(url=url)
+    # logging.debug(url)
+    import yurl
+    # noinspection PyArgumentList
+    parse_result = yurl.URL(url=url)
+    import re
+    url_without_credentials = re.sub(parse_result.username + ":" + parse_result.authorization, "", url)
+    from cloudant.client import CouchDB
+    self.client = CouchDB(user=parse_result.username, auth_token=parse_result.authorization,
+                          url=url_without_credentials, connect=True, auto_renew=True)
+    # logging.debug(self.client)
+    assert self.client is not None, logging.error(self.client)
 
-  # noinspection PyBroadException
   def get_database(self, db_name):
-    try:
-      return self.server[db_name]
-    except e:
-      return self.server.create(db_name)
+    # noinspection PyTypeChecker
+    db = self.client.get(db_name, default=None)
+    if db is not None:
+      return db
+    else:
+      return self.client.create_database(db_name)
 
   def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
     db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
-    return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
+    if db_type == "ullekhanam_db":
+      return BookPortionsCouchdb(some_collection=self.get_database(db_name=db_name_backend),
+                                 db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
+    elif db_type == "users_db":
+      db_name_frontend_final = db_name_frontend if db_name_frontend is not None else "users"
+      return UsersCouchdb(some_collection=self.get_database(db_name=db_name_backend),
+                          db_name_frontend=db_name_frontend_final)
+    else:
+      return CloudantApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
 
   def delete_database(self, db_name):
-    self.server.delete(db_name)
+    self.client.delete_database(db_name)
 
 
 class CouchdbApiDatabase(DbInterface):
@@ -202,3 +200,25 @@ class CouchdbApiDatabase(DbInterface):
   def find(self, find_filter):
     for row in self.db.find(query=find_filter):
       yield strip_revision_in_copy(row.doc)
+
+
+class CouchdbApiClient(ClientInterface):
+  """.. note:: Prefer :class:`CloudantApiClient`."""
+
+  def __init__(self, url):
+    from couchdb import Server
+    self.server = Server(url=url)
+
+  # noinspection PyBroadException
+  def get_database(self, db_name):
+    try:
+      return self.server[db_name]
+    except e:
+      return self.server.create(db_name)
+
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
+    db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
+    return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
+
+  def delete_database(self, db_name):
+    self.server.delete(db_name)

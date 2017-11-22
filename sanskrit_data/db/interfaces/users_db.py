@@ -1,7 +1,7 @@
 import logging
-from sanskrit_data.db import DbInterface, mongodb
+
+from sanskrit_data.db.interfaces import DbInterface
 from sanskrit_data.schema.users import User
-from sanskrit_data.db.couchdb import CloudantApiDatabase
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -31,13 +31,3 @@ class UsersInterface(DbInterface):
       if matching_user is not None:
         matching_users.append(matching_user)
     return matching_users
-
-
-class UsersMongodb(mongodb.Collection, UsersInterface):
-  def __init__(self, some_collection):
-    super(UsersMongodb, self).__init__(some_collection=some_collection, db_name_frontend="users")
-
-
-class UsersCouchdb(CloudantApiDatabase, UsersInterface):
-  def __init__(self, some_collection):
-    super(UsersCouchdb, self).__init__(db=some_collection)

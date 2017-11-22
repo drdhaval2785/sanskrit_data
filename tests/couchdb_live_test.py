@@ -3,9 +3,8 @@ from __future__ import absolute_import
 import logging
 import unittest
 
-from sanskrit_data.db.couchdb import CouchdbApiDatabase, CloudantApiClient, CloudantApiDatabase
-from sanskrit_data.schema.common import JsonObject
 import tests
+from sanskrit_data.db.implementations.couchdb import CloudantApiClient
 
 logging.basicConfig(
   level=logging.DEBUG,
