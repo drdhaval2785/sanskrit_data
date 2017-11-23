@@ -64,6 +64,24 @@ class TestDBRoundTrip(unittest.TestCase):
     logging.debug("update result is " + str(updated_annotation))
     self.assertTrue(updated_annotation.equals_ignore_id(annotation))
 
+  def test_ImageAnnotationSourceAutoSet(self):
+    db = self.test_db
+    book_portion = books.BookPortion.from_details(
+      title="halAyudhakoshaH", authors=["halAyudhaH"], path="myrepo/halAyudha")
+    updated_book = book_portion.update_collection(db)
+    target_page_id = updated_book._id
+    annotation = ullekhanam.ImageAnnotation()
+    annotation.targets=[
+      ullekhanam.ImageTarget.from_details(container_id=str(target_page_id),
+                                          rectangle=ullekhanam.Rectangle.from_details())]
+
+    logging.debug(annotation.to_json_map())
+
+    updated_annotation = annotation.update_collection(db_interface=db)
+    logging.debug("update result is " + str(updated_annotation))
+    self.assertEqual(updated_annotation.source.jsonClass, "AnnotationSource")
+
+
   def test_TextAnnotation(self):
     db = self.test_db
     book_portion = books.BookPortion.from_details(
