@@ -66,16 +66,15 @@ class Annotation(JsonObjectWithTarget):
     "required": ["targets", "source"]
   }))
 
-  def get_source_type(self):
-    return AnnotationSource
+  def __init__(self):
+    super(Annotation, self).__init__()
+    self.source = AnnotationSource()
 
   def validate(self, db_interface=None, user=None):
     self.source.validate(db_interface=db_interface, user=user)
     super(Annotation, self).validate(db_interface=db_interface, user=user)
 
   def update_collection(self, db_interface, user=None):
-    if not hasattr(self, "source"):
-      self.source = self.get_source_type()()
     self.source.setup_source(db_interface=db_interface, user=user)
     return super(Annotation, self).update_collection(db_interface=db_interface, user=user)
 
@@ -223,6 +222,10 @@ class ValidationAnnotation(Annotation):
       "source": ValidationAnnotationSource.schema
     },
   }))
+
+  def __init__(self):
+    super(ValidationAnnotation, self).__init__()
+    self.source = ValidationAnnotationSource()
 
   def get_source_type(self):
     return ValidationAnnotationSource
