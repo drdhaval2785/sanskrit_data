@@ -12,7 +12,7 @@ logging.basicConfig(
   level=logging.DEBUG,
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
-user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
+
 
 class TestDBRoundTrip(unittest.TestCase):
   TEST_DB_NAME = 'vedavaapi_test'
