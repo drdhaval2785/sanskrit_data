@@ -13,6 +13,8 @@ from jsonschema.exceptions import best_match
 from six import string_types
 import jsonpickle
 import jsonschema
+from jsonschema import ValidationError
+from jsonschema import SchemaError
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -277,8 +279,6 @@ class JsonObject(object):
     json_map = self.to_json_map()
     json_map.pop("_id", None)
     # logging.debug(str(self))
-    from jsonschema import ValidationError
-    from jsonschema import SchemaError
     try:
       jsonschema.validate(json_map, self.schema)
 

@@ -22,6 +22,8 @@ import sys
 from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion, CreationDetails
 from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, DataSource, ScriptRendering, Text, NamedEntity
+from jsonschema import ValidationError
+from jsonschema import SchemaError
 
 logging.basicConfig(
   level=logging.DEBUG,
