@@ -73,8 +73,13 @@ class Annotation(JsonObjectWithTarget):
     self.source = AnnotationSource()
 
   def validate(self, db_interface=None, user=None):
-    self.source.validate(db_interface=db_interface, user=user)
     super(Annotation, self).validate(db_interface=db_interface, user=user)
+    self.source.validate(db_interface=db_interface, user=user)
+    if hasattr(self, "_id") and db_interface is not None:
+      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
+      if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
+        if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
+          raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
 
   def update_collection(self, db_interface, user=None):
     self.source.setup_source(db_interface=db_interface, user=user)
