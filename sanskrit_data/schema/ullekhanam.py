@@ -63,6 +63,11 @@ class Annotation(JsonObjectWithTarget):
         "description": "The entity being annotated.",
         "minItems": 1,
         "items": Target.schema
+      },
+      "editable_by_others": {
+        "type": "boolean",
+        "description": "Can this annotation be taken over by others for wiki-style editing or deleting?",
+        "default": True
       }
     },
     "required": ["targets", "source"]
@@ -72,14 +77,21 @@ class Annotation(JsonObjectWithTarget):
     super(Annotation, self).__init__()
     self.source = AnnotationSource()
 
+  def is_editable_by_others(self):
+    return self.editable_by_others if hasattr(self, "editable_by_others") else self.schema["properties"]["editable_by_others"]["default"]
+
+  def detect_illegal_takeover(self, db_interface=None, user=None):
+    if hasattr(self, "_id") and db_interface is not None:
+      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
+      if not old_annotation.is_editable_by_others():
+        if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
+          if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
+            raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
+
   def validate(self, db_interface=None, user=None):
     super(Annotation, self).validate(db_interface=db_interface, user=user)
     self.source.validate(db_interface=db_interface, user=user)
-    if hasattr(self, "_id") and db_interface is not None:
-      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
-      if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
-        if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
-          raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
+    self.detect_illegal_takeover(db_interface=db_interface, user=user)
 
   def update_collection(self, db_interface, user=None):
     self.source.setup_source(db_interface=db_interface, user=user)
