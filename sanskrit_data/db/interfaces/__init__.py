@@ -41,6 +41,8 @@ class DbInterface(object):
   def update_doc(self, doc):
     """ Update or insert a json object, represented as a dict.
 
+    Where possible, use wrapper methods like :py:meth:`~sanskrit_data.schema.common.JsonObject.update_collection` since they do validation and other setup to ensure data consistency.
+
     :param db_name_frontend:
     :param dict doc: _id parameter determines the key. One will be created if it does not exist. This argument could be modified.
     :return: updated dict with _id set.
@@ -51,6 +53,7 @@ class DbInterface(object):
   def delete_doc(self, doc_id):
     """
 
+    Where possible, use wrapper methods like :py:meth:`~sanskrit_data.schema.common.JsonObject.delete_in_collection` since they do validation.
     :param doc_id:
     :return: Not used.
     """
