@@ -142,43 +142,10 @@ class ImageTarget(Target):
 
 
 class ValidationAnnotationSource(DataSource):
-  schema = common.recursively_merge_json_schemas(Annotation.schema, ({
-    "type": "object",
-    "description": "Any user or system script can validate a certain annotation (or other object). But it is up to various systems whether such 'validation' has any effect.",
-    "properties": {
-      common.TYPE_FIELD: {
-        "enum": ["ValidationAnnotationSource"]
-      },
-      "by_admin": {
-        "type": "boolean",
-        "description": "Was the creator of this annotation an admin at the time it was created or updated?"
-      }
-    },
-  }))
-
-  def infer_by_admin(self, db_interface=None, user=None):
-    if not hasattr(self, "by_admin"):
-      # source_type is a compulsory attribute, because that validation is done separately and a suitable error is thrown.
-      if hasattr(self, "source_type") and self.source_type == "user_supplied":
-        if user is not None and db_interface is not None:
-          if not hasattr(self, "id") or self.id in user.get_user_ids():
-            self.by_admin = user.is_admin(service=db_interface.db_name_frontend)
-
+  """We don't override the schema here as no new fields are added."""
   def setup_source(self, db_interface=None, user=None):
     self.infer_by_admin(db_interface=db_interface, user=user)
     super(ValidationAnnotationSource, self).setup_source(db_interface=db_interface, user=user)
-
-  def validate(self, db_interface=None, user=None):
-    super(ValidationAnnotationSource, self).validate(db_interface=db_interface, user=user)
-    # Only if the writer user is an admin or None, allow by_admin to be set to true (even when the admin is impersonating another user).
-    if hasattr(self, "by_admin") and self.by_admin:
-      if user is not None and db_interface is not None and not user.is_admin(service=db_interface.db_name_frontend):
-        raise ValidationError("Impersonation by %(id_1)s of %(id_2)s not allowed for this user." % dict(id_1=user.get_first_user_id_or_none(), id_2=self.id))
-
-      # source_type is a compulsory attribute, because that validation is done separately and a suitable error is thrown.
-      if hasattr(self, "source_type") and self.source_type != "user_supplied":
-        if user is not None and db_interface is not None:
-          raise ValidationError("non user_supplied source_type cannot be an admin.")
 
 
 class ValidationAnnotation(Annotation):
@@ -197,8 +164,6 @@ class ValidationAnnotation(Annotation):
     super(ValidationAnnotation, self).__init__()
     self.source = ValidationAnnotationSource()
 
-  def get_source_type(self):
-    return ValidationAnnotationSource
 
 class ImageAnnotation(Annotation):
   """ Mark a certain fragment of an image.
