@@ -261,7 +261,7 @@ class JsonObject(object):
     return updated_obj
 
   # To delete referrent items also, use appropriate method in JsonObjectNode.
-  def delete_in_collection(self, db_interface):
+  def delete_in_collection(self, db_interface, user=None):
     assert hasattr(self, "_id"), "_id not present!"
     return db_interface.delete_doc(self._id)
 
@@ -543,7 +543,7 @@ class UllekhanamJsonObject(JsonObject):
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
 class JsonObjectNode(JsonObject):
-  """Represents a tree (not a general Directed Acyclic Graph) of JsonObjectWithTargets.
+  """Represents a tree (not a general Directed Acyclic Graph) of UllekhanamJsonObject.
 
   `A video describing its use <https://youtu.be/neVeKcxzeQI>`_.
   """
@@ -609,12 +609,12 @@ class JsonObjectNode(JsonObject):
       child.content.targets[0].container_id = str(self.content._id)
       child.update_collection(db_interface=db_interface, user=user)
 
-  def delete_in_collection(self, db_interface):
+  def delete_in_collection(self, db_interface, user=None):
     self.fill_descendents(db_interface=db_interface, depth=100)
     for child in self.children:
-      child.delete_in_collection(db_interface)
+      child.delete_in_collection(db_interface, user=user)
     # Delete or disconnect children before deleting oneself.
-    self.content.delete_in_collection(db_interface)
+    self.content.delete_in_collection(db_interface, user=user)
 
   def fill_descendents(self, db_interface, depth=10, entity_type=None):
     targetting_objs = self.content.get_targetting_entities(db_interface=db_interface, entity_type=entity_type)
