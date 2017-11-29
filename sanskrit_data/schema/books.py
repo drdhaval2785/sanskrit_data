@@ -15,7 +15,7 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import JsonObjectWithTarget, TYPE_FIELD, JsonObject, Target, DataSource, Text, NamedEntity
+from sanskrit_data.schema.common import UllekhanamJsonObject, TYPE_FIELD, JsonObject, Target, DataSource, Text, NamedEntity
 
 
 class BookPositionTarget(Target):
@@ -90,7 +90,7 @@ class CreationDetails(NamedEntity):
     return obj
 
 
-class BookPortion(JsonObjectWithTarget):
+class BookPortion(UllekhanamJsonObject):
   schema = common.recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
     "description": "A BookPortion could represent a Book or a chapter or a verse or a half-verse or a sentence or any such unit.",

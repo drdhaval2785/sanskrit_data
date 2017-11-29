@@ -21,7 +21,7 @@ import sys
 
 from sanskrit_data.schema import common
 from sanskrit_data.schema.books import BookPortion, CreationDetails
-from sanskrit_data.schema.common import JsonObject, JsonObjectWithTarget, Target, DataSource, ScriptRendering, Text, NamedEntity
+from sanskrit_data.schema.common import JsonObject, UllekhanamJsonObject, Target, DataSource, ScriptRendering, Text, NamedEntity
 from jsonschema import ValidationError
 from jsonschema import SchemaError
 
@@ -31,27 +31,8 @@ logging.basicConfig(
 )
 
 
-class AnnotationSource(DataSource):
-  schema = common.recursively_merge_json_schemas(DataSource.schema , ({
-    "type": "object",
-    "description": "Source of the annotation which contains this node.",
-    common.TYPE_FIELD: {
-      "enum": ["AnnotationSource"]
-    }
-  }))
-
-  # noinspection PyShadowingBuiltins
-  @classmethod
-  def from_details(cls, source_type, id):
-    source = AnnotationSource()
-    source.source_type = source_type
-    source.id = id
-    source.validate_schema()
-    return source
-
-
-class Annotation(JsonObjectWithTarget):
-  schema = common.recursively_merge_json_schemas(JsonObjectWithTarget.schema, ({
+class Annotation(UllekhanamJsonObject):
+  schema = common.recursively_merge_json_schemas(UllekhanamJsonObject.schema, ({
     "type": "object",
     "properties": {
       common.TYPE_FIELD: {
@@ -64,11 +45,6 @@ class Annotation(JsonObjectWithTarget):
         "minItems": 1,
         "items": Target.schema
       },
-      "editable_by_others": {
-        "type": "boolean",
-        "description": "Can this annotation be taken over by others for wiki-style editing or deleting?",
-        "default": True
-      }
     },
     "required": ["targets", "source"]
   }))
@@ -76,26 +52,6 @@ class Annotation(JsonObjectWithTarget):
   def __init__(self):
     super(Annotation, self).__init__()
     self.source = AnnotationSource()
-
-  def is_editable_by_others(self):
-    return self.editable_by_others if hasattr(self, "editable_by_others") else self.schema["properties"]["editable_by_others"]["default"]
-
-  def detect_illegal_takeover(self, db_interface=None, user=None):
-    if hasattr(self, "_id") and db_interface is not None:
-      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
-      if not old_annotation.is_editable_by_others():
-        if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
-          if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
-            raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
-
-  def validate(self, db_interface=None, user=None):
-    super(Annotation, self).validate(db_interface=db_interface, user=user)
-    self.source.validate(db_interface=db_interface, user=user)
-    self.detect_illegal_takeover(db_interface=db_interface, user=user)
-
-  def update_collection(self, db_interface, user=None):
-    self.source.setup_source(db_interface=db_interface, user=user)
-    return super(Annotation, self).update_collection(db_interface=db_interface, user=user)
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -707,6 +663,11 @@ class RatingAnnotation(Annotation):
       "rating": {
         "type": "number"
       },
+      "editable_by_others": {
+        "type": "boolean",
+        "description": "Can this annotation be taken over by others for wiki-style editing or deleting?",
+        "default": False
+      }
     },
   }))
 

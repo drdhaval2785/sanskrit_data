@@ -81,7 +81,6 @@ class JsonObject(object):
         "type": "string",
       },
     },
-    "required": [TYPE_FIELD]
   }
 
   def __init__(self):
@@ -371,65 +370,6 @@ class Target(JsonObject):
     return Target.from_ids(container_ids=[container._id for container in containers])
 
 
-class JsonObjectWithTarget(JsonObject):
-  """A JsonObject with a target field."""
-
-  schema = recursively_merge_json_schemas(JsonObject.schema, ({
-    "type": "object",
-    "description": "A JsonObject with a target field.",
-    "properties": {
-      "targets": {
-        "type": "array",
-        "items": Target.schema,
-        "description": "This field lets us define a directed graph involving JsonObjects stored in a database."
-      }
-    }
-  }))
-
-  target_class = Target
-
-  @classmethod
-  def get_allowed_target_classes(cls):
-    return []
-
-  def validate_targets(self, targets, allowed_types, db_interface):
-    if targets and len(targets) > 0 and db_interface is not None:
-      for target in targets:
-        target_entity = target.get_target_entity(db_interface=db_interface)
-        if not check_class(target_entity, allowed_types):
-          raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self,
-                                      target_obj=target_entity)
-
-  def validate(self, db_interface=None, user=None):
-    super(JsonObjectWithTarget, self).validate(db_interface=db_interface, user=user)
-    if hasattr(self, "targets"):
-      self.validate_targets(targets=self.targets, allowed_types=self.get_allowed_target_classes(),
-                            db_interface=db_interface)
-
-  def get_targetting_entities(self, db_interface, entity_type=None):
-    # Alas, the below shows that no index is used:
-    # curl -sg vedavaapi.org:5984/vedavaapi_ullekhanam_db/_explain -H content-type:application/json -d '{"selector": {"targets": {"$elemMatch": {"container_id": "4b9f454f5aa5414e82506525d015ac68"}}}}'|jq
-    # TODO: Use index.
-    find_filter = {
-      "targets": {
-        "$elemMatch": {
-          "container_id": str(self._id)
-        }
-      }
-    }
-    targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(find_filter)]
-    if entity_type is not None:
-      targetting_objs = list(filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs))
-    return targetting_objs
-
-  @classmethod
-  def add_indexes(cls, db_interface):
-    super(JsonObjectWithTarget, cls).add_indexes(db_interface=db_interface)
-    db_interface.add_index(keys_dict={
-      "targets.container_id": 1
-    }, index_name="targets_container_id")
-
-
 class DataSource(JsonObject):
   schema = recursively_merge_json_schemas(JsonObject.schema, ({
     "type": "object",
@@ -443,6 +383,7 @@ class DataSource(JsonObject):
         "type": "string",
         "enum": ["system_inferred", "user_supplied"],
         "description": "Does this data come from a machine, or a human? source_ prefix avoids keyword conflicts in some languages.",
+        "default": "system_inferred"
       },
       "id": {
         "type": "string",
@@ -451,6 +392,10 @@ class DataSource(JsonObject):
     },
     "required": ["source_type"]
   }))
+
+  def __init__(self):
+    """Set the default properties"""
+    self.source_type = "system_inferred"
 
   # noinspection PyShadowingBuiltins
   @classmethod
@@ -483,6 +428,92 @@ class DataSource(JsonObject):
       if user is not None and user.is_human() and not user.is_admin(service=db_interface.db_name_frontend):
         raise ValidationError("Impersonation by %(id_1)s as a bot not allowed for this user." % dict(id_1=user.get_first_user_id_or_none()))
     super(DataSource, self).validate(db_interface=db_interface, user=user)
+
+
+class UllekhanamJsonObject(JsonObject):
+  """The archetype JsonObject for use with the Ullekhanam project. See description.schema field"""
+
+  schema = recursively_merge_json_schemas(JsonObject.schema, ({
+    "type": "object",
+    "description": "Some JsonObject which can be saved as a document in the ullekhanam database.",
+    "properties": {
+      "source": DataSource.schema,
+      "editable_by_others": {
+        "type": "boolean",
+        "description": "Can this annotation be taken over by others for wiki-style editing or deleting?",
+        "default": True
+      },
+      "targets": {
+        "type": "array",
+        "items": Target.schema,
+        "description": "This field lets us define a directed graph involving JsonObjects stored in a database."
+      }
+    },
+    "required": [TYPE_FIELD]
+  }))
+
+  target_class = Target
+
+  def is_editable_by_others(self):
+    return self.editable_by_others if hasattr(self, "editable_by_others") else self.schema["properties"]["editable_by_others"]["default"]
+
+  def __init__(self):
+    super(UllekhanamJsonObject, self).__init__()
+    self.source = DataSource()
+
+  def detect_illegal_takeover(self, db_interface=None, user=None):
+    if hasattr(self, "_id") and db_interface is not None:
+      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
+      if not old_annotation.is_editable_by_others():
+        if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
+          if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
+            raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
+
+  def update_collection(self, db_interface, user=None):
+    self.source.setup_source(db_interface=db_interface, user=user)
+    return super(UllekhanamJsonObject, self).update_collection(db_interface=db_interface, user=user)
+
+  @classmethod
+  def get_allowed_target_classes(cls):
+    return []
+
+  def validate_targets(self, db_interface):
+    allowed_types = self.get_allowed_target_classes()
+    if hasattr(self, "targets") and len(self.targets) > 0 and db_interface is not None:
+      for target in self.targets:
+        target_entity = target.get_target_entity(db_interface=db_interface)
+        if not check_class(target_entity, allowed_types):
+          raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self,
+                                      target_obj=target_entity)
+
+  def validate(self, db_interface=None, user=None):
+    super(UllekhanamJsonObject, self).validate(db_interface=db_interface, user=user)
+    self.validate_targets(db_interface=db_interface)
+    self.source.validate(db_interface=db_interface, user=user)
+    self.detect_illegal_takeover(db_interface=db_interface, user=user)
+
+  def get_targetting_entities(self, db_interface, entity_type=None):
+    # Alas, the below shows that no index is used:
+    # curl -sg vedavaapi.org:5984/vedavaapi_ullekhanam_db/_explain -H content-type:application/json -d '{"selector": {"targets": {"$elemMatch": {"container_id": "4b9f454f5aa5414e82506525d015ac68"}}}}'|jq
+    # TODO: Use index.
+    find_filter = {
+      "targets": {
+        "$elemMatch": {
+          "container_id": str(self._id)
+        }
+      }
+    }
+    targetting_objs = [JsonObject.make_from_dict(item) for item in db_interface.find(find_filter)]
+    if entity_type is not None:
+      targetting_objs = list(filter(lambda obj: isinstance(obj, json_class_index[entity_type]), targetting_objs))
+    return targetting_objs
+
+  @classmethod
+  def add_indexes(cls, db_interface):
+    super(UllekhanamJsonObject, cls).add_indexes(db_interface=db_interface)
+    db_interface.add_index(keys_dict={
+      "targets.container_id": 1
+    }, index_name="targets_container_id")
 
 
 # noinspection PyProtectedMember,PyAttributeOutsideInit,PyAttributeOutsideInit,PyTypeChecker
