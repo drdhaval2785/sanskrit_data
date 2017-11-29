@@ -398,7 +398,7 @@ class DataSource(JsonObject):
 
   def __init__(self):
     """Set the default properties"""
-    self.source_type = "system_inferred"
+    self.source_type = self.schema["properties"]["source_type"]["default"]
 
   # noinspection PyShadowingBuiltins
   @classmethod

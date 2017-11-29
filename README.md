@@ -46,7 +46,7 @@ Have a problem or question? Please head to [github](https://github.com/vedavaapi
 ## Packaging
 * ~/.pypirc should have your pypi login credentials.
 ```
-python setup.py bdist_wheel
+python3 setup.py bdist_wheel
 twine upload dist/* --skip-existing
 ```
 
