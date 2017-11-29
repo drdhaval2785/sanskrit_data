@@ -38,7 +38,6 @@ class Annotation(UllekhanamJsonObject):
       common.TYPE_FIELD: {
         "enum": ["Annotation"]
       },
-      "source": AnnotationSource.schema,
       "targets": {
         "type": "array",
         "description": "The entity being annotated.",
@@ -48,10 +47,6 @@ class Annotation(UllekhanamJsonObject):
     },
     "required": ["targets", "source"]
   }))
-
-  def __init__(self):
-    super(Annotation, self).__init__()
-    self.source = AnnotationSource()
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -146,7 +141,7 @@ class ImageTarget(Target):
     return target
 
 
-class ValidationAnnotationSource(AnnotationSource):
+class ValidationAnnotationSource(DataSource):
   schema = common.recursively_merge_json_schemas(Annotation.schema, ({
     "type": "object",
     "description": "Any user or system script can validate a certain annotation (or other object). But it is up to various systems whether such 'validation' has any effect.",

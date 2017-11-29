@@ -93,7 +93,7 @@ class BookPortionsInterface(DbInterface):
       # noinspection PyProtectedMember
       target = ullekhanam.ImageTarget.from_details(container_id=page._id, rectangle=region)
       annotation = ullekhanam.ImageAnnotation.from_details(
-        targets=[target], source=ullekhanam.AnnotationSource.from_details(source_type='system_inferred', id="pyCV2"))
+        targets=[target], source=ullekhanam.DataSource.from_details(source_type='system_inferred', id="pyCV2"))
       annotation = annotation.update_collection(self)
       new_annotations.append(annotation)
     return new_annotations

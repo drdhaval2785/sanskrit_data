@@ -50,7 +50,7 @@ def test_ImageAnnotation_db_roundrip(db_fixture):
   annotation = ullekhanam.ImageAnnotation.from_details(targets=[
     ullekhanam.ImageTarget.from_details(container_id=str(target_page_id),
                                         rectangle=ullekhanam.Rectangle.from_details())],
-    source=ullekhanam.AnnotationSource.from_details("system_inferred", "xyz.py"))
+    source=ullekhanam.DataSource.from_details("system_inferred", "xyz.py"))
 
   logging.debug(annotation.to_json_map())
 
@@ -70,14 +70,14 @@ def test_full_sentence_storage(db_fixture):
   target_image_id = book_portion._id
   text_annotation = ullekhanam.TextAnnotation.from_details(targets=[
     common.Target.from_details(container_id=book_portion._id)],
-    source=ullekhanam.AnnotationSource.from_details("system_inferred", "xyz.py"),
+    source=ullekhanam.DataSource.from_details("system_inferred", "xyz.py"),
     content=common.Text.from_text_string(text_string=u"रामो विग्रवान् धर्मः।"))
   logging.debug(text_annotation.to_json_map())
 
   text_annotation = text_annotation.update_collection(db)
   logging.debug(text_annotation.to_json_map())
 
-  samsAdhanI_source = ullekhanam.AnnotationSource.from_details("system_inferred", "samsAdhanI/xyz.py")
+  samsAdhanI_source = ullekhanam.DataSource.from_details("system_inferred", "samsAdhanI/xyz.py")
 
   # Add pada db
   pada_annotation_rAmaH = ullekhanam.SubantaAnnotation.from_details(targets=[

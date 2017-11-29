@@ -38,7 +38,7 @@ def test_ImageAnnotation_source_auto_set(db_fixture):
 
   updated_annotation = annotation.update_collection(db_interface=db)
   # logging.debug("update result is " + str(updated_annotation))
-  assert(updated_annotation.source.jsonClass == "AnnotationSource")
+  assert(updated_annotation.source.jsonClass == "DataSource")
 
 
 def test_ImageAnnotation_take_over_while_editing(db_fixture):
@@ -51,7 +51,7 @@ def test_ImageAnnotation_take_over_while_editing(db_fixture):
   annotation = ullekhanam.ImageAnnotation.from_details(targets=[
     ullekhanam.ImageTarget.from_details(container_id=str(target_page_id),
                                         rectangle=ullekhanam.Rectangle.from_details())],
-    source=ullekhanam.AnnotationSource.from_details("user_supplied", non_admin_user_raama.get_first_user_id_or_none()))
+    source=ullekhanam.DataSource.from_details("user_supplied", non_admin_user_raama.get_first_user_id_or_none()))
 
   logging.debug(annotation.to_json_map())
 

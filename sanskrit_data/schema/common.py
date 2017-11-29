@@ -79,8 +79,11 @@ class JsonObject(object):
     "properties": {
       TYPE_FIELD: {
         "type": "string",
+        "description": "A hint used by json libraries to deserialize json data to an object of the appropriate type."
+                       " This is necessary for sub-objects to have as well (to ensure that the deserialization functions as expected)."
       },
     },
+    "required": [TYPE_FIELD]
   }
 
   def __init__(self):
