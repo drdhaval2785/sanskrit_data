@@ -260,6 +260,10 @@ class JsonObject(object):
     updated_obj = JsonObject.make_from_dict(updated_doc)
     return updated_obj
 
+  def validate_deletion(self, db_interface, user=None):
+    if not hasattr(self, "_id"):
+      raise ValidationError("_id not present!")
+
   def delete_in_collection(self, db_interface, user=None):
     """
 
@@ -268,7 +272,7 @@ class JsonObject(object):
     :param user:
     :return:
     """
-    assert hasattr(self, "_id"), "_id not present!"
+    self.validate_deletion(db_interface=db_interface, user=user)
     return db_interface.delete_doc(self._id)
 
   def validate(self, db_interface=None, user=None):
@@ -504,11 +508,11 @@ class UllekhanamJsonObject(JsonObject):
     self.source.setup_source(db_interface=db_interface, user=user)
     return super(UllekhanamJsonObject, self).update_collection(db_interface=db_interface, user=user)
 
-  def delete_in_collection(self, db_interface, user=None):
+  def validate_deletion(self, db_interface, user=None):
+    super(UllekhanamJsonObject, self).validate_deletion(db_interface=db_interface, user=user)
     if user is not None:
       self.source.id = user.get_first_user_id_or_none()
     self.detect_illegal_takeover(db_interface=db_interface, user=user)
-    return super(UllekhanamJsonObject, self).delete_in_collection(db_interface=db_interface, user=user)
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -608,6 +612,7 @@ class JsonObjectNode(JsonObject):
     return node
 
   def update_collection(self, db_interface, user=None):
+    """Special info: Mutates this object."""
     # But we don't call self.validate() as child.content.targets (required of Annotations) mayn't be set.
     self.validate_children_types()
     # The content is validated within the below call.
@@ -621,7 +626,14 @@ class JsonObjectNode(JsonObject):
       child.content.targets[0].container_id = str(self.content._id)
       child.update_collection(db_interface=db_interface, user=user)
 
+  def validate_deletion(self, db_interface, user=None):
+    # Deliberately not calling super.validate_deletion - the node does not exist in the database.
+    self.content.validate_deletion(db_interface=db_interface, user=user)
+    for child in self.children:
+      child.validate_deletion(db_interface=db_interface, user=user)
+
   def delete_in_collection(self, db_interface, user=None):
+    self.validate_deletion(db_interface=db_interface, user=user)
     self.fill_descendents(db_interface=db_interface, depth=100)
     for child in self.children:
       child.delete_in_collection(db_interface=db_interface, user=user)

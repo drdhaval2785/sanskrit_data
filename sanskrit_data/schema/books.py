@@ -139,7 +139,7 @@ class BookPortion(UllekhanamJsonObject):
 
   @classmethod
   def from_details(cls, title, path=None, authors=None, targets=None, base_data=None,
-                   curated_content=None, portion_class=None, publication_details=None):
+                   curated_content=None, portion_class=None, publication_details=None, source=None):
     if authors is None:
       authors = []
     book_portion = BookPortion()
@@ -160,6 +160,8 @@ class BookPortion(UllekhanamJsonObject):
       book_portion.portion_class = portion_class
     if publication_details is not None:
       book_portion.publication_details = publication_details
+    if source is not None:
+      book_portion.source = source
     book_portion.validate()
     return book_portion
 
