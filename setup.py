@@ -33,10 +33,10 @@ setup(
   long_description=long_description,
 
   # The project's main homepage.
-  url='https://github.com/sanskrit-coders/sanskrit_data',
+  url='https://github.com/vedavaapi/sanskrit_data',
 
   # Author details
-  author='Sanskrit programmers',
+  author='Vedavaapi',
   author_email='sanskrit-programmers@googlegroups.com',
 
   # Choose your license
