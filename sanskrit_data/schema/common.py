@@ -626,11 +626,28 @@ class JsonObjectNode(JsonObject):
       child.content.targets[0].container_id = str(self.content._id)
       child.update_collection(db_interface=db_interface, user=user)
 
+  def affected_user_ids(self):
+    if not hasattr(self, "content"):
+      raise ValidationError("This is a node with no content! Not allowed.")
+    user_ids = []
+    if hasattr(self.content.source, "id"):
+      user_ids = [self.content.source.id]
+    for child in self.children:
+      user_ids = user_ids + child.affected_user_ids()
+    return user_ids
+
   def validate_deletion(self, db_interface, user=None):
     # Deliberately not calling super.validate_deletion - the node does not exist in the database.
+    if not hasattr(self, "content"):
+      raise ValidationError("This is a node with no content! Not allowed.")
     self.content.validate_deletion(db_interface=db_interface, user=user)
     for child in self.children:
       child.validate_deletion(db_interface=db_interface, user=user)
+    self.content = JsonObject.from_id(id = self.content._id, db_interface=db_interface)
+    affected_users = self.affected_user_ids()
+    # logging.debug(affected_users)
+    if len(set(affected_users)) > 2 and not user.is_admin(service=db_interface.db_name_frontend):
+      raise ValidationError("This deletion affects more than 2 other users. Only admins can do that.")
 
   def delete_in_collection(self, db_interface, user=None):
     self.validate_deletion(db_interface=db_interface, user=user)
