@@ -3,7 +3,6 @@ import re
 import sanskrit_data.schema.books
 import sanskrit_data.schema.common
 from sanskrit_data.db.interfaces import DbInterface
-from docimage import *
 
 logging.basicConfig(
   level=logging.DEBUG,
@@ -64,10 +63,9 @@ class BookPortionsInterface(DbInterface):
     book_node.fill_descendents(self)
     return book_node
 
-  def update_image_annotations(self, page, base_path):
+  def update_image_annotations(self, page, page_image):
     """return the page annotation with id = anno_id"""
     from os import path
-    page_image = DocImage.from_path(path=path.join(base_path, page.path))
     known_annotations = page.get_targetting_entities(db_interface=self,
                                                      entity_type=ullekhanam.ImageAnnotation.get_wire_typeid())
     if len(known_annotations):
