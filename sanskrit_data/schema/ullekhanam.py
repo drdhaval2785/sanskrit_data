@@ -39,10 +39,7 @@ class Annotation(UllekhanamJsonObject):
         "enum": ["Annotation"]
       },
       "targets": {
-        "type": "array",
-        "description": "The entity being annotated.",
         "minItems": 1,
-        "items": Target.schema
       },
     },
     "required": ["targets", "source"]
@@ -268,6 +265,9 @@ class QuoteAnnotation(TextAnnotation):
     "properties": {
       common.TYPE_FIELD: {
         "enum": ["QuoteAnnotation"]
+      },
+      "editable_by_others": {
+        "default": False
       },
     }
   }))

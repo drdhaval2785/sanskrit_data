@@ -118,6 +118,9 @@ class BookPortion(UllekhanamJsonObject):
         "description": "book, part, chapter, verse, line etc.."
       },
       "curated_content": Text.schema,
+      "editable_by_others": {
+        "default": False
+      },
       "targets": {
         "maxLength": 1,
         "items": BookPositionTarget.schema,
