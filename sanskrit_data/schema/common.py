@@ -260,8 +260,14 @@ class JsonObject(object):
     updated_obj = JsonObject.make_from_dict(updated_doc)
     return updated_obj
 
-  # To delete referrent items also, use appropriate method in JsonObjectNode.
   def delete_in_collection(self, db_interface, user=None):
+    """
+
+    To delete referrent items also, use appropriate method in JsonObjectNode.
+    :param db_interface:
+    :param user:
+    :return:
+    """
     assert hasattr(self, "_id"), "_id not present!"
     return db_interface.delete_doc(self._id)
 
@@ -497,6 +503,12 @@ class UllekhanamJsonObject(JsonObject):
   def update_collection(self, db_interface, user=None):
     self.source.setup_source(db_interface=db_interface, user=user)
     return super(UllekhanamJsonObject, self).update_collection(db_interface=db_interface, user=user)
+
+  def delete_in_collection(self, db_interface, user=None):
+    if user is not None:
+      self.source.id = user.get_first_user_id_or_none()
+    self.detect_illegal_takeover(db_interface=db_interface, user=user)
+    return super(UllekhanamJsonObject, self).delete_in_collection(db_interface=db_interface, user=user)
 
   @classmethod
   def get_allowed_target_classes(cls):
