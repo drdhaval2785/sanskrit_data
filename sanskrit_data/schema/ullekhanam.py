@@ -45,6 +45,9 @@ class Annotation(UllekhanamJsonObject):
     "required": ["targets", "source"]
   }))
 
+  def __init__(self):
+    super(Annotation, self).__init__()
+
   @classmethod
   def get_allowed_target_classes(cls):
     return [BookPortion, Annotation]
@@ -484,11 +487,13 @@ class TextSambandhaAnnotation(Annotation):
       "source_text_padas": {
         "type": "array",
         "description": "The entity being annotated.",
-        "items": Target.schema
+        "items": Target.schema,
+        "minItems": 1,
       },
       "target_text_padas": {
         "type": "array",
         "description": "The entity being annotated.",
+        "minItems": 1,
         "items": Target.schema
       }
     },
@@ -497,8 +502,8 @@ class TextSambandhaAnnotation(Annotation):
 
   def validate(self, db_interface=None, user=None):
     super(TextSambandhaAnnotation, self).validate(db_interface=db_interface, user=user)
-    self.validate_targets(targets=self.source_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
-    self.validate_targets(targets=self.target_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
+    Target.check_target_classes(targets_to_check=self.source_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface, targeting_obj=self)
+    Target.check_target_classes(targets_to_check=self.target_text_padas, allowed_types=[PadaAnnotation], db_interface=db_interface, targeting_obj=self)
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -546,6 +551,7 @@ class SamaasaAnnotation(Annotation):
       "component_padas": {
         "type": "array",
         "description": "Pointers to PadaAnnotation objects corresponding to components of the samasta-pada",
+        "minItems": 1,
         "items": Target.schema
       },
       "samaasa_type": {
@@ -560,7 +566,7 @@ class SamaasaAnnotation(Annotation):
 
   def validate(self, db_interface=None, user=None):
     super(SamaasaAnnotation, self).validate(db_interface=db_interface, user=user)
-    self.validate_targets(targets=self.component_padas, allowed_types=[PadaAnnotation], db_interface=db_interface)
+    Target.check_target_classes(targets_to_check=self.component_padas, allowed_types=[PadaAnnotation], db_interface=db_interface, targeting_obj=self)
 
   @classmethod
   def from_details(cls, targets, source, combined_string, samaasa_type="UNK"):

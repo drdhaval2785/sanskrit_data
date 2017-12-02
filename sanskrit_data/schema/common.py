@@ -109,6 +109,7 @@ class JsonObject(object):
     _id = dict_without_id.pop("_id", None)
 
     def recursively_set_jsonpickle_type(some_dict):
+      """Translates jsonClass fields to py/object"""
       wire_type = some_dict.pop(TYPE_FIELD, None)
       if wire_type:
         some_dict[JSONPICKLE_TYPE_FIELD] = json_class_index[wire_type].__module__ + "." + wire_type
@@ -336,16 +337,17 @@ class JsonObject(object):
 
 
 class TargetValidationError(Exception):
-  def __init__(self, allowed_types, target_obj, targetting_obj):
+  def __init__(self, allowed_types, target_obj, targeting_obj):
     self.allowed_types = allowed_types
     self.target_obj = target_obj
-    self.targetting_obj = targetting_obj
+    self.targeting_obj = targeting_obj
+    self.message = str(self)
 
   def __str__(self):
     return "%s\n targets object \n" \
            "%s,\n" \
            "which does not belong to \n" \
-           "%s" % (self.targetting_obj, self.target_obj, str(self.allowed_types))
+           "%s" % (self.targeting_obj, self.target_obj, str(self.allowed_types))
 
 
 # noinspection PyProtectedMember
@@ -366,6 +368,18 @@ class Target(JsonObject):
   def get_target_entity(self, db_interface):
     """Returns null if db_interface doesnt have any such entity."""
     return JsonObject.from_id(id=self.container_id, db_interface=db_interface)
+
+  def check_target_class(self, db_interface, allowed_types, targeting_obj):
+    if db_interface is not None:
+      target_entity = self.get_target_entity(db_interface=db_interface)
+      if not check_class(obj=target_entity, allowed_types=allowed_types):
+        raise TargetValidationError(allowed_types=allowed_types, targeting_obj=targeting_obj,
+                                    target_obj=target_entity)
+
+  @classmethod
+  def check_target_classes(cls, targets_to_check, db_interface, allowed_types, targeting_obj):
+    for target in targets_to_check:
+      target.check_target_class(db_interface=db_interface, allowed_types=allowed_types, targeting_obj=targeting_obj)
 
   @classmethod
   def from_details(cls, container_id):
@@ -412,6 +426,8 @@ class DataSource(JsonObject):
 
   def __init__(self):
     """Set the default properties"""
+    super().__init__()
+    # noinspection PyTypeChecker
     self.source_type = self.schema["properties"]["source_type"]["default"]
 
   # noinspection PyShadowingBuiltins
@@ -490,6 +506,7 @@ class UllekhanamJsonObject(JsonObject):
   target_class = Target
 
   def is_editable_by_others(self):
+    # noinspection PyTypeChecker
     return self.editable_by_others if hasattr(self, "editable_by_others") else self.schema["properties"]["editable_by_others"]["default"]
 
   def __init__(self):
@@ -520,12 +537,9 @@ class UllekhanamJsonObject(JsonObject):
 
   def validate_targets(self, db_interface):
     allowed_types = self.get_allowed_target_classes()
-    if hasattr(self, "targets") and len(self.targets) > 0 and db_interface is not None:
-      for target in self.targets:
-        target_entity = target.get_target_entity(db_interface=db_interface)
-        if not check_class(target_entity, allowed_types):
-          raise TargetValidationError(allowed_types=allowed_types, targetting_obj=self,
-                                      target_obj=target_entity)
+    targets_to_check = self.targets if hasattr(self, "targets") else []
+    Target.check_target_classes(targets_to_check=targets_to_check, db_interface=db_interface, allowed_types=allowed_types, targeting_obj=self)
+
 
   def validate(self, db_interface=None, user=None):
     super(UllekhanamJsonObject, self).validate(db_interface=db_interface, user=user)
@@ -583,12 +597,17 @@ class JsonObjectNode(JsonObject):
     }
   )
 
-  """Recursively valdiate target-types."""
+  def setup_source(self, source):
+    assert self.content is not None
+    self.content.source = source
+    for child in self.children:
+      child.setup_source(source=source)
 
   def validate_children_types(self):
+    """Recursively valdiate target-types."""
     for child in self.children:
       if not check_class(self.content, child.content.get_allowed_target_classes()):
-        raise TargetValidationError(targetting_obj=child, allowed_types=child.content.get_allowed_target_classes(),
+        raise TargetValidationError(targeting_obj=child, allowed_types=child.content.get_allowed_target_classes(),
                                     target_obj=self.content)
     for child in self.children:
       child.validate_children_types()

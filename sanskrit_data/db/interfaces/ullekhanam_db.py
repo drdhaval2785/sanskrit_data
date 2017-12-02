@@ -2,14 +2,33 @@ import re
 import logging
 import os
 
-import sanskrit_data.schema.books
-import sanskrit_data.schema.common
+from sanskrit_data.schema import books
+from sanskrit_data.schema import common
 from sanskrit_data.db.interfaces import DbInterface
 
 logging.basicConfig(
   level=logging.DEBUG,
   format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
 )
+
+
+def run_command(cmd):
+  try:
+    # shellswitch = isinstance(cmd, collections.Sequence)
+    # print "cmd:",cmd
+    # print "type:",shellswitch
+    shellval = False if (type(cmd) == type([])) else True
+    result = subprocess.Popen(cmd, shell=shellval,
+                              stderr=subprocess.PIPE,
+                              stdout=subprocess.PIPE).communicate()
+    if result[1] != "" and result[1] != b"":
+      logging.error(cmd)
+      logging.error(result)
+      raise Exception(result[1])
+    return result[0].decode("utf-8")  # Returns the STDOUT
+  except Exception as e:
+    logging.error("Error in " + str(cmd) + ": " + str(e))
+    raise e
 
 
 class BookPortionsInterface(DbInterface):
@@ -20,7 +39,7 @@ class BookPortionsInterface(DbInterface):
     cmd = "find " + rootdir + r" \( \( -path '*/.??*' \) -prune \) , \( -path '*book_v2.json' \) -follow -print; true"
     logging.info(cmd)
     try:
-      from vedavaapi_py_api.common.file_helper import run_command
+      from sanskrit_data.file_helper import run_command
       results = run_command(cmd)
     except Exception as e:
       logging.error("Error in find: " + str(e))
@@ -35,11 +54,12 @@ class BookPortionsInterface(DbInterface):
       logging.info("    " + bpath)
       if pattern and not re.search(pattern, bpath, re.IGNORECASE):
         continue
-      book = sanskrit_data.schema.books.BookPortion.from_path(path=bpath, db_interface=self)
-      if book:
+      book = books.BookPortion.from_path(path=bpath, db_interface=self)
+      if book is not None:
         logging.info("Book already present %s" % bpath)
       else:
-        book_portion_node = sanskrit_data.schema.common.JsonObject.read_from_file(f)
+        book_portion_node = common.JsonObject.read_from_file(f)
+        book_portion_node.setup_source(source=common.DataSource.from_details(source_type="system_inferred", id="book_importer"))
         logging.info("Importing afresh! %s " % book_portion_node)
         from jsonschema import ValidationError
         try:
@@ -60,8 +80,8 @@ class BookPortionsInterface(DbInterface):
     return self.find(find_filter={"portion_class": "book"})
 
   def get(self, path):
-    book = sanskrit_data.schema.books.BookPortion.from_path(path=path, db_interface=self)
-    book_node = sanskrit_data.schema.common.JsonObjectNode.from_details(content=book)
+    book = books.BookPortion.from_path(path=path, db_interface=self)
+    book_node = common.JsonObjectNode.from_details(content=book)
     book_node.fill_descendents(self)
     return book_node
 

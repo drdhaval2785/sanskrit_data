@@ -23,6 +23,11 @@ def db_fixture(request):
   return tests.ullekhanam_db_fixture(request=request)
 
 
+def test_import(db_fixture):
+  db_fixture.import_all(rootdir=os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo"))
+  assert books.BookPortion.from_path(path="english", db_interface=db_fixture) is not None
+
+
 # We deliberately don't use find_one_and_update below - as a test.
 def test_BookPortion_db_roundrip(db_fixture):
   book_portion = books.BookPortion.from_details(
