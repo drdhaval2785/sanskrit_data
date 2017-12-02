@@ -9,6 +9,7 @@ import logging
 import os
 import pytest
 
+import sanskrit_data.schema.ullekhanam.sanskrit
 import tests
 from sanskrit_data.schema import ullekhanam, common, books
 
@@ -85,7 +86,7 @@ def test_full_sentence_storage(db_fixture):
   samsAdhanI_source = ullekhanam.DataSource.from_details("system_inferred", "samsAdhanI/xyz.py")
 
   # Add pada db
-  pada_annotation_rAmaH = ullekhanam.SubantaAnnotation.from_details(targets=[
+  pada_annotation_rAmaH = sanskrit_data.schema.ullekhanam.samskrta.SubantaAnnotation.from_details(targets=[
     ullekhanam.TextTarget.from_details(container_id=str(text_annotation._id))],
     source=samsAdhanI_source, word=common.Text.from_text_string(text_string=u"रामः"), root=common.Text.from_text_string(text_string=u"राम"),
     linga=u"pum", vibhakti="1", vachana=1)

@@ -2,7 +2,7 @@
 This module defines:
 
 - **schema**
-    - shared standard schema for communicating and storing Sanskrit data of various types.
+    - shared standard schema for communicating and storing data (with a particular focus on sanskrit texts) of various types.
     - various idiosyncratic notations used by various modules which deviate from the proposed standards.
 - **python classes** (corresponding to the schema) and **shared libraries** for validating, (de-)serializing and storing sanskrit data of various types.
 - a **common database interface** for accessing various databases (so that a downstream app can switch to a different database with a single line change).
