@@ -7,7 +7,9 @@ This module defines:
 - **python classes** (corresponding to the schema) and **shared libraries** for validating, (de-)serializing and storing sanskrit data of various types.
 - a **common database interface** for accessing various databases (so that a downstream app can switch to a different database with a single line change).
 
-Similar libraries in various other languages are being built:
+While this package was originally motivated by Sanskrit text annotation needs, it is more generally useful. 
+
+Similar libraries in various other programming languages are being built:
 
 - Scala (likely compatible with Java): [db-interface](https://github.com/vedavaapi/db-interface) .
 
