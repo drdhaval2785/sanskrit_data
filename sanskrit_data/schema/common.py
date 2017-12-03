@@ -136,7 +136,7 @@ class JsonObject(object):
 
   @classmethod
   def make_from_pickledstring(cls, pickle):
-    if str(pickle).strip().startswith("["):
+    if str(pickle,'utf-8').strip().startswith("["):
       return cls.make_from_dict_list(jsonpickle.decode(pickle))
     else:
       obj = cls.make_from_dict(jsonpickle.decode(pickle))
