@@ -136,8 +136,11 @@ class JsonObject(object):
 
   @classmethod
   def make_from_pickledstring(cls, pickle):
-    obj = cls.make_from_dict(jsonpickle.decode(pickle))
-    return obj
+    if pickle.strip().startswith("["):
+      return cls.make_from_dict_list(jsonpickle.decode(pickle))
+    else:
+      obj = cls.make_from_dict(jsonpickle.decode(pickle))
+      return obj
 
   @classmethod
   def read_from_file(cls, filename):
