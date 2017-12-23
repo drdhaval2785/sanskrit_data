@@ -15,7 +15,8 @@ import logging
 import sys
 
 from sanskrit_data.schema import common
-from sanskrit_data.schema.common import UllekhanamJsonObject, TYPE_FIELD, JsonObject, Target, DataSource, Text, NamedEntity
+from sanskrit_data.schema.common import UllekhanamJsonObject, TYPE_FIELD, JsonObject, Target, DataSource, Text, \
+  NamedEntity
 
 
 class BookPositionTarget(Target):
@@ -100,7 +101,15 @@ class BookPortion(UllekhanamJsonObject):
       },
       "creation_details": CreationDetails.schema,
       "path": {
-        "type": "string"
+        "type": "string",
+        "description": "The path prefix where files are to be stored. "
+                       "If this field is empty, such a path is computed from _id of this object "
+                       "and its ancestors. "
+                       "Ideally, the value stored here should equal the result of this computation "
+                       "- but it may not be the case, especially in the following cases: "
+                       "* Imported books "
+                       "* Moved BookPortions. "
+                       " Once upon a time this field also uniquely identified a BookPortion."
       },
       "thumbnail_path": {
         "type": "string"
@@ -124,9 +133,10 @@ class BookPortion(UllekhanamJsonObject):
       "targets": {
         "maxLength": 1,
         "items": BookPositionTarget.schema,
-        "description": "Target for BookPortion of which this BookPortion is a part. It is an array only for consistency. "
-                       "For any given BookPortion, one can get the right order of contained BookPortions by seeking all "
-                       "BookPortions referring to it in the targets list, and sorting them by their target.position values."
+        "description": (
+          "Target for BookPortion of which this BookPortion is a part. It is an array only for consistency. "
+          "For any given BookPortion, one can get the right order of contained BookPortions by seeking all "
+          "BookPortions referring to it in the targets list, and sorting them by their target.position values.")
       }
     },
   }))
@@ -196,6 +206,15 @@ class BookPortion(UllekhanamJsonObject):
     db_interface.add_index(keys_dict={
       "curated_content.search_strings": 1
     }, index_name="curated_content_search_strings")
+
+  def get_path(self, db_interface):
+    external_file_store = db_interface.external_file_store
+    import os
+    if hasattr(self, "path") and self.path is not None:
+      return os.path.join(external_file_store, self.path)
+    elif hasattr(self, "targets") and self.targets is not None and len(self.targets) > 0:
+      container_book = self.targets[0]
+      return os.path.join(external_file_store, container_book.get_path(db_interface=db_interface), self._id)
 
 
 # Essential for depickling to work.
