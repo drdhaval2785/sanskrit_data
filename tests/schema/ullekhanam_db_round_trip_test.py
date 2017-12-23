@@ -24,14 +24,15 @@ def db_fixture(request):
   return tests.ullekhanam_db_fixture(request=request)
 
 
-def test_import(db_fixture):
+def test_import_export(db_fixture):
   db_fixture.import_all(rootdir=os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo/books"))
-  assert books.BookPortion.from_path(path="english", db_interface=db_fixture) is not None
+  assert books.BookPortion.from_id(id="5a3dfa6f751d5d9780b4c6ca", db_interface=db_fixture) is not None
 
   export_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo/books_v2")
   import shutil
   shutil.rmtree(path=export_dir, ignore_errors=True)
   db_fixture.dump_books(export_dir=export_dir)
+  assert len(list(os.scandir(export_dir))) > 0
 
 
 # We deliberately don't use find_one_and_update below - as a test.
@@ -45,7 +46,7 @@ def test_BookPortion_db_roundrip(db_fixture):
   result = book_portions.update_doc(book_portion.to_json_map())
   logging.debug("update result is " + str(result))
 
-  book_portion_retrieved = books.BookPortion.from_path(path="myrepo/halAyudha", db_interface=book_portions)
+  book_portion_retrieved = books.BookPortion.from_id(id=result["_id"], db_interface=book_portions)
   logging.info(book_portion_retrieved.__class__)
   logging.info(str(book_portion_retrieved.to_json_map()))
   logging.info(book_portion.to_json_map())

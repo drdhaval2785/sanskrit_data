@@ -228,7 +228,14 @@ class BookPortion(UllekhanamJsonObject):
     elif self.portion_class == "page":
       # Just dump the file.
       import shutil
-      shutil.copyfile(os.path.join(db_interface.external_file_store, self.path), os.path.join(export_dir, self._id + os.path.splitext(self.path)[1]))
+      if hasattr(self, "path"):
+        src_file = self.path
+        shutil.copyfile(os.path.join(db_interface.external_file_store, src_file), os.path.join(export_dir, self._id + os.path.splitext(src_file)[1]))
+      else:
+        for f in os.scandir(db_interface.external_file_store):
+          if self._id in f.name:
+            shutil.copyfile(os.path.join(db_interface.external_file_store, f.name), os.path.join(export_dir, f.name))
+
     for sub_portion in book_node.children:
       sub_portion.content.dump_book_portion(export_dir=export_dir, db_interface=db_interface)
 

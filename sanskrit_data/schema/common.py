@@ -520,11 +520,11 @@ class UllekhanamJsonObject(JsonObject):
 
   def detect_illegal_takeover(self, db_interface=None, user=None):
     if hasattr(self, "_id") and db_interface is not None:
-      old_annotation = JsonObject.from_id(id=self._id, db_interface=db_interface)
-      if not old_annotation.is_editable_by_others():
-        if hasattr(self.source, "id") and hasattr(old_annotation.source, "id") and self.source.id != old_annotation.source.id:
+      old_obj = JsonObject.from_id(id=self._id, db_interface=db_interface)
+      if old_obj is not None and not old_obj.is_editable_by_others():
+        if hasattr(self.source, "id") and hasattr(old_obj.source, "id") and self.source.id != old_obj.source.id:
           if user is not None and not user.is_admin(service=db_interface.db_name_frontend):
-            raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_annotation.source.id, user.get_first_user_id_or_none))
+            raise ValidationError("{} cannot take over {}'s annotation for editing or deleting under a non-admin user {}'s authority".format(self.source.id, old_obj.source.id, user.get_first_user_id_or_none))
 
   def update_collection(self, db_interface, user=None):
     self.source.setup_source(db_interface=db_interface, user=user)

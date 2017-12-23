@@ -34,42 +34,25 @@ def run_command(cmd):
 class BookPortionsInterface(DbInterface):
   """Operations on BookPortion objects in an Db"""
 
-  def import_all(self, rootdir, pattern=None):
+  def import_all(self, rootdir):
     logging.info("Importing books into database from " + rootdir)
-    cmd = "find " + rootdir + r" \( \( -path '*/.??*' \) -prune \) , \( -path '*book_v2.json' \) -follow -print; true"
-    logging.info(cmd)
-    try:
-      from sanskrit_data.file_helper import run_command
-      results = run_command(cmd)
-    except Exception as e:
-      logging.error("Error in find: " + str(e))
-      return 0
-
     nbooks = 0
-
-    for f in results.split("\n"):
-      if not f:
+    for f in os.scandir(rootdir):
+      if not f.name.endswith('.json'):
         continue
-      bpath, fname = os.path.split(f.replace(rootdir + "/", ""))
-      logging.info("    " + bpath)
-      if pattern and not re.search(pattern, bpath, re.IGNORECASE):
-        continue
-      book = books.BookPortion.from_path(path=bpath, db_interface=self)
-      if book is not None:
-        logging.info("Book already present %s" % bpath)
-      else:
-        book_portion_node = common.JsonObject.read_from_file(f)
-        book_portion_node.setup_source(source=common.DataSource.from_details(source_type="system_inferred", id="book_importer"))
-        logging.debug("Importing afresh! %s " % bpath)
-        from jsonschema import ValidationError
-        try:
-          book_portion_node.update_collection(self)
-        except ValidationError as e:
-          import traceback
-          logging.error(e)
-          logging.error(traceback.format_exc())
-        # logging.debug(str(book_portion_node))
-        nbooks = nbooks + 1
+      logging.info("    " + f.name)
+      book_portion_node = common.JsonObject.read_from_file(os.path.join(rootdir, f.name))
+      book_portion_node.setup_source(source=common.DataSource.from_details(source_type="system_inferred", id="book_importer"))
+      logging.debug("Importing afresh! %s " % f.name)
+      from jsonschema import ValidationError
+      try:
+        book_portion_node.update_collection(self)
+      except ValidationError as e:
+        import traceback
+        logging.error(e)
+        logging.error(traceback.format_exc())
+      # logging.debug(str(book_portion_node))
+      nbooks = nbooks + 1
     return nbooks
 
   def dump_books(self, export_dir):
