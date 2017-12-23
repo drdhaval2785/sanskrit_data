@@ -530,6 +530,9 @@ class UllekhanamJsonObject(JsonObject):
 
   def validate_deletion(self, db_interface, user=None):
     super(UllekhanamJsonObject, self).validate_deletion(db_interface=db_interface, user=user)
+    targetting_entities = self.get_targetting_entities(db_interface=db_interface)
+    if len(targetting_entities) > 0:
+      raise ValidationError("Unsafe deletion of %s: %d entities refer to this entity. Delete them first" % (self._id, len(targetting_entities)))
     if user is not None:
       self.source.id = user.get_first_user_id_or_none()
     self.detect_illegal_takeover(db_interface=db_interface, user=user)
