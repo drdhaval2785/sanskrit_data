@@ -216,6 +216,22 @@ class BookPortion(UllekhanamJsonObject):
       container_book = self.targets[0]
       return os.path.join(external_file_store, container_book.get_path(db_interface=db_interface), self._id)
 
+  def dump_book_portion(self, export_dir, db_interface):
+    import os
+    book_node = common.JsonObjectNode.from_details(content=self)
+    book_node.fill_descendents(db_interface=db_interface, entity_type="BookPortion")
+    if self.portion_class == "book":
+      import copy
+      copied_node = copy.deepcopy(book_node)
+      copied_node.recursively_delete_attr(field_name="path")
+      copied_node.dump_to_file(filename=os.path.join(export_dir, self._id + "_book.json"))
+    elif self.portion_class == "page":
+      # Just dump the file.
+      import shutil
+      shutil.copyfile(os.path.join(db_interface.external_file_store, self.path), os.path.join(export_dir, self._id + os.path.splitext(self.path)[1]))
+    for sub_portion in book_node.children:
+      sub_portion.content.dump_book_portion(export_dir=export_dir, db_interface=db_interface)
+
 
 # Essential for depickling to work.
 common.update_json_class_index(sys.modules[__name__])

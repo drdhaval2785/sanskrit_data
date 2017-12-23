@@ -154,6 +154,8 @@ class JsonObject(object):
 
   def dump_to_file(self, filename):
     try:
+      import os
+      os.makedirs(os.path.dirname(filename), exist_ok=True)
       with open(filename, "w") as f:
         f.write(str(self))
     except Exception as e:
@@ -690,6 +692,16 @@ class JsonObjectNode(JsonObject):
         child = JsonObjectNode.from_details(content=targetting_obj)
         child.fill_descendents(db_interface=db_interface, depth=depth - 1)
         self.children.append(child)
+
+  def recursively_delete_attr(self, field_name):
+    """Rarely useful method: example when the schema of a Class changes to omit a field.
+
+    Limitation: Only useful with direct members.
+    """
+    if hasattr(self.content, field_name):
+      delattr(self.content, field_name)
+    for child in self.children:
+      child.recursively_delete_attr(field_name)
 
 
 class ScriptRendering(JsonObject):

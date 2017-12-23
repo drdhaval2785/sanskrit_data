@@ -60,7 +60,7 @@ class BookPortionsInterface(DbInterface):
       else:
         book_portion_node = common.JsonObject.read_from_file(f)
         book_portion_node.setup_source(source=common.DataSource.from_details(source_type="system_inferred", id="book_importer"))
-        logging.info("Importing afresh! %s " % book_portion_node)
+        logging.debug("Importing afresh! %s " % bpath)
         from jsonschema import ValidationError
         try:
           book_portion_node.update_collection(self)
@@ -68,16 +68,21 @@ class BookPortionsInterface(DbInterface):
           import traceback
           logging.error(e)
           logging.error(traceback.format_exc())
-        logging.debug(str(book_portion_node))
+        # logging.debug(str(book_portion_node))
         nbooks = nbooks + 1
     return nbooks
+
+  def dump_books(self, export_dir):
+    books = self.list_books()
+    for book in books:
+      book.dump_book_portion(export_dir=export_dir, db_interface=self)
 
   def list_books(self):
     """ List book objects (not chapters or pages).
 
     :return:
     """
-    return self.find(find_filter={"portion_class": "book"})
+    return [common.JsonObject.make_from_dict(input_dict=book) for book in self.find(find_filter={"portion_class": "book"})]
 
   def get(self, path):
     book = books.BookPortion.from_path(path=path, db_interface=self)

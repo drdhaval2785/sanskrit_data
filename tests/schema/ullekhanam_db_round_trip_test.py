@@ -25,8 +25,13 @@ def db_fixture(request):
 
 
 def test_import(db_fixture):
-  db_fixture.import_all(rootdir=os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo"))
+  db_fixture.import_all(rootdir=os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo/books"))
   assert books.BookPortion.from_path(path="english", db_interface=db_fixture) is not None
+
+  export_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "textract-example-repo/books_v2")
+  import shutil
+  shutil.rmtree(path=export_dir, ignore_errors=True)
+  db_fixture.dump_books(export_dir=export_dir)
 
 
 # We deliberately don't use find_one_and_update below - as a test.
@@ -86,7 +91,7 @@ def test_full_sentence_storage(db_fixture):
   samsAdhanI_source = ullekhanam.DataSource.from_details("system_inferred", "samsAdhanI/xyz.py")
 
   # Add pada db
-  pada_annotation_rAmaH = sanskrit_data.schema.ullekhanam.samskrta.SubantaAnnotation.from_details(targets=[
+  pada_annotation_rAmaH = sanskrit_data.schema.ullekhanam.sanskrit.SubantaAnnotation.from_details(targets=[
     ullekhanam.TextTarget.from_details(container_id=str(text_annotation._id))],
     source=samsAdhanI_source, word=common.Text.from_text_string(text_string=u"रामः"), root=common.Text.from_text_string(text_string=u"राम"),
     linga=u"pum", vibhakti="1", vachana=1)
