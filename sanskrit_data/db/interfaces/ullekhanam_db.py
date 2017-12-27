@@ -37,13 +37,13 @@ class BookPortionsInterface(DbInterface):
   def import_all(self, rootdir):
     logging.info("Importing books into database from " + rootdir)
     nbooks = 0
-    for f in os.scandir(rootdir):
-      if not f.name.endswith('.json'):
-        continue
-      logging.info("    " + f.name)
-      book_portion_node = common.JsonObject.read_from_file(os.path.join(rootdir, f.name))
+    import glob
+    import os
+    for f in glob.glob(os.path.join(rootdir, "*/book.json")):
+      logging.info("    " + f)
+      book_portion_node = common.JsonObject.read_from_file(f)
       book_portion_node.setup_source(source=common.DataSource.from_details(source_type="system_inferred", id="book_importer"))
-      logging.debug("Importing afresh! %s " % f.name)
+      logging.debug("Importing afresh! %s " % f)
       from jsonschema import ValidationError
       try:
         book_portion_node.update_collection(self)

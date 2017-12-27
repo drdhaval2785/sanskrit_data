@@ -174,6 +174,16 @@ class JsonObject(object):
   def get_json_map_list(cls, some_list):
     return [item.to_json_map() for item in some_list]
 
+  def get_external_storage_path(self, db_interface):
+    """Get the directory path where files associated with this object are to be stored."""
+    import os
+    return os.path.join(db_interface.external_file_store, self._id)
+
+  def list_files(self, db_interface, suffix_pattern="*"):
+    import glob
+    import os
+    return glob.glob(pathname=os.path.join(self.get_external_storage_path(db_interface=db_interface), suffix_pattern))
+
   def set_type(self):
     # self.class_type = str(self.__class__.__name__)
     setattr(self, TYPE_FIELD, self.__class__.get_wire_typeid())

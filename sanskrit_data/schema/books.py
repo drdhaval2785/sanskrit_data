@@ -220,21 +220,26 @@ class BookPortion(UllekhanamJsonObject):
     import os
     book_node = common.JsonObjectNode.from_details(content=self)
     book_node.fill_descendents(db_interface=db_interface, entity_type="BookPortion")
+    export_dir_destination = os.path.join(export_dir, self._id)
     if self.portion_class == "book":
       import copy
       copied_node = copy.deepcopy(book_node)
       copied_node.recursively_delete_attr(field_name="path")
-      copied_node.dump_to_file(filename=os.path.join(export_dir, self._id + "_book.json"))
+      copied_node.dump_to_file(filename=os.path.join(export_dir_destination, "book.json"))
     elif self.portion_class == "page":
       # Just dump the file.
       import shutil
+      # TODO: Remove this branch once data migration is done.
       if hasattr(self, "path"):
         src_file = self.path
-        shutil.copyfile(os.path.join(db_interface.external_file_store, src_file), os.path.join(export_dir, self._id + os.path.splitext(src_file)[1]))
+        # noinspection PyArgumentList
+        os.makedirs(name=export_dir_destination, exist_ok=True)
+        shutil.copyfile(os.path.join(db_interface.external_file_store, src_file), os.path.join(export_dir_destination, src_file))
       else:
-        for f in os.scandir(db_interface.external_file_store):
-          if self._id in f.name:
-            shutil.copyfile(os.path.join(db_interface.external_file_store, f.name), os.path.join(export_dir, f.name))
+        for f in self.list_files(db_interface=db_interface):
+          # noinspection PyArgumentList
+          os.makedirs(name=export_dir_destination, exist_ok=True)
+          shutil.copyfile(f, os.path.join(export_dir_destination, os.path.basename(f)))
 
     for sub_portion in book_node.children:
       sub_portion.content.dump_book_portion(export_dir=export_dir, db_interface=db_interface)

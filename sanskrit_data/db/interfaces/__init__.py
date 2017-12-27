@@ -1,3 +1,11 @@
+import logging
+
+logging.basicConfig(
+  level=logging.DEBUG,
+  format="%(levelname)s: %(asctime)s {%(filename)s:%(lineno)d}: %(message)s "
+)
+
+
 class ClientInterface(object):
   """A common interface to a database server or system.
 
@@ -42,8 +50,9 @@ class DbInterface(object):
     # Add filestores for use with the DB.
     if self.external_file_store is not None:
       logging.info("Initializing work directory ...")
+      import os
       # noinspection PyArgumentList
-      os.makedirs(name=db.external_file_store, exist_ok=True)
+      os.makedirs(name=self.external_file_store, exist_ok=True)
 
   def update_doc(self, doc):
     """ Update or insert a json object, represented as a dict.
