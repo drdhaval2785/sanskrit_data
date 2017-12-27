@@ -33,6 +33,7 @@ class CloudantApiDatabase(DbInterface):
     self.db = db
     self.db_name_frontend = db_name_frontend
     self.external_file_store = external_file_store
+    self.init_external_file_store()
 
   def update_doc(self, doc):
     super(CloudantApiDatabase, self).update_doc(doc=doc)
@@ -135,7 +136,7 @@ class CloudantApiClient(ClientInterface):
     else:
       return self.client.create_database(db_name)
 
-  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None, db_type=None):
     db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
     if db_type == "ullekhanam_db":
       return BookPortionsCouchdb(some_collection=self.get_database(db_name=db_name_backend),
@@ -159,6 +160,7 @@ class CouchdbApiDatabase(DbInterface):
     self.db = db
     self.db_name_frontend = db_name_frontend
     self.external_file_store = external_file_store
+    self.init_external_file_store()
 
   def set_revision(self, doc_map):
     from couchdb import ResourceNotFound
@@ -216,7 +218,7 @@ class CouchdbApiClient(ClientInterface):
     except e:
       return self.server.create(db_name)
 
-  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None):
+  def get_database_interface(self, db_name_backend, db_name_frontend=None, external_file_store=None, db_type=None):
     db_name_frontend_final = db_name_frontend if db_name_frontend is not None else db_name_backend
     return CouchdbApiDatabase(db=self.get_database(db_name=db_name_backend), db_name_frontend=db_name_frontend_final, external_file_store=external_file_store)
 

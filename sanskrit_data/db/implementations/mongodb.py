@@ -37,6 +37,7 @@ class Collection(DbInterface):
     self.mongo_collection = some_collection
     self.db_name_frontend = db_name_frontend
     self.external_file_store = external_file_store
+    self.init_external_file_store()
 
   # noinspection PyShadowingBuiltins
   def find_by_id(self, id):

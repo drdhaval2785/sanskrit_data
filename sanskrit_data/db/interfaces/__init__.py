@@ -38,6 +38,13 @@ class DbInterface(object):
   Accessing databases through implementations of this interface enables one to switch databases more easily down the line.
   """
 
+  def init_external_file_store(self):
+    # Add filestores for use with the DB.
+    if self.external_file_store is not None:
+      logging.info("Initializing work directory ...")
+      # noinspection PyArgumentList
+      os.makedirs(name=db.external_file_store, exist_ok=True)
+
   def update_doc(self, doc):
     """ Update or insert a json object, represented as a dict.
 
