@@ -182,7 +182,8 @@ class JsonObject(object):
   def list_files(self, db_interface, suffix_pattern="*"):
     import glob
     import os
-    return glob.glob(pathname=os.path.join(self.get_external_storage_path(db_interface=db_interface), suffix_pattern))
+    file_list = glob.glob(pathname=os.path.join(self.get_external_storage_path(db_interface=db_interface), suffix_pattern))
+    return [os.path.basename(f) for f in file_list]
 
   def set_type(self):
     # self.class_type = str(self.__class__.__name__)
