@@ -2,7 +2,7 @@ import re
 import logging
 import os
 
-from sanskrit_data.schema import books
+from sanskrit_data.schema import books, ullekhanam
 from sanskrit_data.schema import common
 from sanskrit_data.db.interfaces import DbInterface
 
