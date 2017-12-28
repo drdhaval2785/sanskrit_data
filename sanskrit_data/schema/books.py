@@ -234,7 +234,7 @@ class BookPortion(UllekhanamJsonObject):
         src_file = self.path
         # noinspection PyArgumentList
         os.makedirs(name=export_dir_destination, exist_ok=True)
-        shutil.copyfile(os.path.join(db_interface.external_file_store, src_file), os.path.join(export_dir_destination, src_file))
+        shutil.copyfile(os.path.join(db_interface.external_file_store, src_file), os.path.join(export_dir_destination, "content" + os.path.splitext( os.path.basename(src_file))[1]))
       else:
         for f in self.list_files(db_interface=db_interface):
           # noinspection PyArgumentList

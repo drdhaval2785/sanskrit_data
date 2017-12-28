@@ -60,6 +60,7 @@ def test_deletion_validation_general(db_fixture):
   # The below should succeed.
   node.delete_in_collection(db_interface=db, user=non_admin_user_raama)
 
+
 def test_deletion_validation_affect_too_many_users(db_fixture):
   db = db_fixture
   node = make_tree()
@@ -78,3 +79,19 @@ def test_deletion_validation_affect_too_many_users(db_fixture):
   with pytest.raises(jsonschema.ValidationError) as exception_info:
     node.delete_in_collection(db_interface=db, user=non_admin_user_siitaa)
   assert exception_info.value.message.startswith("This deletion affects more than 2 other users.")
+
+
+def test_fill_descendents(db_fixture):
+  node = make_tree()
+  node.update_collection(db_interface=db_fixture)
+  logging.debug(node)
+  target_page_id = node.children[0].children[0].content._id
+  annotation = ullekhanam.ImageAnnotation()
+  annotation.targets=[
+    ullekhanam.ImageTarget.from_details(container_id=str(target_page_id),
+                                        rectangle=ullekhanam.Rectangle.from_details())]
+  annotation.update_collection(db_interface=db_fixture)
+  top_node = node
+  top_node.children = None
+  top_node.fill_descendents(db_interface=db_fixture, entity_type="BookPortion")
+  assert "Annotation" not in str(top_node)

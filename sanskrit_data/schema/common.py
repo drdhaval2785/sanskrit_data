@@ -540,14 +540,18 @@ class UllekhanamJsonObject(JsonObject):
     self.source.setup_source(db_interface=db_interface, user=user)
     return super(UllekhanamJsonObject, self).update_collection(db_interface=db_interface, user=user)
 
-  def validate_deletion(self, db_interface, user=None):
+  def validate_deletion_ignoring_targetters(self, db_interface, user=None):
     super(UllekhanamJsonObject, self).validate_deletion(db_interface=db_interface, user=user)
-    targetting_entities = self.get_targetting_entities(db_interface=db_interface)
-    if len(targetting_entities) > 0:
-      raise ValidationError("Unsafe deletion of %s: %d entities refer to this entity. Delete them first" % (self._id, len(targetting_entities)))
     if user is not None:
       self.source.id = user.get_first_user_id_or_none()
     self.detect_illegal_takeover(db_interface=db_interface, user=user)
+
+  def validate_deletion(self, db_interface, user=None):
+    # Not calling: super(UllekhanamJsonObject, self).validate_deletion(db_interface=db_interface, user=user) as it's called inside the below.
+    self.validate_deletion_ignoring_targetters(db_interface=db_interface, user=user)
+    targetting_entities = self.get_targetting_entities(db_interface=db_interface)
+    if len(targetting_entities) > 0:
+      raise ValidationError("Unsafe deletion of %s: %d entities refer to this entity. Delete them first" % (self._id, len(targetting_entities)))
 
   @classmethod
   def get_allowed_target_classes(cls):
@@ -677,7 +681,7 @@ class JsonObjectNode(JsonObject):
     # Deliberately not calling super.validate_deletion - the node does not exist in the database.
     if not hasattr(self, "content"):
       raise ValidationError("This is a node with no content! Not allowed.")
-    self.content.validate_deletion(db_interface=db_interface, user=user)
+    self.content.validate_deletion_ignoring_targetters(db_interface=db_interface, user=user)
     for child in self.children:
       child.validate_deletion(db_interface=db_interface, user=user)
     self.content = JsonObject.from_id(id = self.content._id, db_interface=db_interface)
@@ -700,7 +704,7 @@ class JsonObjectNode(JsonObject):
     if depth > 0:
       for targetting_obj in targetting_objs:
         child = JsonObjectNode.from_details(content=targetting_obj)
-        child.fill_descendents(db_interface=db_interface, depth=depth - 1)
+        child.fill_descendents(db_interface=db_interface, depth=depth - 1, entity_type=entity_type)
         self.children.append(child)
 
   def recursively_delete_attr(self, field_name):
