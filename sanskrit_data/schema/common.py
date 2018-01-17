@@ -87,7 +87,7 @@ class JsonObject(object):
   }
 
   def __init__(self):
-    self._id = None
+    # Dont do: self._id = None . You'll get "_id": null when the object is serialized.
     self.set_type()
 
   @classmethod
