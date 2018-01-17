@@ -87,6 +87,7 @@ class JsonObject(object):
   }
 
   def __init__(self):
+    self._id = None
     self.set_type()
 
   @classmethod
@@ -149,8 +150,13 @@ class JsonObject(object):
         obj = cls.make_from_dict(jsonpickle.decode(fhandle.read()))
         return obj
     except Exception as e:
-      logging.error("Error reading " + filename + " : ".format(e))
-      raise e
+      try:
+        with open(filename) as fhandle:
+          obj = cls.make_from_dict_list(jsonpickle.decode(fhandle.read()))
+          return obj
+      except Exception as e:
+        logging.error("Error reading " + filename + " : ".format(e))
+        raise e
 
   def dump_to_file(self, filename):
     try:
