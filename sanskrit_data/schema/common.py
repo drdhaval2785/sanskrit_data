@@ -296,7 +296,9 @@ class JsonObject(object):
     :return:
     """
     self.validate_deletion(db_interface=db_interface, user=user)
-    return db_interface.delete_doc(self._id)
+    import shutil
+    db_interface.delete_doc(self._id)
+    shutil.rmtree(path=self.get_external_storage_path(db_interface=db_interface), ignore_errors=True)
 
   def validate(self, db_interface=None, user=None):
     """Validate the JSON serialization of this object using the schema member. Called before database writes.
