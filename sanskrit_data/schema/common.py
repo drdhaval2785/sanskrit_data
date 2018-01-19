@@ -133,11 +133,15 @@ class JsonObject(object):
 
   @classmethod
   def make_from_dict_list(cls, input_dict_list):
+    assert isinstance(input_dict_list, list)
     return [cls.make_from_dict(input_dict=input_dict) for input_dict in input_dict_list]
 
   @classmethod
   def make_from_pickledstring(cls, pickle):
-    if str(pickle,'utf-8').strip().startswith("["):
+    input_str = pickle
+    if not isinstance(pickle, str):
+      input_str = str(pickle,'utf-8')
+    if input_str.strip().startswith("["):
       return cls.make_from_dict_list(jsonpickle.decode(pickle))
     else:
       obj = cls.make_from_dict(jsonpickle.decode(pickle))
